@@ -21,7 +21,7 @@ modId = "createsifter" #mandatory TODO: change this!
 # see the associated build.gradle script for how to populate this completely automatically during a build
 version = "${file.jarVersion}" #mandatory
 # A display name for the mod
-displayName = "Sifter" #mandatory TODO: change this!
+displayName = "Create Sifter" #mandatory TODO: change this!
 # A URL to query for updates for this mod. See the JSON update specification <here>
 #updateJSONURL="http://myurl.me/" #optional
 # A URL for the "homepage" for this mod, displayed in the mod UI
@@ -34,11 +34,11 @@ displayName = "Sifter" #mandatory TODO: change this!
 #authors = "You" #optional
 # The description text for the mod (multi line!) (#mandatory) TODO: change this!
 description = '''
-Gather resourcer sifting
+Gather resources sifting
 '''
 # A dependency - use the . to indicate dependency for a specific modid. Dependencies are optional.
 # TODO: change all of the depdendencies.yourmodid to dependencies.(your modid) !
-[[dependencies.yourmodid]] #optional
+[[dependencies.createsifter]] #optional
 # the modid of the dependency
 modId = "forge" #mandatory
 # Does this dependency have to exist - if not, ordering below must be specified
@@ -50,16 +50,16 @@ ordering = "NONE"
 # Side this dependency is applied on - BOTH, CLIENT or SERVER
 side = "BOTH"
 # Here's another dependency
-[[dependencies.yourmodid]]
+[[dependencies.createsifter]]
 modId = "minecraft"
 mandatory = true
 # This version range declares a minimum of the current minecraft version up to but not including the next major version
 versionRange = "[1.18,1.19)"
 ordering = "NONE"
 side = "BOTH"
-[[dependencies.yourmodid]]
+[[dependencies.createsifter]]
 modId = "create"
 mandatory = true
-versionRange = "[0.4, 0.4d)"
+versionRange = "[0.4d,)"
 ordering = "AFTER"
 side = "BOTH"

@@ -3,12 +3,14 @@ buildscript {
         maven { url = 'https://files.minecraftforge.net/maven' }
         mavenCentral()
         maven {url='https://repo.spongepowered.org/maven'}
+        maven { url = 'https://maven.parchmentmc.org' }
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
         classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.1.0'
         classpath 'com.wynprice.cursemaven:CurseMaven:2.1.3'
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+        classpath "org.parchmentmc:librarian:1.+"
     }
 }
 
@@ -17,6 +19,7 @@ plugins {
 }
 
 apply plugin: 'net.minecraftforge.gradle'
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'com.matthewprenger.cursegradle'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'idea'
@@ -30,7 +33,8 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
-    mappings channel: "official", version: "${minecraft_version}"
+    //mappings channel: "official", version: "${minecraft_version}"
+    mappings channel: 'parchment', version: '2022.01.23-1.18.1'
 
      accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
@@ -68,8 +72,8 @@ minecraft {
         data {
             workingDirectory project.file('run')
             property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createsSrgToMcp/output.srg"
+            property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
 
             args "--mod", modid, "--all", "--output", file('src/generated/resources/'), "--existing", file('src/main/resources/')
@@ -100,10 +104,16 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+    //implementation fg.deobf("com.simibubi.create:Create:mc${create_version}")
+    //implementation fg.deobf("com.jozufozu.flywheel:Flywheel-Forge:${flywheel_version}")
+
+    //implementation fg.deobf("curse.maven:create-328085:3623348")
+    //implementation fg.deobf("curse.maven:flywheel-486392:3623314")
     implementation fg.deobf("com.simibubi.create:Create:mc${create_version}")
     implementation fg.deobf("com.jozufozu.flywheel:Flywheel-Forge:${flywheel_version}")
 
-    annotationProcessor 'org.spongepowered:mixin:0.8:processor'
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
 }
 
 compileJava.options.encoding = 'UTF-8'

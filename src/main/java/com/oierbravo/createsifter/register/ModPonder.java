@@ -1,4 +1,4 @@
-package mod.yourname.yourmodid.register;
+package com.oierbravo.createsifter.register;
 
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.ponder.PonderLocalization;

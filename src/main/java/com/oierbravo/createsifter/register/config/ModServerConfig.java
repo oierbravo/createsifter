@@ -1,8 +1,8 @@
-package mod.yourname.yourmodid.register.config;
+package com.oierbravo.createsifter.register.config;
 
+import com.oierbravo.createsifter.CreateSifter;
 import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.block.BlockStressValues;
-import mod.yourname.yourmodid.BuildConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -19,18 +19,18 @@ public class ModServerConfig extends ModConfigs.Config {
         protected void registerAll(ForgeConfigSpec.Builder builder) {
             builder.push("impact");
             BlockStressDefaults.DEFAULT_IMPACTS.forEach((r, i) -> {
-                if (r.getNamespace().equals(BuildConfig.MODID)) {
+                if (r.getNamespace().equals(CreateSifter.MODID)) {
                     impacts.put(r, builder.define(r.getPath(), i));
                 }
             });
             builder.pop().push("capacities");
             BlockStressDefaults.DEFAULT_CAPACITIES.forEach((r, i) -> {
-                if (r.getNamespace().equals(BuildConfig.MODID)) {
+                if (r.getNamespace().equals(CreateSifter.MODID)) {
                     capacities.put(r, builder.define(r.getPath(), i));
                 }
             });
             builder.pop();
-            BlockStressValues.registerProvider(BuildConfig.MODID, this);
+            BlockStressValues.registerProvider(CreateSifter.MODID, this);
             super.registerAll(builder);
         }
 
