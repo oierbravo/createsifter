@@ -17,9 +17,10 @@ public class ModBlocks {
     //private static final CreateRegistrate REGISTRATE = Create.registrate()
     //        .creativeModeTab(() -> Create.BASE_CREATIVE_TAB);
     private static final CreateRegistrate REGISTRATE = CreateSifter.registrate()
-            .creativeModeTab(() -> Create.BASE_CREATIVE_TAB);
+            .creativeModeTab(() -> ModItems.itemGroup);
 
     public static void register() {
+
         Create.registrate().addToSection(SIFTER, AllSections.KINETICS);
     }
     public static final BlockEntry<SifterBlock> SIFTER = REGISTRATE.block("sifter", SifterBlock::new)

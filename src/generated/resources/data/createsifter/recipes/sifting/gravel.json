@@ -1,0 +1,14 @@
+{
+  "type": "createsifter:sifting",
+  "ingredients": [
+    {
+      "item": "minecraft:gravel"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:flint"
+    }
+  ],
+  "processingTime": 100
+}

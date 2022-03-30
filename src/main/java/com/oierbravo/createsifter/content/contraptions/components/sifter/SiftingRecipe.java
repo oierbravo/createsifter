@@ -1,8 +1,8 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
-import com.simibubi.create.AllRecipeTypes;
+import com.oierbravo.createsifter.ModRecipeTypes;
 import com.simibubi.create.content.contraptions.components.crusher.AbstractCrushingRecipe;
-import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder;
+import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
@@ -10,8 +10,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class SiftingRecipe  extends AbstractCrushingRecipe {
-    public SiftingRecipe(ProcessingRecipeBuilder.ProcessingRecipeParams params) {
-        super(AllRecipeTypes.MILLING, params);
+    public SiftingRecipe(ProcessingRecipeParams params) {
+        super(ModRecipeTypes.SIFTING, params);
     }
 
     @Override
@@ -23,7 +23,12 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     }
 
     @Override
+    protected int getMaxInputCount() {
+        return 16;
+    }
+
+    @Override
     protected int getMaxOutputCount() {
-        return 4;
+        return 16;
     }
 }
