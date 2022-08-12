@@ -34,9 +34,10 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 minecraft {
     //mappings channel: "official", version: "${minecraft_version}"
-    mappings channel: 'parchment', version: '2022.01.23-1.18.1'
+    mappings channel: mappings_channel, version: mappings_version
 
-     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -113,6 +114,9 @@ repositories {
     }
     maven {
         url "https://maven.architectury.dev/"
+        content {
+            includeGroup "dev.architectury"
+        }
     }
 
 }
@@ -125,12 +129,13 @@ dependencies {
 
 
     implementation fg.deobf("com.simibubi.create:Create:mc${create_version}")
+    //implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
     implementation fg.deobf("com.jozufozu.flywheel:Flywheel-Forge:${flywheel_version}")
-
-    runtimeOnly fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
-    runtimeOnly fg.deobf("me.shedaniel:architectury-forge:${architectury_version}")
+    //implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-1.18.2:${flywheel_version}")
+    implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
+    implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
     implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
-    implementation fg.deobf("dev.latvian.mods:kubejs-create:${kubejs_create_version}")
+    //implementation fg.deobf("dev.latvian.mods:kubejs-create-forge:${kubejs_create_version}")
 
     if (System.getProperty('idea.sync.active') != 'true') {
         annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

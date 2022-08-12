@@ -4,8 +4,14 @@ import com.google.common.base.Predicates;
 import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.compat.jei.category.SiftingCategory;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
 import com.oierbravo.createsifter.register.ModBlocks;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.AllRecipeTypes;
+import com.simibubi.create.compat.jei.CreateJEI;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
+import com.simibubi.create.compat.jei.category.MillingCategory;
+import com.simibubi.create.content.contraptions.components.crusher.AbstractCrushingRecipe;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.config.CRecipes;
 import com.simibubi.create.foundation.config.ConfigBase;
@@ -40,19 +46,26 @@ public class CreateSifterJEI implements IModPlugin {
 
     public IIngredientManager ingredientManager;
     private final List<CreateRecipeCategory<?>> allCategories = new ArrayList<>();
-    private final CreateRecipeCategory<?> sifting = register("sifting", SiftingCategory::new).recipes(ModRecipeTypes.SIFTING)
+    //private final CreateRecipeCategory<?> sifting = register("sifting", SiftingCategory::new).recipes(ModRecipeTypes.SIFTING)
+    //        .catalyst(ModBlocks.SIFTER::get)
+    //        .build();
+
+
+    final CreateRecipeCategory<?> sifting = register("sifting", SiftingCategory::new)
+            .recipes(ModRecipeTypes.SIFTING.getType())
             .catalyst(ModBlocks.SIFTER::get)
             .build();
+
 
     @Override
     @Nonnull
     public ResourceLocation getPluginUid() {
         return ID;
     }
-    private <T extends Recipe<?>> CategoryBuilder<T> register(String name,
+  /*  private <T extends Recipe<?>> CategoryBuilder<T> register(String name,
                                                               Supplier<CreateRecipeCategory<T>> supplier) {
         return new CategoryBuilder<T>(name, supplier);
-    }
+    }*/
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
         allCategories.forEach(registration::addRecipeCategories);
@@ -64,12 +77,39 @@ public class CreateSifterJEI implements IModPlugin {
 
     }
 
-    @Override
-    public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        allCategories.forEach(c -> c.recipeCatalysts.forEach(s -> registration.addRecipeCatalyst(s.get(), c.getUid())));
+    private <T extends Recipe<?>> CategoryBuilder<T> register(String name, Supplier<CreateRecipeCategory<T>> supplier) {
+        return new CategoryBuilder<T>(name, supplier);
     }
 
     private class CategoryBuilder<T extends Recipe<?>> {
+        CreateRecipeCategory<T> category;
+
+        CategoryBuilder(String name, Supplier<CreateRecipeCategory<T>> category) {
+            this.category = category.get();
+            this.category.setCategoryId(name);
+        }
+
+        CategoryBuilder<T> catalyst(Supplier<ItemLike> supplier) {
+            return catalystStack(() -> new ItemStack(supplier.get()
+                    .asItem()));
+        }
+
+        CategoryBuilder<T> catalystStack(Supplier<ItemStack> supplier) {
+            category.recipeCatalysts.add(supplier);
+            return this;
+        }
+
+        CategoryBuilder<T> recipes(RecipeType<?> recipeTypeEntry) {
+            category.recipes.add(() -> (List<T>) findRecipesByType(recipeTypeEntry));
+            return this;
+        }
+
+        CreateRecipeCategory<T> build() {
+            allCategories.add(category);
+            return category;
+        }
+    }
+    /*private class CategoryBuilder<T extends Recipe<?>> {
         private CreateRecipeCategory<T> category;
         private List<Consumer<List<Recipe<?>>>> recipeListConsumers = new ArrayList<>();
         private Predicate<CRecipes> pred;
@@ -167,7 +207,7 @@ public class CreateSifterJEI implements IModPlugin {
             return category;
         }
 
-    }
+    }*/
     public static List<Recipe<?>> findRecipes(Predicate<Recipe<?>> predicate) {
         return Minecraft.getInstance().getConnection().getRecipeManager()
                 .getRecipes()

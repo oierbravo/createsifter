@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "createsifter:block/sifter/block"
+    }
+  }
+}

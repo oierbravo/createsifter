@@ -6,7 +6,7 @@ import com.oierbravo.createsifter.register.config.ModConfigs;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.LangMerger;
-import com.simibubi.create.repack.registrate.util.NonNullLazyValue;
+import com.simibubi.create.repack.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -33,7 +33,7 @@ public class CreateSifter {
     private static final Logger LOGGER = LogManager.getLogger(MODID);
     public static IEventBus modEventBus;
 
-    public static final NonNullLazyValue<CreateRegistrate> registrate = CreateRegistrate.lazy(MODID);
+    public static final NonNullSupplier<CreateRegistrate> registrate = CreateRegistrate.lazy(MODID);
 
     public CreateSifter() {
         modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -61,10 +61,9 @@ public class CreateSifter {
     @SubscribeEvent
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
-        //gen.addProvider(new LangMerger(gen));
+        gen.addProvider(new LangMerger(gen));
         ModProcessingRecipes.registerAllProcessingProviders(gen);
 
-        //ProcessingRecipeGen.registerAll(gen);
     }
     public static ResourceLocation asResource(String path) {
         return new ResourceLocation(MODID, path);
