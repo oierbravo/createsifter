@@ -1,0 +1,35 @@
+{
+  "type": "createsifter:sifting",
+  "ingredients": [
+    {
+      "item": "minecraft:gravel"
+    }
+  ],
+  "results": [
+    {
+      "item": "create:crushed_copper_ore",
+      "chance": 0.1
+    },
+    {
+      "item": "create:crushed_zinc_ore",
+      "chance": 0.1
+    },
+    {
+      "item": "create:crushed_gold_ore",
+      "chance": 0.05
+    },
+    {
+      "item": "create:crushed_iron_ore",
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:flint",
+      "chance": 0.1
+    },
+    {
+      "item": "create:experience_nugget",
+      "chance": 0.25
+    }
+  ],
+  "processingTime": 500
+}

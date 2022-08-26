@@ -1,5 +1,6 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
+import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.simibubi.create.content.contraptions.components.crusher.AbstractCrushingRecipe;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
@@ -21,10 +22,13 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
         return ingredients.get(0)
                 .test(inv.getItem(0));
     }
-
+    @Override
+    public String toString() {
+        return CreateSifter.MODID+":sifting";
+    }
     @Override
     protected int getMaxInputCount() {
-        return 16;
+        return 4;
     }
 
     @Override

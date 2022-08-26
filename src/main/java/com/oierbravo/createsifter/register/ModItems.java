@@ -14,7 +14,7 @@ public class ModItems {
         }
     };
 
-    public static void register(CreateRegistrate registrate) {
-        registrate.creativeModeTab(()->itemGroup, CreateSifter.DISPLAY_NAME);
+    public static void register() {
+        //registrate.creativeModeTab(()->itemGroup, CreateSifter.DISPLAY_NAME);
     }
 }

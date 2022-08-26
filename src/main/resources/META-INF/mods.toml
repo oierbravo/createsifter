@@ -27,7 +27,7 @@ displayName = "Create Sifter" #mandatory TODO: change this!
 # A URL for the "homepage" for this mod, displayed in the mod UI
 #displayURL="http://example.com/" #optional
 # A file name (in the root of the mod JAR) containing a logo for display
-#logoFile="createaddon.png" #optional
+logoFile="logo.png" #optional
 # A text field displayed in the mod UI
 #credits="Thanks for this example mod goes to Java" #optional
 # A text field displayed in the mod UI
@@ -40,7 +40,7 @@ Gather resources sifting
 [[dependencies.createsifter]] #optional
 modId = "forge" #mandatory
 mandatory = true #mandatory
-versionRange = "[39,)" #mandatory
+versionRange = "[40,)" #mandatory
 ordering = "NONE"
 # Side this dependency is applied on - BOTH, CLIENT or SERVER
 side = "BOTH"
@@ -57,7 +57,7 @@ side = "BOTH"
 [[dependencies.createsifter]]
 modId = "create"
 mandatory = true
-versionRange = "[0.4d,)"
+versionRange="[0.5.0.d,)"
 ordering = "AFTER"
 side = "BOTH"
 
