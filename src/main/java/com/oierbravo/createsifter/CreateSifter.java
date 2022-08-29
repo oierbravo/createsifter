@@ -39,9 +39,16 @@ public class CreateSifter {
         //DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
         //        () -> ModPartials::load);
         modEventBus.addListener(EventPriority.LOWEST, CreateSifter::gatherData);
+
+
         //modEventBus.addGenericListener(RecipeSerializer.class, ModRecipeTypes::register);
         ModRecipeTypes.register(modEventBus);
 
+        generateLangEntries();
+
+    }
+    private void generateLangEntries(){
+        registrate().addRawLang("createsifter.recipe.sifting", "Sifting recipe");
     }
     public static CreateRegistrate registrate() {
         return registrate.get();
