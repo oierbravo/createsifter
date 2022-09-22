@@ -57,7 +57,9 @@ public class CreateSifter {
 
     }
     private void generateLangEntries(){
+
         registrate().addRawLang("createsifter.recipe.sifting", "Sifting recipe");
+        registrate().addRawLang("create.recipe.sifting", "Sifting recipe");
     }
     public static CreateRegistrate registrate() {
         return registrate.get();
