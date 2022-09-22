@@ -138,6 +138,7 @@ public class SifterBlock  extends KineticBlock implements ITE<SifterTileEntity>,
         if (state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {
             withTileEntityDo(worldIn, pos, te -> {
                 ItemHelper.dropContents(worldIn, pos, te.inputInv);
+                ItemHelper.dropContents(worldIn, pos, te.meshInv);
                 ItemHelper.dropContents(worldIn, pos, te.outputInv);
             });
 
