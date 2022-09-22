@@ -1,7 +1,6 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
-import com.oierbravo.createsifter.register.ModShapes;
-import com.oierbravo.createsifter.register.ModTiles;
+import com.oierbravo.createsifter.register.*;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllTileEntities;
 import com.simibubi.create.content.contraptions.base.KineticBlock;
@@ -51,11 +50,27 @@ public class SifterBlock  extends KineticBlock implements ITE<SifterTileEntity>,
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn,
                                  BlockHitResult hit) {
-        if (!player.getItemInHand(handIn)
-                .isEmpty())
-            return InteractionResult.PASS;
+        SifterTileEntity sifterTileEntity = (SifterTileEntity) worldIn.getBlockEntity(pos);
+        ItemStack handInStack = player.getItemInHand(handIn);
+
         if (worldIn.isClientSide)
             return InteractionResult.SUCCESS;
+        //if(handInStack.is())
+        if(handInStack.is(ModTags.ModItemTags.MESHES.tag)){
+            sifterTileEntity.insertMesh(handInStack, player);
+      //  }
+      //  if(handInStack.sameItem(new ItemStack(ModItems.ANDESITE_MESH.get(),1))){
+        //if(handInStack.sameItem(new ItemStack(ModItems.ANDESITE_MESH.get(),1))){
+
+        }
+        if(handInStack.isEmpty() && sifterTileEntity.hasMesh() && player.isShiftKeyDown()){
+            sifterTileEntity.removeMesh(player);
+        }
+        if (!handInStack.isEmpty())
+            return InteractionResult.PASS;
+       //if(player.getItemInHand(handIn).isEmpty() &&){
+
+        //}
 
         withTileEntityDo(worldIn, pos, sifter -> {
             boolean emptyOutput = true;

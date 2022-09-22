@@ -10,6 +10,7 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,6 +25,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
+import java.util.List;
 import java.util.Optional;
 
 public class SifterTileEntity extends KineticTileEntity {
@@ -33,6 +35,9 @@ public class SifterTileEntity extends KineticTileEntity {
     public int timer;
     private SiftingRecipe lastRecipe;
 
+    public ItemStackHandler meshInv;
+
+    protected CombinedInvWrapper inputAndMeshCombined ;
 
     public SifterTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -40,6 +45,8 @@ public class SifterTileEntity extends KineticTileEntity {
         inputInv = new ItemStackHandler(1);
         outputInv = new ItemStackHandler(9);
         capability = LazyOptional.of(SifterInventoryHandler::new);
+        meshInv = new ItemStackHandler(1);
+        inputAndMeshCombined = new CombinedInvWrapper(inputInv,meshInv);
     }
 
     @Override
@@ -84,7 +91,8 @@ public class SifterTileEntity extends KineticTileEntity {
                 .isEmpty())
             return;
 
-        RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
+        RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
+        //SiftingRecipe.SifterInv inventoryIn = new SiftingRecipe.SifterInv(inputInv.getStackInSlot(0),this.meshInv.getStackInSlot(0));
         if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
             Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level);
             if (!recipe.isPresent()) {
@@ -108,7 +116,9 @@ public class SifterTileEntity extends KineticTileEntity {
     }
 
     private void process() {
-        RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
+
+        RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
+        //((SiftingRecipe.SifterInv inventoryIn = new SiftingRecipe.SifterInv(inputInv.getStackInSlot(0),this.meshInv.getStackInSlot(0));
 
         if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
             Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level);
@@ -147,6 +157,8 @@ public class SifterTileEntity extends KineticTileEntity {
         compound.putInt("Timer", timer);
         compound.put("InputInventory", inputInv.serializeNBT());
         compound.put("OutputInventory", outputInv.serializeNBT());
+        compound.put("MeshInventory", meshInv.serializeNBT());
+
         super.write(compound, clientPacket);
     }
 
@@ -155,6 +167,7 @@ public class SifterTileEntity extends KineticTileEntity {
         timer = compound.getInt("Timer");
         inputInv.deserializeNBT(compound.getCompound("InputInventory"));
         outputInv.deserializeNBT(compound.getCompound("OutputInventory"));
+        meshInv.deserializeNBT(compound.getCompound("MeshInventory"));
         super.read(compound, clientPacket);
     }
 
@@ -169,14 +182,42 @@ public class SifterTileEntity extends KineticTileEntity {
         return super.getCapability(cap, side);
     }
     private boolean canProcess(ItemStack stack) {
-        ItemStackHandler tester = new ItemStackHandler(1);
+        //if(!hasMesh()){
+        //    return false;
+        //e}
+        //ItemStackHandler tester = new ItemStackHandler(1);
+        //tester.setStackInSlot(0, stack);
+        //RecipeWrapper inventoryIn = new RecipeWrapper(tester);
+        //SiftingRecipe.SifterInv inventoryIn = new SiftingRecipe.SifterInv(stack,this.meshInv.getStackInSlot(0));
+
+        ItemStackHandler tester = new ItemStackHandler(2);
         tester.setStackInSlot(0, stack);
+        tester.setStackInSlot(1, this.meshInv.getStackInSlot(0));
         RecipeWrapper inventoryIn = new RecipeWrapper(tester);
 
         if (lastRecipe != null && lastRecipe.matches(inventoryIn, level))
             return true;
+        Optional<SiftingRecipe> match = ModRecipeTypes.SIFTING.find(inventoryIn, level);
         return ModRecipeTypes.SIFTING.find(inventoryIn, level)
                 .isPresent();
+    }
+
+    public void insertMesh(ItemStack meshStack, Player player) {
+        if(meshInv.getStackInSlot(0).isEmpty()){
+            ItemStack meshToInsert = meshStack.copy();
+            meshToInsert.setCount(1);
+            meshStack.shrink(1);
+            meshInv.setStackInSlot(0, meshToInsert);
+            setChanged();
+        }
+    }
+    public boolean hasMesh(){
+        return !meshInv.getStackInSlot(0).isEmpty();
+    }
+
+    public void removeMesh(Player player) {
+        player.getInventory().placeItemBackInInventory(meshInv.getStackInSlot(0));
+        meshInv.setStackInSlot(0, ItemStack.EMPTY);
     }
 
     private class SifterInventoryHandler extends CombinedInvWrapper {

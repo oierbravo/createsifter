@@ -1,32 +1,20 @@
 package com.oierbravo.createsifter.compat.jei;
 
-import com.google.common.base.Predicates;
 import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.compat.jei.category.SiftingCategory;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
 import com.oierbravo.createsifter.register.ModBlocks;
-import com.simibubi.create.*;
 import com.simibubi.create.compat.jei.*;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.compat.jei.category.MillingCategory;
-import com.simibubi.create.content.contraptions.components.crusher.AbstractCrushingRecipe;
-import com.simibubi.create.content.contraptions.fluids.potion.PotionFluid;
-import com.simibubi.create.content.curiosities.tools.BlueprintScreen;
-import com.simibubi.create.content.logistics.item.LinkedControllerScreen;
-import com.simibubi.create.content.logistics.item.filter.AbstractFilterScreen;
-import com.simibubi.create.content.logistics.trains.management.schedule.ScheduleScreen;
 import com.simibubi.create.foundation.config.AllConfigs;
 import com.simibubi.create.foundation.config.CRecipes;
 import com.simibubi.create.foundation.config.ConfigBase;
-import com.simibubi.create.foundation.gui.container.AbstractSimiContainerScreen;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo;
-import com.tterrag.registrate.util.entry.BlockEntry;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
-import mezz.jei.api.forge.ForgeTypes;
 import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import mezz.jei.api.registration.*;
@@ -37,6 +25,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -45,7 +34,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
-import java.util.stream.Collectors;
 
 @JeiPlugin
 @SuppressWarnings("unused")
@@ -62,10 +50,10 @@ public class CreateSifterJEI implements IModPlugin {
         this.modCategories.clear();
         CreateRecipeCategory<?>
 
-                sifting = builder(AbstractCrushingRecipe.class)
+                sifting = builder(SiftingRecipe.class)
                 .addTypedRecipes(ModRecipeTypes.SIFTING)
                 .catalyst(ModBlocks.SIFTER::get)
-                .doubleItemIcon(ModBlocks.SIFTER.get(), AllItems.WHEAT_FLOUR.get())
+                .doubleItemIcon(ModBlocks.SIFTER.get(), Blocks.GRAVEL)
                 .emptyBackground(177, 75)
                 .build("sifting", SiftingCategory::new);
     }
@@ -91,7 +79,7 @@ public class CreateSifterJEI implements IModPlugin {
 
         modCategories.forEach(c -> c.registerRecipes(registration));
 
-        registration.addRecipes(RecipeTypes.CRAFTING, ToolboxColoringRecipeMaker.createRecipes().toList());
+        //registration.addRecipes(RecipeTypes.CRAFTING, ToolboxColoringRecipeMaker.createRecipes().toList());
     }
 
     @Override
@@ -255,7 +243,7 @@ public class CreateSifterJEI implements IModPlugin {
             }
 
             CreateRecipeCategory.Info<T> info = new CreateRecipeCategory.Info<>(
-                    new mezz.jei.api.recipe.RecipeType<>(Create.asResource(name), recipeClass),
+                    new mezz.jei.api.recipe.RecipeType<>(CreateSifter.asResource(name), recipeClass),
                     Lang.translateDirect("recipe." + name), background, icon, recipesSupplier, catalysts);
             CreateRecipeCategory<T> category = factory.create(info);
             modCategories.add(category);

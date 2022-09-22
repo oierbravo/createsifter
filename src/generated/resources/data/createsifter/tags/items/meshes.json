@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "createsifter:string_mesh",
+    "createsifter:andesite_mesh",
+    "createsifter:zinc_mesh",
+    "createsifter:brass_mesh"
+  ]
+}

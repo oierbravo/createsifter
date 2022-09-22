@@ -1,0 +1,17 @@
+{
+  "type": "createsifter:sifting",
+  "ingredients": [
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "createsifter:string_mesh"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:andesite"
+    }
+  ],
+  "processingTime": 200
+}

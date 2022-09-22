@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SSS",
+    "SZS",
+    "SSS"
+  ],
+  "key": {
+    "Z": {
+      "item": "create:zinc_ingot"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "createsifter:zinc_mesh",
+    "count": 1
+  }
+}

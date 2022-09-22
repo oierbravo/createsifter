@@ -2,33 +2,36 @@
   "type": "createsifter:sifting",
   "ingredients": [
     {
+      "item": "createsifter:andesite_mesh"
+    },
+    {
       "item": "minecraft:gravel"
     }
   ],
   "results": [
     {
-      "item": "create:crushed_copper_ore",
+      "item": "create:copper_nugget",
       "chance": 0.1
     },
     {
-      "item": "create:crushed_zinc_ore",
+      "item": "create:zinc_nugget",
       "chance": 0.1
     },
     {
-      "item": "create:crushed_gold_ore",
+      "item": "minecraft:iron_nugget",
       "chance": 0.05
     },
     {
-      "item": "create:crushed_iron_ore",
+      "item": "minecraft:gold_nugget",
       "chance": 0.15
+    },
+    {
+      "item": "minecraft:coal",
+      "chance": 0.1
     },
     {
       "item": "minecraft:flint",
       "chance": 0.1
-    },
-    {
-      "item": "create:experience_nugget",
-      "chance": 0.25
     }
   ],
   "processingTime": 500

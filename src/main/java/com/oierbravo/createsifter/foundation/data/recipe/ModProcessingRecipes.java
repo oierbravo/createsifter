@@ -70,6 +70,7 @@ public abstract class ModProcessingRecipes extends CreateRecipeProvider {
         ProcessingRecipeSerializer<T> serializer = getSerializer();
         GeneratedRecipe generatedRecipe =
                 c -> transform.apply(new ProcessingRecipeBuilder<>(serializer.getFactory(), name.get()))
+                //c -> transform.apply(new ModProcessingRecipeBuilder<>(serializer.getFactory(), name.get()))
                         .build(c);
         all.add(generatedRecipe);
         return generatedRecipe;
@@ -80,4 +81,5 @@ public abstract class ModProcessingRecipes extends CreateRecipeProvider {
     }
 
     protected abstract IRecipeTypeInfo getRecipeType();
+
 }

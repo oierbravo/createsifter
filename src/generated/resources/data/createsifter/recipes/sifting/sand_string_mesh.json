@@ -3,20 +3,19 @@
   "ingredients": [
     {
       "item": "minecraft:sand"
+    },
+    {
+      "item": "createsifter:andesite_mesh"
     }
   ],
   "results": [
     {
       "item": "minecraft:redstone",
-      "chance": 0.1
+      "chance": 0.05
     },
     {
       "item": "minecraft:bone_meal",
-      "chance": 0.3
-    },
-    {
-      "item": "create:experience_nugget",
-      "chance": 0.25
+      "chance": 0.4
     }
   ],
   "processingTime": 500

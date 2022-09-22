@@ -9,6 +9,7 @@ public class ModTiles {
     public static final BlockEntityEntry<SifterTileEntity> SIFTER = CreateSifter.registrate()
             .tileEntity("sifter", SifterTileEntity::new)
             .instance(() -> MillStoneCogInstance::new)
+            //.instance(() -> MeshInstance::new)
             .validBlocks(ModBlocks.SIFTER)
             .renderer(() -> SifterRenderer::new)
             .register();

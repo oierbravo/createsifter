@@ -5,11 +5,13 @@ import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterB
 import com.oierbravo.createsifter.groups.ModGroup;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.AllSections;
+import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerBlockItem;
 import com.simibubi.create.foundation.block.BlockStressDefaults;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.level.material.MaterialColor;
 
 import static com.simibubi.create.AllTags.pickaxeOnly;
@@ -20,6 +22,8 @@ public class ModBlocks {
 
     private static final CreateRegistrate REGISTRATE = CreateSifter.registrate()
             .creativeModeTab(() -> ModGroup.MAIN);
+
+
     public static void register() {
 
         Create.registrate().addToSection(SIFTER, AllSections.KINETICS);

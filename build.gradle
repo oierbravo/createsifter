@@ -24,7 +24,7 @@ apply plugin: 'com.matthewprenger.cursegradle'
 apply plugin: 'org.spongepowered.mixin'
 apply plugin: 'idea'
 
-group = "mod.${author}.${modid}"
+group = "com.${author}.${modid}"
 version = "${minecraft_version}-${mod_version}"
 archivesBaseName = modid
 
@@ -150,11 +150,8 @@ dependencies {
     compileOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_minecraft_version}-${curios_version}:api")
     runtimeOnly fg.deobf("top.theillusivec4.curios:curios-forge:${curios_minecraft_version}-${curios_version}")
 
-    dependencies {
-        // Visit https://www.curseforge.com/minecraft/mc-mods/jade/files/all
-        // to get the latest version's jade_id
-        runtimeOnly fg.deobf("curse.maven:jade-324717:${jade_id}")
-    }
+    runtimeOnly fg.deobf("curse.maven:jade-324717:${jade_id}")
+
 
     if (System.getProperty('idea.sync.active') != 'true') {
         annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"

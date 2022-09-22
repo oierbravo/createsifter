@@ -3,15 +3,19 @@ package com.oierbravo.createsifter;
 import com.oierbravo.createsifter.foundation.data.recipe.ModProcessingRecipes;
 import com.oierbravo.createsifter.groups.ModGroup;
 import com.oierbravo.createsifter.register.ModBlocks;
+import com.oierbravo.createsifter.register.ModItems;
+import com.oierbravo.createsifter.register.ModPartials;
 import com.oierbravo.createsifter.register.ModTiles;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
@@ -33,11 +37,16 @@ public class CreateSifter {
         CreateRegistrate r = registrate.get();
 
         new ModGroup("main");
-        ModBlocks.register();
 
+        //ModPartials.init();
+
+        ModBlocks.register();
+        ModItems.register();
         ModTiles.register();
-        //DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-        //        () -> ModPartials::load);
+
+
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                () -> ModPartials::load);
         modEventBus.addListener(EventPriority.LOWEST, CreateSifter::gatherData);
 
 
