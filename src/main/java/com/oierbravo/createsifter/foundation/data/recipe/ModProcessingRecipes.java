@@ -7,6 +7,7 @@ import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuild
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeSerializer;
 import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider;
 import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo;
+import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.HashCache;
@@ -22,17 +23,18 @@ import java.util.function.UnaryOperator;
 public abstract class ModProcessingRecipes extends CreateRecipeProvider {
 
 
-    protected static final List<ModProcessingRecipes> PROVIDERS = new ArrayList<>();
+    protected static final List<ModProcessingRecipes> GENERATORS = new ArrayList<>();
+
 
     public static void registerAllProcessingProviders(DataGenerator generator) {
-        PROVIDERS.add(new SiftingRecipeGen(generator));
+        GENERATORS.add(new SiftingRecipeGen(generator));
 
-        generator.addProvider(new DataProvider() {
+        generator.addProvider(true, new DataProvider() {
             @Override
-            public void run(@NotNull HashCache pCache) throws IOException {
-                PROVIDERS.forEach(generator -> {
+            public void run(CachedOutput dc) throws IOException {
+                GENERATORS.forEach(g -> {
                     try {
-                        generator.run(pCache);
+                        g.run(dc);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

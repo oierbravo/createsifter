@@ -16,7 +16,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 import java.util.Collections;
 
@@ -26,8 +25,9 @@ public class ModTags {
     private static final CreateRegistrate REGISTRATE = CreateSifter.registrate()
             .creativeModeTab(() -> ModGroup.MAIN);
 
-    public static <T extends IForgeRegistryEntry<T>> TagKey<T> optionalTag(IForgeRegistry<T> registry,
-                                                                           ResourceLocation id) {
+
+    public static <T> TagKey<T> optionalTag(IForgeRegistry<T> registry,
+                                            ResourceLocation id) {
         return registry.tags()
                 .createOptionalTagKey(id, Collections.emptySet());
     }

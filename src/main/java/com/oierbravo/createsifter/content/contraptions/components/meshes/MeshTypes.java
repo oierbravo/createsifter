@@ -1,15 +1,9 @@
 package com.oierbravo.createsifter.content.contraptions.components.meshes;
 
-import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.register.ModItems;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import org.checkerframework.checker.units.qual.K;
 
 public enum MeshTypes implements StringRepresentable {
     STRING(0,ModItems.STRING_MESH),

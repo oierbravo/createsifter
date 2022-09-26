@@ -2,6 +2,7 @@ package com.oierbravo.createsifter.content.contraptions.components.meshes;
 
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
 import com.simibubi.create.AllSoundEvents;
+import com.simibubi.create.content.curiosities.tools.SandPaperItemRenderer;
 import com.simibubi.create.foundation.item.CustomUseEffectsItem;
 import com.simibubi.create.foundation.item.render.SimpleCustomRenderer;
 import com.simibubi.create.foundation.mixin.accessor.LivingEntityAccessor;
@@ -10,6 +11,7 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
@@ -27,7 +29,7 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.util.FakePlayer;
@@ -178,13 +180,12 @@ public abstract class BaseMesh extends Item implements CustomUseEffectsItem {
         // Trigger every tick so that we have more fine grain control over the animation
         return true;
     }
-
     @Override
-    public boolean triggerUseEffects(ItemStack stack, LivingEntity entity, int count, Random random) {
+    public boolean triggerUseEffects(ItemStack stack, LivingEntity entity, int count, RandomSource random) {
         CompoundTag tag = stack.getOrCreateTag();
         if (tag.contains("Sifting")) {
-            ItemStack sifting = ItemStack.of(tag.getCompound("Sifting"));
-            ((LivingEntityAccessor) entity).create$callSpawnItemParticles(sifting, 1);
+            ItemStack polishing = ItemStack.of(tag.getCompound("Sifting"));
+            ((LivingEntityAccessor) entity).create$callSpawnItemParticles(polishing, 1);
         }
 
         // After 6 ticks play the sound every 7th
@@ -194,6 +195,7 @@ public abstract class BaseMesh extends Item implements CustomUseEffectsItem {
 
         return true;
     }
+
 
     @Override
     public SoundEvent getEatingSound() {
@@ -215,9 +217,11 @@ public abstract class BaseMesh extends Item implements CustomUseEffectsItem {
         return 1;
     }
 
+
+
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void initializeClient(Consumer<IItemRenderProperties> consumer) {
+    public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(SimpleCustomRenderer.create(this, new MeshItemRenderer()));
     }
 }
