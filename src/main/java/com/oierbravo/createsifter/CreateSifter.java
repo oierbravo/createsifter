@@ -60,6 +60,7 @@ public class CreateSifter {
 
         registrate().addRawLang("createsifter.recipe.sifting", "Sifting recipe");
         registrate().addRawLang("create.recipe.sifting", "Sifting recipe");
+        registrate().addRawLang("itemGroup.createsifter:main", "Create sifting");
     }
     public static CreateRegistrate registrate() {
         return registrate.get();
