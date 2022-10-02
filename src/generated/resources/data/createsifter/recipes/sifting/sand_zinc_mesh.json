@@ -1,0 +1,26 @@
+{
+  "type": "createsifter:sifting",
+  "ingredients": [
+    {
+      "item": "minecraft:sand"
+    },
+    {
+      "item": "createsifter:andesite_mesh"
+    }
+  ],
+  "results": [
+    {
+      "item": "minecraft:redstone",
+      "chance": 0.15
+    },
+    {
+      "item": "minecraft:bone_meal",
+      "chance": 0.4
+    },
+    {
+      "item": "create:experience_nugget",
+      "chance": 0.1
+    }
+  ],
+  "processingTime": 500
+}

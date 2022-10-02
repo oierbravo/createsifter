@@ -5,5 +5,6 @@
   "item.createsifter.andesite_mesh": "\u0265s\u01DDW \u01DD\u0287\u0131s\u01DDpu\u2C6F",
   "item.createsifter.brass_mesh": "\u0265s\u01DDW ss\u0250\u0279\u15FA",
   "item.createsifter.string_mesh": "\u0265s\u01DDW bu\u0131\u0279\u0287S",
-  "item.createsifter.zinc_mesh": "\u0265s\u01DDW \u0254u\u0131Z"
+  "item.createsifter.zinc_mesh": "\u0265s\u01DDW \u0254u\u0131Z",
+  "itemGroup.createsifter:main": "bu\u0131\u0287\u025F\u0131s \u01DD\u0287\u0250\u01DD\u0279\u0186"
 }

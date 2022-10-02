@@ -45,15 +45,18 @@ public class CreateSifter {
         ModTiles.register();
 
 
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-                () -> ModPartials::load);
-        modEventBus.addListener(EventPriority.LOWEST, CreateSifter::gatherData);
+
 
 
         //modEventBus.addGenericListener(RecipeSerializer.class, ModRecipeTypes::register);
         ModRecipeTypes.register(modEventBus);
 
         generateLangEntries();
+
+        modEventBus.addListener(EventPriority.LOWEST, CreateSifter::gatherData);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                () -> ModPartials::load);
+       // DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> CreateSifterClient.onCtorClient(modEventBus, forgeEventBus));
 
     }
     private void generateLangEntries(){

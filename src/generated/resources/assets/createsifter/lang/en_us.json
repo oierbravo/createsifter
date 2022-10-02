@@ -5,5 +5,6 @@
   "item.createsifter.andesite_mesh": "Andesite Mesh",
   "item.createsifter.brass_mesh": "Brass Mesh",
   "item.createsifter.string_mesh": "String Mesh",
-  "item.createsifter.zinc_mesh": "Zinc Mesh"
+  "item.createsifter.zinc_mesh": "Zinc Mesh",
+  "itemGroup.createsifter:main": "Create sifting"
 }

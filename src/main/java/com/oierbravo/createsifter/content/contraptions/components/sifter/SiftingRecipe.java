@@ -4,6 +4,7 @@ import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.BaseMesh;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.MeshTypes;
+import com.oierbravo.createsifter.register.ModTags;
 import com.simibubi.create.content.contraptions.components.crusher.AbstractCrushingRecipe;
 import com.simibubi.create.content.contraptions.processing.ProcessingOutput;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
@@ -26,7 +27,6 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
 
     ItemStack meshStack;
     ItemStack siftableIngredienStack;
-    //private final boolean isSimple;
 
 
     public SiftingRecipe( ProcessingRecipeParams params) {
@@ -45,7 +45,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     public ItemStack getMeshItemStack(){
         for(int i = 0; i < ingredients.size();i++){
             ItemStack itemStack = ingredients.get(i).getItems()[0];
-            if(itemStack.getItem() instanceof BaseMesh)
+            if(SiftingRecipe.isMeshItemStack(itemStack))
                 return itemStack;
         }
         return ItemStack.EMPTY;
@@ -54,7 +54,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     public ItemStack getSiftableItemStack(){
         for(int i = 0; i < ingredients.size();i++){
             ItemStack itemStack = ingredients.get(i).getItems()[0];
-            if(!(itemStack.getItem() instanceof BaseMesh))
+            if(!SiftingRecipe.isMeshItemStack(itemStack))
                 return itemStack;
         }
         return ItemStack.EMPTY;
@@ -63,7 +63,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     public Ingredient getSiftableIngredient(){
         for(int i = 0; i < ingredients.size();i++){
             ItemStack itemStack = ingredients.get(i).getItems()[0];
-            if(!(itemStack.getItem() instanceof BaseMesh))
+            if(!SiftingRecipe.isMeshItemStack(itemStack))
                 return ingredients.get(i);
         }
         return Ingredient.EMPTY;
@@ -72,11 +72,16 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     public Ingredient getMeshIngredient(){
         for(int i = 0; i < ingredients.size();i++){
             ItemStack itemStack = ingredients.get(i).getItems()[0];
-            if(itemStack.getItem() instanceof BaseMesh)
+            if(SiftingRecipe.isMeshItemStack(itemStack))
                 return ingredients.get(i);
         }
         return Ingredient.EMPTY;
 
+    }
+    public static boolean isMeshItemStack(ItemStack itemStack){
+        if(itemStack.getTags().anyMatch(tag -> tag == ModTags.ModItemTags.MESHES.tag ))
+            return true;
+        return false;
     }
     /*@Override
     public boolean matches(RecipeWrapper inv, Level worldIn) {
@@ -157,48 +162,11 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
         return results;
     }
 
-    /*@Override
-    public void readAdditional(JsonObject json) {
-        super.readAdditional(json);
-        mesh = MeshTypes.STRING;
-        if (GsonHelper.isValidNode(json, "mesh")) {
-            mesh = MeshTypes.valueOf(GsonHelper.getAsString(json, "mesh"));
-        }
-
-    }
-
-
-    @Override
-    public void writeAdditional(JsonObject json) {
-        super.writeAdditional(json);
-
-        json.addProperty("mesh", mesh.getName());
-    }
-    @Override
-    public void readAdditional(FriendlyByteBuf buffer) {
-        //mesh = buffer.
-        super.readAdditional(buffer);
-        mesh = buffer.readEnum(MeshTypes.class);
-    }
-    @Override
-    public void writeAdditional(FriendlyByteBuf buffer) {
-        super.writeAdditional(buffer);
-        buffer.writeEnum(this.mesh);
-    }*/
     public static List<Recipe<SiftingRecipe.SifterInv>> getMatchingInHandRecipes(Level world, ItemStack stack, ItemStack mesh) {
         return world.getRecipeManager()
                 .getRecipesFor(ModRecipeTypes.SIFTING.getType(), new SiftingRecipe.SifterInv(stack,mesh), world);
     }
 
-    /*@Override
-    public boolean matches(RecipeWrapper pContainer, Level pLevel) {
-        return false;
-    }*/
-
-   /* @Override
-    public boolean matches(RecipeWrapper pContainer, Level pLevel) {
-        return false;
-    }*/
 
 
     public static class SifterInv extends RecipeWrapper {
@@ -208,11 +176,5 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
             inv.setStackInSlot(0, stack);
             inv.setStackInSlot(1,mesh);
         }
-        public MeshTypes getMeshType(){
-            BaseMesh mesh = (BaseMesh) inv.getStackInSlot(1).getItem();
-            return mesh.getMesh();
-        }
-
-
     }
 }

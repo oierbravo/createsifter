@@ -14,10 +14,6 @@ import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 
 public class SiftingRecipeGen extends ModProcessingRecipes {
-    GeneratedRecipe DIRT_STRING = create("dirt_string_mesh", b ->  b.duration(200)
-            .require(Blocks.DIRT)
-            .require(MeshTypes.STRING.getItem())
-            .output(1, Blocks.ANDESITE,1));
     GeneratedRecipe GRAVEL_ANDESITE = create("gravel_andesite_mesh", b ->  b.duration(500)
 
             .require(MeshTypes.ANDESITE.getItem())
@@ -68,19 +64,20 @@ public class SiftingRecipeGen extends ModProcessingRecipes {
             .output(.4f, Items.BONE_MEAL,1)
             .output(.10f, AllItems.EXP_NUGGET.get(), 1));
 
-    GeneratedRecipe SAND_ZINC = create("sand_andesite_mesh", b -> b.duration(500)
+    GeneratedRecipe SAND_ZINC = create("sand_zinc_mesh", b -> b.duration(500)
             .require(Blocks.SAND)
             .require(MeshTypes.ANDESITE.getItem())
             .output(.15f, Items.REDSTONE,1)
             .output(.4f, Items.BONE_MEAL,1)
             .output(.10f, AllItems.EXP_NUGGET.get(), 1));
 
-    GeneratedRecipe SAND_BRASS = create("sand_andesite_mesh", b -> b.duration(500)
+    GeneratedRecipe SAND_BRASS = create("sand_brass_mesh", b -> b.duration(500)
             .require(Blocks.SAND)
             .require(MeshTypes.ANDESITE.getItem())
             .output(.25f, Items.REDSTONE,2)
             .output(.10f, Items.GLOWSTONE_DUST,1)
             .output(.4f, Items.BONE_MEAL,1)
+            .output(.05f, Items.BLAZE_POWDER,1)
             .output(.20f, AllItems.EXP_NUGGET.get(), 1));
     /* GeneratedRecipe COBBLE_STONE = create("cobblestone", b ->
             b.duration(100).require(Blocks.DIRT)
