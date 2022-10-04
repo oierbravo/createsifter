@@ -41,5 +41,10 @@ public class ModItems {
                     .model(AssetLookup.customGenericItemModel("meshes", "brass_mesh"))
                     .tag(ModTags.ModItemTags.MESHES.tag)
                     .register();
+    public static final ItemEntry<BrassMesh> CUSTOM_MESH =
+            REGISTRATE.item("custom_mesh", BrassMesh::new)
+                    .model(AssetLookup.customGenericItemModel("meshes", "andesite_mesh"))
+                    .tag(ModTags.ModItemTags.MESHES.tag)
+                    .register();
     
 }

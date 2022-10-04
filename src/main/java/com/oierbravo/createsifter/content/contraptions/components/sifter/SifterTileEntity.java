@@ -24,6 +24,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.Optional;
@@ -45,7 +46,15 @@ public class SifterTileEntity extends KineticTileEntity {
         inputInv = new ItemStackHandler(1);
         outputInv = new ItemStackHandler(9);
         capability = LazyOptional.of(SifterInventoryHandler::new);
-        meshInv = new ItemStackHandler(1);
+        meshInv = new ItemStackHandler(1){
+            @Override
+            public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+                if(SiftingRecipe.isMeshItemStack(stack)){
+                    return true;
+                }
+                return false;
+            }
+        };
         inputAndMeshCombined = new CombinedInvWrapper(inputInv,meshInv);
     }
 
@@ -92,7 +101,6 @@ public class SifterTileEntity extends KineticTileEntity {
             return;
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
-        //SiftingRecipe.SifterInv inventoryIn = new SiftingRecipe.SifterInv(inputInv.getStackInSlot(0),this.meshInv.getStackInSlot(0));
         if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
             Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level);
             if (!recipe.isPresent()) {
@@ -118,7 +126,6 @@ public class SifterTileEntity extends KineticTileEntity {
     private void process() {
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
-        //((SiftingRecipe.SifterInv inventoryIn = new SiftingRecipe.SifterInv(inputInv.getStackInSlot(0),this.meshInv.getStackInSlot(0));
 
         if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
             Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level);
@@ -182,13 +189,6 @@ public class SifterTileEntity extends KineticTileEntity {
         return super.getCapability(cap, side);
     }
     private boolean canProcess(ItemStack stack) {
-        //if(!hasMesh()){
-        //    return false;
-        //e}
-        //ItemStackHandler tester = new ItemStackHandler(1);
-        //tester.setStackInSlot(0, stack);
-        //RecipeWrapper inventoryIn = new RecipeWrapper(tester);
-        //SiftingRecipe.SifterInv inventoryIn = new SiftingRecipe.SifterInv(stack,this.meshInv.getStackInSlot(0));
 
         ItemStackHandler tester = new ItemStackHandler(2);
         tester.setStackInSlot(0, stack);
@@ -197,7 +197,6 @@ public class SifterTileEntity extends KineticTileEntity {
 
         if (lastRecipe != null && lastRecipe.matches(inventoryIn, level))
             return true;
-        Optional<SiftingRecipe> match = ModRecipeTypes.SIFTING.find(inventoryIn, level);
         return ModRecipeTypes.SIFTING.find(inventoryIn, level)
                 .isPresent();
     }

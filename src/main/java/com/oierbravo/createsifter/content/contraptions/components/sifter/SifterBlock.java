@@ -1,5 +1,6 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
+import com.oierbravo.createsifter.content.contraptions.components.meshes.BaseMesh;
 import com.oierbravo.createsifter.register.*;
 import com.simibubi.create.AllShapes;
 import com.simibubi.create.AllTileEntities;
@@ -56,7 +57,8 @@ public class SifterBlock  extends KineticBlock implements ITE<SifterTileEntity>,
         if (worldIn.isClientSide)
             return InteractionResult.SUCCESS;
         //if(handInStack.is())
-        if(handInStack.is(ModTags.ModItemTags.MESHES.tag)){
+        if(handInStack.getItem() instanceof BaseMesh){
+        //if(handInStack.is(ModTags.ModItemTags.MESHES.tag)){
             sifterTileEntity.insertMesh(handInStack, player);
       //  }
       //  if(handInStack.sameItem(new ItemStack(ModItems.ANDESITE_MESH.get(),1))){
