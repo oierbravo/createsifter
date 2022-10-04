@@ -79,7 +79,8 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
 
     }
     public static boolean isMeshItemStack(ItemStack itemStack){
-        if(itemStack.getTags().anyMatch(tag -> tag == ModTags.ModItemTags.MESHES.tag ))
+        //if(itemStack.getTags().anyMatch(tag -> tag == ModTags.ModItemTags.MESHES.tag ))
+        if(itemStack.getItem() instanceof BaseMesh)
             return true;
         return false;
     }
@@ -163,6 +164,8 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     }
 
     public static List<Recipe<SiftingRecipe.SifterInv>> getMatchingInHandRecipes(Level world, ItemStack stack, ItemStack mesh) {
+        List<Recipe<SiftingRecipe.SifterInv>> recipes = world.getRecipeManager()
+                .getRecipesFor(ModRecipeTypes.SIFTING.getType(), new SiftingRecipe.SifterInv(stack,mesh), world);
         return world.getRecipeManager()
                 .getRecipesFor(ModRecipeTypes.SIFTING.getType(), new SiftingRecipe.SifterInv(stack,mesh), world);
     }

@@ -15,7 +15,8 @@ public enum MeshTypes implements StringRepresentable {
     STRING(0,ModItems.STRING_MESH),
     ANDESITE(1,ModItems.ANDESITE_MESH),
     ZINC(2, ModItems.ZINC_MESH),
-    BRASS(3, ModItems.BRASS_MESH);
+    BRASS(3, ModItems.BRASS_MESH),
+    CUSTOM(4,ModItems.CUSTOM_MESH);
 
     private final int tier;
     private final ItemEntry item;

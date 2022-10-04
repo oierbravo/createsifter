@@ -4,6 +4,7 @@
     "createsifter:string_mesh",
     "createsifter:andesite_mesh",
     "createsifter:zinc_mesh",
-    "createsifter:brass_mesh"
+    "createsifter:brass_mesh",
+    "createsifter:custom_mesh"
   ]
 }
