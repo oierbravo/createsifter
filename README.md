@@ -82,9 +82,22 @@ Code inspiration from [Create Craft & Additions](https://www.curseforge.com/mine
 
 
 ### KubeJS integration:
+#### Custom meshes (startup_script)
+```
+// STARTUP_SCRIPT
+event.create('test_mesh','createsifter:mesh').displayName("Test MESH");
+
 
 ```
+
+#### Custom recipes (server_script)
+```
+// SERVER_SCRIPT
 //event.recipes.createsifterSifting(output[], input[])
 
 event.recipes.createsifterSifting([Item.of('minecraft:redstone').withChance(0.5)], ['minecraft:sand','createsifter:andesite_mesh'])
+
+//With a custom mesh:
+event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5)], ['minecraft:sand','kubejs:test_mesh'])
+
 ```
