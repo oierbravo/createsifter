@@ -8,28 +8,28 @@
       "item": "createsifter:andesite_mesh"
     }
   ],
+  "processingTime": 500,
   "results": [
     {
-      "item": "minecraft:redstone",
+      "chance": 0.25,
       "count": 2,
-      "chance": 0.25
+      "item": "minecraft:redstone"
     },
     {
-      "item": "minecraft:glowstone_dust",
-      "chance": 0.1
+      "chance": 0.1,
+      "item": "minecraft:glowstone_dust"
     },
     {
-      "item": "minecraft:bone_meal",
-      "chance": 0.4
+      "chance": 0.4,
+      "item": "minecraft:bone_meal"
     },
     {
-      "item": "minecraft:blaze_powder",
-      "chance": 0.05
+      "chance": 0.05,
+      "item": "minecraft:blaze_powder"
     },
     {
-      "item": "create:experience_nugget",
-      "chance": 0.2
+      "chance": 0.2,
+      "item": "create:experience_nugget"
     }
-  ],
-  "processingTime": 500
+  ]
 }

@@ -28,12 +28,12 @@ public class ModPartials {
         return new PartialModel(CreateSifter.asResource("block/" + path));
     }
     public static PartialModel getFromItemStack(ItemStack itemStack){
-        String itemRegistryName = itemStack.getItem().getRegistryName().toString();
+        String itemRegistryName = itemStack.getItem().toString();
         return switch (itemRegistryName) {
-            case "createsifter:string_mesh" -> STRING_MESH;
-            case "createsifter:andesite_mesh" -> ANDESITE_MESH;
-            case "createsifter:zinc_mesh" -> ZINC_MESH;
-            case "createsifter:brass_mesh" -> BRASS_MESH;
+            case "string_mesh" -> STRING_MESH;
+            case "andesite_mesh" -> ANDESITE_MESH;
+            case "zinc_mesh" -> ZINC_MESH;
+            case "brass_mesh" -> BRASS_MESH;
             default -> ANDESITE_MESH;
         };
     }
