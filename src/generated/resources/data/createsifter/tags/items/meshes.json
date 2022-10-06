@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "createsifter:string_mesh",
     "createsifter:andesite_mesh",

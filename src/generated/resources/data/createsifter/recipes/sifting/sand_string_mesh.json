@@ -5,18 +5,18 @@
       "item": "minecraft:sand"
     },
     {
-      "item": "createsifter:andesite_mesh"
+      "item": "createsifter:string_mesh"
     }
   ],
-  "processingTime": 500,
   "results": [
     {
-      "chance": 0.05,
-      "item": "minecraft:redstone"
+      "item": "minecraft:redstone",
+      "chance": 0.05
     },
     {
-      "chance": 0.4,
-      "item": "minecraft:bone_meal"
+      "item": "minecraft:bone_meal",
+      "chance": 0.4
     }
-  ]
+  ],
+  "processingTime": 500
 }

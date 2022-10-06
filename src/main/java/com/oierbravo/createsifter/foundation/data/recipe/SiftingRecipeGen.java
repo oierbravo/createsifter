@@ -53,7 +53,7 @@ public class SiftingRecipeGen extends ModProcessingRecipes {
 
     GeneratedRecipe SAND_STRING = create("sand_string_mesh", b -> b.duration(500)
             .require(Blocks.SAND)
-            .require(MeshTypes.ANDESITE.getItem())
+            .require(MeshTypes.STRING.getItem())
             .output(.05f, Items.REDSTONE,1)
             .output(.4f, Items.BONE_MEAL,1));
 
@@ -66,14 +66,14 @@ public class SiftingRecipeGen extends ModProcessingRecipes {
 
     GeneratedRecipe SAND_ZINC = create("sand_zinc_mesh", b -> b.duration(500)
             .require(Blocks.SAND)
-            .require(MeshTypes.ANDESITE.getItem())
+            .require(MeshTypes.ZINC.getItem())
             .output(.15f, Items.REDSTONE,1)
             .output(.4f, Items.BONE_MEAL,1)
             .output(.10f, AllItems.EXP_NUGGET.get(), 1));
 
     GeneratedRecipe SAND_BRASS = create("sand_brass_mesh", b -> b.duration(500)
             .require(Blocks.SAND)
-            .require(MeshTypes.ANDESITE.getItem())
+            .require(MeshTypes.BRASS.getItem())
             .output(.25f, Items.REDSTONE,2)
             .output(.10f, Items.GLOWSTONE_DUST,1)
             .output(.4f, Items.BONE_MEAL,1)
