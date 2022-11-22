@@ -52,6 +52,11 @@ public class ProcessingRecipeJSNoLiquid extends RecipeJS {
         save();
         return this;
     }
+    public ProcessingRecipeJSNoLiquid waterlogged() {
+        json.addProperty("waterlogged", true);
+        save();
+        return this;
+    }
 
     @Override
     public void serialize() {

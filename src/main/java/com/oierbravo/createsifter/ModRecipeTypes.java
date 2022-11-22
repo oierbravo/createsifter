@@ -16,14 +16,17 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.items.wrapper.RecipeWrapper;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 public enum ModRecipeTypes implements IRecipeTypeInfo {
     SIFTING(SiftingRecipe::new);
@@ -98,6 +101,15 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
     public <C extends Container, T extends Recipe<C>> Optional<T> find(C inv, Level world) {
         return world.getRecipeManager()
                 .getRecipeFor(getType(), inv, world);
+    }
+    public Optional<SiftingRecipe> find(Container inv, Level world,boolean waterlogged) {
+        if(world.isClientSide())
+            return Optional.empty();
+        List<SiftingRecipe> siftingRecipes = world.getRecipeManager().getAllRecipesFor(ModRecipeTypes.SIFTING.getType());
+        Stream<SiftingRecipe> siftingRecipesFiltered = siftingRecipes.stream().filter(siftingRecipe -> siftingRecipe.matches((RecipeWrapper) inv,world, waterlogged));
+        return siftingRecipesFiltered.findAny();
+
+
     }
 
     public static final Set<ResourceLocation> RECIPE_DENY_SET =

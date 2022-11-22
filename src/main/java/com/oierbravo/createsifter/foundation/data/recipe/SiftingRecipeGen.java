@@ -4,17 +4,12 @@ package com.oierbravo.createsifter.foundation.data.recipe;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.MeshTypes;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.content.contraptions.processing.ProcessingRecipe;
-import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import org.jetbrains.annotations.NotNull;
 
 public class SiftingRecipeGen extends ModProcessingRecipes {
-    GeneratedRecipe GRAVEL_ANDESITE = create("gravel_andesite_mesh", b ->  b.duration(500)
+    GeneratedRecipe GRAVEL_ANDESITE = create("gravel_andesite_mesh", b -> b.duration(500)
 
             .require(MeshTypes.ANDESITE.getItem())
             .require(Blocks.GRAVEL)
@@ -25,7 +20,7 @@ public class SiftingRecipeGen extends ModProcessingRecipes {
             .output(.10f, Items.COAL,1)
             .output(.1f, Items.FLINT, 1));
 
-    GeneratedRecipe GRAVEL_ZINC = create("gravel_zinc_mesh", b ->  b.duration(500)
+    GeneratedRecipe GRAVEL_ZINC = create("gravel_zinc_mesh", b -> b.duration(500)
 
             .require(MeshTypes.ZINC.getItem())
             .require(Blocks.GRAVEL)
@@ -38,7 +33,7 @@ public class SiftingRecipeGen extends ModProcessingRecipes {
             .output(.1f, Items.FLINT, 1)
             .output(.10f, AllItems.EXP_NUGGET.get(), 1));
 
-    GeneratedRecipe GRAVEL_BRASS = create("gravel_brass_mesh", b ->  b.duration(500)
+    GeneratedRecipe GRAVEL_BRASS = create("gravel_brass_mesh", b -> b.duration(500)
 
             .require(MeshTypes.BRASS.getItem())
             .require(Blocks.GRAVEL)
@@ -79,6 +74,8 @@ public class SiftingRecipeGen extends ModProcessingRecipes {
             .output(.4f, Items.BONE_MEAL,1)
             .output(.05f, Items.BLAZE_POWDER,1)
             .output(.20f, AllItems.EXP_NUGGET.get(), 1));
+
+
     /* GeneratedRecipe COBBLE_STONE = create("cobblestone", b ->
             b.duration(100).require(Blocks.DIRT)
             .output(Blocks.COBBLESTONE)
