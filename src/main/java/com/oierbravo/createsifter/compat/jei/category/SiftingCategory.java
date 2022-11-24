@@ -12,7 +12,8 @@ import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
-import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
 
 import java.util.Iterator;
 import java.util.List;
@@ -61,5 +62,14 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
 
         AllGuiTextures.JEI_DOWN_ARROW.render(matrixStack, 43, 4);
         sifter.draw(matrixStack, 48, 27);
+        drawWaterlogged(recipe, matrixStack, 35,50);
+    }
+    protected void drawWaterlogged(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
+        boolean waterlogged = recipe.isWaterlogged();
+        if (waterlogged) {
+            Minecraft minecraft = Minecraft.getInstance();
+            Font fontRenderer = minecraft.font;
+            fontRenderer.draw(poseStack, "Waterlogged", x, y, 0xFF808080);
+        }
     }
 }

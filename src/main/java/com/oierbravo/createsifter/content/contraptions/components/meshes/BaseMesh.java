@@ -23,6 +23,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
@@ -33,6 +35,7 @@ import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.fluids.IFluidBlock;
 
 import java.util.List;
 import java.util.Random;
@@ -60,7 +63,11 @@ public abstract class BaseMesh extends Item implements CustomUseEffectsItem {
         InteractionHand otherHand =
                 handIn == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         ItemStack itemInOtherHand = playerIn.getItemInHand(otherHand);
-        if (SiftingRecipe.canHandSift(worldIn, itemInOtherHand,itemstack)) {
+
+        Block blockUnderPlayer = playerIn.getFeetBlockState().getBlock();
+        boolean waterlogged = blockUnderPlayer instanceof LiquidBlock || blockUnderPlayer instanceof IFluidBlock;
+
+        if (SiftingRecipe.canHandSift(worldIn, itemInOtherHand,itemstack,waterlogged)) {
             ItemStack item = itemInOtherHand.copy();
             ItemStack toSift = item.split(1);
             playerIn.startUsingItem(handIn);
@@ -85,7 +92,8 @@ public abstract class BaseMesh extends Item implements CustomUseEffectsItem {
                     .distanceTo(playerIn.position()) > 3)
                 continue;
             ItemStack stack = itemEntity.getItem();
-            if (!SiftingRecipe.canHandSift(worldIn, stack, itemstack))
+
+            if (!SiftingRecipe.canHandSift(worldIn, stack, itemstack,waterlogged))
                 continue;
             pickUp = itemEntity;
             break;
@@ -118,10 +126,12 @@ public abstract class BaseMesh extends Item implements CustomUseEffectsItem {
             return stack;
         Player player = (Player) entityLiving;
         CompoundTag tag = stack.getOrCreateTag();
+        Block blockUnderPlayer = player.getFeetBlockState().getBlock();
+        boolean waterlogged = blockUnderPlayer instanceof LiquidBlock || blockUnderPlayer instanceof IFluidBlock;
         if (tag.contains("Sifting")) {
             ItemStack toSift = ItemStack.of(tag.getCompound("Sifting"));
             List<ItemStack> sifted =
-                    SiftingRecipe.applyHandSift(worldIn, entityLiving.position(), toSift, stack);
+                    SiftingRecipe.applyHandSift(worldIn, entityLiving.position(), toSift, stack,waterlogged);
 
             if (worldIn.isClientSide) {
                 spawnParticles(entityLiving.getEyePosition(1)

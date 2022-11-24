@@ -1,5 +1,6 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
+import com.google.gson.JsonObject;
 import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.BaseMesh;
@@ -8,9 +9,12 @@ import com.oierbravo.createsifter.register.ModTags;
 import com.simibubi.create.content.contraptions.components.crusher.AbstractCrushingRecipe;
 import com.simibubi.create.content.contraptions.processing.ProcessingOutput;
 import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.ItemStackHandler;
@@ -27,16 +31,21 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
 
     ItemStack meshStack;
     ItemStack siftableIngredienStack;
+    private boolean waterlogged;
 
 
     public SiftingRecipe( ProcessingRecipeParams params) {
         super(ModRecipeTypes.SIFTING, params);
         this.meshStack = getMeshItemStack();
         this.siftableIngredienStack = getSiftableItemStack();
+        this.waterlogged = false;
+
 
     }
-    public boolean matches(RecipeWrapper    inv, Level worldIn) {
+    public boolean matches(RecipeWrapper    inv, Level worldIn, boolean waterlogged) {
         if (inv.isEmpty())
+            return false;
+        if(isWaterlogged() != waterlogged)
             return false;
         return siftableIngredienStack.is(inv.getItem(0).getItem()) &&
                 meshStack.is(inv.getItem(1).getItem());
@@ -135,18 +144,17 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
         return 16;
     }
 
-    public static boolean canHandSift(Level world, ItemStack stack, ItemStack mesh) {
-        return !getMatchingInHandRecipes(world, stack, mesh).isEmpty();
+    public static boolean canHandSift(Level world, ItemStack stack, ItemStack mesh, boolean waterlogged) {
+        return getMatchingInHandRecipes(world, stack, mesh, waterlogged);
     }
 
-    public static List<ItemStack> applyHandSift(Level world, Vec3 position, ItemStack stack, ItemStack mesh) {
+    public static List<ItemStack> applyHandSift(Level world, Vec3 position, ItemStack stack, ItemStack mesh, boolean waterlogged) {
 
         RecipeWrapper inventoryIn = new SifterInv(stack,mesh);
-        Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, world);
+        Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, world,waterlogged);
 
-        if(!recipe.isEmpty()){
-            List<ItemStack> results = recipe.get().rollResults();
-            return results;
+        if(recipe.isPresent()){
+            return recipe.get().rollResults();
         }
         return Collections.singletonList(stack);
     }
@@ -163,13 +171,45 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
         return results;
     }
 
-    public static List<Recipe<SiftingRecipe.SifterInv>> getMatchingInHandRecipes(Level world, ItemStack stack, ItemStack mesh) {
-        List<Recipe<SiftingRecipe.SifterInv>> recipes = world.getRecipeManager()
-                .getRecipesFor(ModRecipeTypes.SIFTING.getType(), new SiftingRecipe.SifterInv(stack,mesh), world);
-        return world.getRecipeManager()
-                .getRecipesFor(ModRecipeTypes.SIFTING.getType(), new SiftingRecipe.SifterInv(stack,mesh), world);
+    @Override
+    public void readAdditional(JsonObject json) {
+        super.readAdditional(json);
+        waterlogged = GsonHelper.getAsBoolean(json, "waterlogged", false);
     }
 
+    @Override
+    public void writeAdditional(JsonObject json) {
+        super.writeAdditional(json);
+        if (waterlogged)
+            json.addProperty("waterlogged", waterlogged);
+    }
+
+    @Override
+    public void readAdditional(FriendlyByteBuf buffer) {
+        super.readAdditional(buffer);
+        waterlogged = buffer.readBoolean();
+    }
+
+    @Override
+    public void writeAdditional(FriendlyByteBuf buffer) {
+        super.writeAdditional(buffer);
+        buffer.writeBoolean(waterlogged);
+    }
+
+    public boolean isWaterlogged() {
+        return waterlogged;
+    }
+
+    public static boolean getMatchingInHandRecipes(Level world, ItemStack stack, ItemStack mesh, boolean waterlogged) {
+        return ModRecipeTypes.SIFTING.find( new SiftingRecipe.SifterInv(stack,mesh), world, waterlogged).isPresent();
+       // return world.getRecipeManager()
+       //         .getRecipesFor(ModRecipeTypes.SIFTING.getType(), new SiftingRecipe.SifterInv(stack,mesh), world);
+    }
+
+    @Override
+    public boolean matches(RecipeWrapper pContainer, Level pLevel) {
+        return matches(pContainer, pLevel, false);
+    }
 
 
     public static class SifterInv extends RecipeWrapper {

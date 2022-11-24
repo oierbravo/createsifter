@@ -14,6 +14,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -101,8 +102,8 @@ public class SifterTileEntity extends KineticTileEntity {
             return;
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
-            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level);
+        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level,this.isWaterlogged())) {
+            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level, this.isWaterlogged());
             if (!recipe.isPresent()) {
                 timer = 100;
                 sendData();
@@ -127,8 +128,8 @@ public class SifterTileEntity extends KineticTileEntity {
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
 
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level)) {
-            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level);
+        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level, this.isWaterlogged())) {
+            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged());
             if (!recipe.isPresent())
                 return;
             lastRecipe = recipe.get();
@@ -195,9 +196,9 @@ public class SifterTileEntity extends KineticTileEntity {
         tester.setStackInSlot(1, this.meshInv.getStackInSlot(0));
         RecipeWrapper inventoryIn = new RecipeWrapper(tester);
 
-        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level))
+        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level,this.isWaterlogged()))
             return true;
-        return ModRecipeTypes.SIFTING.find(inventoryIn, level)
+        return ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged())
                 .isPresent();
     }
 
@@ -217,6 +218,9 @@ public class SifterTileEntity extends KineticTileEntity {
     public void removeMesh(Player player) {
         player.getInventory().placeItemBackInInventory(meshInv.getStackInSlot(0));
         meshInv.setStackInSlot(0, ItemStack.EMPTY);
+    }
+    public boolean isWaterlogged() {
+        return this.getBlockState().getValue(BlockStateProperties.WATERLOGGED);
     }
 
     private class SifterInventoryHandler extends CombinedInvWrapper {

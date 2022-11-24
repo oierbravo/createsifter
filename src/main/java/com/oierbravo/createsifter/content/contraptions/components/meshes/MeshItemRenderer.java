@@ -41,8 +41,6 @@ public class MeshItemRenderer extends CustomRenderedItemModelRenderer<MeshItemRe
 				ms.scale(.75f, .75f, .75f);
 			} else {
 				int modifier = leftHand ? -1 : 1;
-				//ms.mulPose(Vector3f.YP.rotationDegrees(modifier * 20));
-				//ms.mulPose(Vector3f.ZP.rotationDegrees(modifier * 20));
 				ms.mulPose(Vector3f.YP.rotationDegrees(modifier * 40));
 			}
 
