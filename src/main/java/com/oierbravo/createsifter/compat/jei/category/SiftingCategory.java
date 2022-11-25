@@ -14,6 +14,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.Iterator;
 import java.util.List;
@@ -27,6 +28,7 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
 
 
     public void setRecipe(IRecipeLayoutBuilder builder, SiftingRecipe recipe, IFocusGroup focuses) {
+        Ingredient siftable = recipe.getSiftableIngredient();
         builder.addSlot(RecipeIngredientRole.INPUT, 15, 9).setBackground(getRenderedSlot(), -1, -1).addIngredients(recipe.getSiftableIngredient());
 
         if(!recipe.getMeshIngredient().isEmpty())

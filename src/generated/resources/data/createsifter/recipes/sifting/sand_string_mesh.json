@@ -2,21 +2,21 @@
   "type": "createsifter:sifting",
   "ingredients": [
     {
-      "item": "minecraft:sand"
+      "tag": "forge:sand"
     },
     {
       "item": "createsifter:string_mesh"
     }
   ],
+  "processingTime": 500,
   "results": [
     {
-      "item": "minecraft:redstone",
-      "chance": 0.05
+      "chance": 0.05,
+      "item": "minecraft:redstone"
     },
     {
-      "item": "minecraft:bone_meal",
-      "chance": 0.4
+      "chance": 0.4,
+      "item": "minecraft:bone_meal"
     }
-  ],
-  "processingTime": 500
+  ]
 }

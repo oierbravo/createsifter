@@ -2,7 +2,7 @@
   "type": "createsifter:sifting",
   "ingredients": [
     {
-      "item": "minecraft:dirt"
+      "tag": "minecraft:dirt"
     },
     {
       "item": "createsifter:string_mesh"

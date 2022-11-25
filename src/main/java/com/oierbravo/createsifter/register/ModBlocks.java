@@ -26,7 +26,7 @@ public class ModBlocks {
 
     public static void register() {
 
-        Create.registrate().addToSection(SIFTER, AllSections.KINETICS);
+        Create.REGISTRATE.addToSection(SIFTER, AllSections.KINETICS);
     }
     public static final BlockEntry<SifterBlock> SIFTER = REGISTRATE.block("sifter", SifterBlock::new)
             .initialProperties(SharedProperties::stone)

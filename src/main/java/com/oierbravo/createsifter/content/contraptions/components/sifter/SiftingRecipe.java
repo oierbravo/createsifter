@@ -47,8 +47,9 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
             return false;
         if(isWaterlogged() != waterlogged)
             return false;
-        return siftableIngredienStack.is(inv.getItem(0).getItem()) &&
-                meshStack.is(inv.getItem(1).getItem());
+        return getSiftableIngredient().test(inv.getItem(0)) && getMeshIngredient().test(inv.getItem(1));
+        //return siftableIngredienStack.is(inv.getItem(0).getItem()) &&
+        //        meshStack.is(inv.getItem(1).getItem());
 
     }
     public ItemStack getMeshItemStack(){
@@ -202,8 +203,6 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
 
     public static boolean getMatchingInHandRecipes(Level world, ItemStack stack, ItemStack mesh, boolean waterlogged) {
         return ModRecipeTypes.SIFTING.find( new SiftingRecipe.SifterInv(stack,mesh), world, waterlogged).isPresent();
-       // return world.getRecipeManager()
-       //         .getRecipesFor(ModRecipeTypes.SIFTING.getType(), new SiftingRecipe.SifterInv(stack,mesh), world);
     }
 
     @Override

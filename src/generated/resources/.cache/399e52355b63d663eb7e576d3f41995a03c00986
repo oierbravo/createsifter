@@ -1,0 +1,13 @@
+// 1.19.2	2022-11-25T21:02:06.138948565	Registrate Provider for createsifter [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+9f90dc6f23ce5cca32dca8c9193a8702368b9a43 assets/createsifter/blockstates/sifter.json
+7516851b6c2f880225e2a52fc3ac40f81b308664 assets/createsifter/lang/en_ud.json
+78eac032715114cc0eb5d0d57692e2ac5ac4aacf assets/createsifter/lang/en_us.json
+018fa296810798e04a76206d5360fd6da68213b2 assets/createsifter/models/item/andesite_mesh.json
+fbe053bd90586dd1513ba54b521b36cbd8d094d6 assets/createsifter/models/item/brass_mesh.json
+018fa296810798e04a76206d5360fd6da68213b2 assets/createsifter/models/item/custom_mesh.json
+20f9955d7f4bb8e2282a17b47fba93d9e80f74f4 assets/createsifter/models/item/sifter.json
+7a06381e61c68a0b0c0fcf00c87faabb46e317e4 assets/createsifter/models/item/string_mesh.json
+74ef97e153dc0f88264476d317b08b7721ab4656 assets/createsifter/models/item/zinc_mesh.json
+88d5d1a9105552bd59338e8481ebf695bc54f178 data/createsifter/loot_tables/blocks/sifter.json
+c44f39d9d4c613fda8e78244da0d0b0f378289bd data/createsifter/tags/items/meshes.json
+b7d04c996936173d396f9cb46963c6b620982b4b data/minecraft/tags/blocks/mineable/pickaxe.json
