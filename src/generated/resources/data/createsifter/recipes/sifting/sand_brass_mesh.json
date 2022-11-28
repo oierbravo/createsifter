@@ -2,7 +2,7 @@
   "type": "createsifter:sifting",
   "ingredients": [
     {
-      "item": "minecraft:sand"
+      "tag": "forge:sand"
     },
     {
       "item": "createsifter:brass_mesh"
