@@ -5,7 +5,7 @@
       "item": "createsifter:brass_mesh"
     },
     {
-      "tag": "forge:gravel"
+      "item": "minecraft:gravel"
     }
   ],
   "processingTime": 500,

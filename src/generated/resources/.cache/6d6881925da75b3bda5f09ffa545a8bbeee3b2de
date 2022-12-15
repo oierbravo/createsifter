@@ -1,8 +1,8 @@
-// 1.19.2	2022-11-25T23:30:30.202308649	Create: Sifter's Processing Recipes
-ad7c5e05071573ad16ca3ec84af14b4af130bb48 data/createsifter/recipes/sifting/gravel_andesite_mesh.json
-bfc2e6b86176c46a41d7310a197b1f9d70f4f52f data/createsifter/recipes/sifting/gravel_brass_mesh.json
-66e7470d5a87dff7b6736e7505222e881fa93f19 data/createsifter/recipes/sifting/gravel_zinc_mesh.json
-3ee7e13b35694b9ae9460a7e953f7ef28a8e7e76 data/createsifter/recipes/sifting/sand_andesite_mesh.json
-f0faeb5feae5e29f6d404b1b4178d561a5cd2b3e data/createsifter/recipes/sifting/sand_brass_mesh.json
-20e64483caf9438575406d3c8ffd4975e713b0fe data/createsifter/recipes/sifting/sand_string_mesh.json
-f40a0627c78747f1489191ce6ac3bec31768dd44 data/createsifter/recipes/sifting/sand_zinc_mesh.json
+// 1.19.2	2022-12-15T12:24:21.571838763	Create: Sifter's Processing Recipes
+a8e54eeb82bf38d874bf2c378371897bbed21f6b data/createsifter/recipes/sifting/gravel_andesite_mesh.json
+3e63d40fde71b2ebce5089d214734520aeca6113 data/createsifter/recipes/sifting/gravel_brass_mesh.json
+1dbfd90cb3c83c04c47e439a9c1a3b1ace7fe7b0 data/createsifter/recipes/sifting/gravel_zinc_mesh.json
+54adcd68e086515d93bcfa1714336bea5510afad data/createsifter/recipes/sifting/sand_andesite_mesh.json
+bfdd7545f38094c6dc301aeaccbd38c31fb7161f data/createsifter/recipes/sifting/sand_brass_mesh.json
+656dbf917ba2ebe4dd50085ed69b6e286a7f15eb data/createsifter/recipes/sifting/sand_string_mesh.json
+981faeb4ea2664c4ba34d8609921485c40b4273f data/createsifter/recipes/sifting/sand_zinc_mesh.json

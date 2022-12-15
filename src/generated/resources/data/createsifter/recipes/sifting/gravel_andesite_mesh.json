@@ -5,7 +5,7 @@
       "item": "createsifter:andesite_mesh"
     },
     {
-      "tag": "forge:gravel"
+      "item": "minecraft:gravel"
     }
   ],
   "processingTime": 500,
