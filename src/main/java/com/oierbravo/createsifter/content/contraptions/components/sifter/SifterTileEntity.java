@@ -118,9 +118,10 @@ public class SifterTileEntity extends KineticTileEntity {
         timer = lastRecipe.getProcessingDuration();
         sendData();
     }
+
     @Override
-    public void setRemoved() {
-        super.setRemoved();
+    public void invalidate() {
+        super.invalidate();
         capability.invalidate();
     }
 
