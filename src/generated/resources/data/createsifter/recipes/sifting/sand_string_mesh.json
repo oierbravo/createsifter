@@ -2,7 +2,7 @@
   "type": "createsifter:sifting",
   "ingredients": [
     {
-      "tag": "forge:sand"
+      "item": "minecraft:sand"
     },
     {
       "item": "createsifter:string_mesh"
