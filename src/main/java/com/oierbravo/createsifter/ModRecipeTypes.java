@@ -38,22 +38,6 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
     private final RegistryObject<RecipeType<?>> typeObject;
     private final Supplier<RecipeType<?>> type;
 
-    ModRecipeTypes(Supplier<RecipeSerializer<?>> serializerSupplier, Supplier<RecipeType<?>> typeSupplier, boolean registerType) {
-        String name = Lang.asId(name());
-        id = CreateSifter.asResource(name);
-        serializerObject = Registers.SERIALIZER_REGISTER.register(name, serializerSupplier);
-        if (registerType) {
-            typeObject = Registers.TYPE_REGISTER.register(name, typeSupplier);
-            type = typeObject;
-        } else {
-            typeObject = null;
-            type = typeSupplier;
-        }
-    }
-
-
-
-
     ModRecipeTypes(Supplier<RecipeSerializer<?>> serializerSupplier) {
         String name = Lang.asId(name());
         id = CreateSifter.asResource(name);
@@ -112,17 +96,6 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 
     }
 
-    public static final Set<ResourceLocation> RECIPE_DENY_SET =
-            ImmutableSet.of(new ResourceLocation("occultism", "spirit_trade"), new ResourceLocation("occultism", "ritual"));
-
-    public static boolean shouldIgnoreInAutomation(Recipe<?> recipe) {
-        RecipeSerializer<?> serializer = recipe.getSerializer();
-        if (serializer != null && RECIPE_DENY_SET.contains(RegisteredObjects.getKeyOrThrow(serializer)))
-            return true;
-        return recipe.getId()
-                .getPath()
-                .endsWith("_manual_only");
-    }
 
     private static class Registers {
         private static final DeferredRegister<RecipeSerializer<?>> SERIALIZER_REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, CreateSifter.MODID);

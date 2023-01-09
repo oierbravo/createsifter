@@ -57,8 +57,14 @@ public class SifterTileEntity extends KineticTileEntity {
                 }
                 return false;
             }
+
+            @Override
+            protected void onContentsChanged(int slot) {
+                sendData();
+            }
         };
         inputAndMeshCombined = new CombinedInvWrapper(inputInv,meshInv);
+
     }
 
     @Override
@@ -108,19 +114,19 @@ public class SifterTileEntity extends KineticTileEntity {
             Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level, this.isWaterlogged());
             if (!recipe.isPresent()) {
                 timer = 100;
-                //totalTime = lastRecipe.getProcessingDuration();
+                totalTime = 100;
                 sendData();
             } else {
                 lastRecipe = recipe.get();
-                //totalTime = lastRecipe.getProcessingDuration();
                 timer = lastRecipe.getProcessingDuration();
+                totalTime =  lastRecipe.getProcessingDuration();
                 sendData();
             }
             return;
         }
 
         timer = lastRecipe.getProcessingDuration();
-        //totalTime = lastRecipe.getProcessingDuration();
+        totalTime =  lastRecipe.getProcessingDuration();
         sendData();
     }
 
@@ -172,7 +178,7 @@ public class SifterTileEntity extends KineticTileEntity {
         compound.put("InputInventory", inputInv.serializeNBT());
         compound.put("OutputInventory", outputInv.serializeNBT());
         compound.put("MeshInventory", meshInv.serializeNBT());
-        //compound.putInt("TotalTime", totalTime);
+        compound.putInt("TotalTime", totalTime);
         super.write(compound, clientPacket);
     }
 
@@ -182,7 +188,7 @@ public class SifterTileEntity extends KineticTileEntity {
         inputInv.deserializeNBT(compound.getCompound("InputInventory"));
         outputInv.deserializeNBT(compound.getCompound("OutputInventory"));
         meshInv.deserializeNBT(compound.getCompound("MeshInventory"));
-        //totalTime = compound.getInt("TotalTime");
+        totalTime = compound.getInt("TotalTime");
         super.read(compound, clientPacket);
     }
 
@@ -190,7 +196,11 @@ public class SifterTileEntity extends KineticTileEntity {
         return Mth.clamp((int) Math.abs(getSpeed() / 16f), 1, 512);
     }
     public float getProcessingRemainingPercent() {
-        return (float) ((float) this.timer * 100.0 / (float) totalTime);
+        float timer = this.timer;
+        float total = this.totalTime;
+        float remaining = total - timer;
+        float result =  remaining/total;
+        return 1 - result;
     }
 
     @Override
