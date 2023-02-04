@@ -41,6 +41,8 @@ public class SifterTileEntity extends KineticTileEntity {
 
     protected CombinedInvWrapper inputAndMeshCombined ;
 
+    protected int totalTime;
+
     public SifterTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
 
@@ -54,6 +56,11 @@ public class SifterTileEntity extends KineticTileEntity {
                     return true;
                 }
                 return false;
+            }
+
+            @Override
+            protected void onContentsChanged(int slot) {
+                sendData();
             }
         };
         inputAndMeshCombined = new CombinedInvWrapper(inputInv,meshInv);
@@ -106,16 +113,19 @@ public class SifterTileEntity extends KineticTileEntity {
             Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level, this.isWaterlogged());
             if (!recipe.isPresent()) {
                 timer = 100;
+                totalTime = 100;
                 sendData();
             } else {
                 lastRecipe = recipe.get();
                 timer = lastRecipe.getProcessingDuration();
+                totalTime =  lastRecipe.getProcessingDuration();
                 sendData();
             }
             return;
         }
 
         timer = lastRecipe.getProcessingDuration();
+        totalTime =  lastRecipe.getProcessingDuration();
         sendData();
     }
 
@@ -167,7 +177,7 @@ public class SifterTileEntity extends KineticTileEntity {
         compound.put("InputInventory", inputInv.serializeNBT());
         compound.put("OutputInventory", outputInv.serializeNBT());
         compound.put("MeshInventory", meshInv.serializeNBT());
-
+        compound.putInt("TotalTime", totalTime);
         super.write(compound, clientPacket);
     }
 
@@ -177,11 +187,19 @@ public class SifterTileEntity extends KineticTileEntity {
         inputInv.deserializeNBT(compound.getCompound("InputInventory"));
         outputInv.deserializeNBT(compound.getCompound("OutputInventory"));
         meshInv.deserializeNBT(compound.getCompound("MeshInventory"));
+        totalTime = compound.getInt("TotalTime");
         super.read(compound, clientPacket);
     }
 
     public int getProcessingSpeed() {
         return Mth.clamp((int) Math.abs(getSpeed() / 16f), 1, 512);
+    }
+    public float getProcessingRemainingPercent() {
+        float timer = this.timer;
+        float total = this.totalTime;
+        float remaining = total - timer;
+        float result =  remaining/total;
+        return 1 - result;
     }
 
     @Override
@@ -224,6 +242,9 @@ public class SifterTileEntity extends KineticTileEntity {
         return this.getBlockState().getValue(BlockStateProperties.WATERLOGGED);
     }
 
+    public ItemStack getInputItemStack(){
+        return this.inputInv.getStackInSlot(0);
+    }
     private class SifterInventoryHandler extends CombinedInvWrapper {
 
         public SifterInventoryHandler() {
