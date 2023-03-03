@@ -47,7 +47,7 @@ public class SifterTileEntity extends KineticTileEntity {
         super(type, pos, state);
 
         inputInv = new ItemStackHandler(1);
-        outputInv = new ItemStackHandler(9);
+        outputInv = new ItemStackHandler(16);
         capability = LazyOptional.of(SifterInventoryHandler::new);
         meshInv = new ItemStackHandler(1){
             @Override
