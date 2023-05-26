@@ -5,6 +5,7 @@ import com.oierbravo.createsifter.groups.ModGroup;
 import com.oierbravo.createsifter.register.ModBlocks;
 import com.oierbravo.createsifter.register.ModItems;
 import com.oierbravo.createsifter.register.ModBlockEntities;
+import com.oierbravo.createsifter.register.ModPonders;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -12,6 +13,7 @@ import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,6 +39,7 @@ public class CreateSifter {
         ModBlockEntities.register();
 
         ModRecipeTypes.register(modEventBus);
+        modEventBus.addListener(this::doClientStuff);
 
         generateLangEntries();
 
@@ -63,7 +66,9 @@ public class CreateSifter {
         }
 
     }
-
+    private void doClientStuff(final FMLClientSetupEvent event) {
+       // event.enqueueWork(ModPonders::register);
+    }
 
     public static ResourceLocation asResource(String path) {
         return new ResourceLocation(MODID, path);
