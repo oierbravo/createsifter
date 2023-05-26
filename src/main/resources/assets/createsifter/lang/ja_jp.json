@@ -1,11 +1,11 @@
 {
-    "block.createsifter.sifter": "ふるい",
-    "create.recipe.sifting": "ふるいのレシピ",
-    "createsifter.recipe.sifting": "ふるいのレシピ",
-    "item.createsifter.andesite_mesh": "安山岩のメッシュ",
-    "item.createsifter.brass_mesh": "真鍮のメッシュ",
-    "item.createsifter.custom_mesh": "カスタムメッシュ",
-    "item.createsifter.string_mesh": "糸のメッシュ",
-    "item.createsifter.zinc_mesh": "亜鉛のメッシュ",
-    "itemGroup.createsifter:main": "Create sifting"
-  }
+  "block.createsifter.sifter": "ふるい",
+  "create.recipe.sifting": "ふるいのレシピ",
+  "createsifter.recipe.sifting": "ふるいのレシピ",
+  "item.createsifter.andesite_mesh": "安山岩のメッシュ",
+  "item.createsifter.brass_mesh": "真鍮のメッシュ",
+  "item.createsifter.custom_mesh": "カスタムメッシュ",
+  "item.createsifter.string_mesh": "糸のメッシュ",
+  "item.createsifter.zinc_mesh": "亜鉛のメッシュ",
+  "itemGroup.createsifter:main": "Create sifting"
+}

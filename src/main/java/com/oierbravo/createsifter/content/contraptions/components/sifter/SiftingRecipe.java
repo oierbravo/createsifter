@@ -4,15 +4,13 @@ import com.google.gson.JsonObject;
 import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.BaseMesh;
-import com.simibubi.create.content.contraptions.components.crusher.AbstractCrushingRecipe;
-import com.simibubi.create.content.contraptions.processing.ProcessingOutput;
-import com.simibubi.create.content.contraptions.processing.ProcessingRecipeBuilder.ProcessingRecipeParams;
+import com.simibubi.create.content.kinetics.crusher.AbstractCrushingRecipe;
+import com.simibubi.create.content.processing.recipe.ProcessingOutput;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.Recipe;
-import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.items.ItemStackHandler;
@@ -32,7 +30,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     private boolean waterlogged;
 
 
-    public SiftingRecipe( ProcessingRecipeParams params) {
+    public SiftingRecipe( ProcessingRecipeBuilder.ProcessingRecipeParams params) {
         super(ModRecipeTypes.SIFTING, params);
         this.meshStack = getMeshItemStack();
         this.siftableIngredienStack = getSiftableItemStack();

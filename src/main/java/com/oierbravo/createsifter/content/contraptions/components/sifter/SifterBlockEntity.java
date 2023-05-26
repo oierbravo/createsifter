@@ -1,7 +1,7 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 import com.oierbravo.createsifter.ModRecipeTypes;
-import com.simibubi.create.content.contraptions.base.KineticTileEntity;
+import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.sound.SoundScapes;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.core.BlockPos;
@@ -27,10 +27,9 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
 import java.util.Optional;
 
-public class SifterTileEntity extends KineticTileEntity {
+public class SifterBlockEntity extends KineticBlockEntity {
     public ItemStackHandler inputInv;
     public ItemStackHandler outputInv;
     public LazyOptional<IItemHandler> capability;
@@ -43,7 +42,7 @@ public class SifterTileEntity extends KineticTileEntity {
 
     protected int totalTime;
 
-    public SifterTileEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
+    public SifterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
 
         inputInv = new ItemStackHandler(1);
@@ -64,7 +63,6 @@ public class SifterTileEntity extends KineticTileEntity {
             }
         };
         inputAndMeshCombined = new CombinedInvWrapper(inputInv,meshInv);
-
     }
 
     @Override

@@ -5,12 +5,10 @@ import com.oierbravo.createsifter.groups.ModGroup;
 import com.oierbravo.createsifter.register.ModBlocks;
 import com.oierbravo.createsifter.register.ModItems;
 import com.oierbravo.createsifter.register.ModPartials;
-import com.oierbravo.createsifter.register.ModTiles;
+import com.oierbravo.createsifter.register.ModBlockEntities;
 import com.simibubi.create.foundation.data.CreateRegistrate;
-import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -30,11 +28,12 @@ public class CreateSifter {
     private static final Logger LOGGER = LogManager.getLogger(MODID);
     public static IEventBus modEventBus;
 
-    public static final NonNullSupplier<CreateRegistrate> registrate = CreateRegistrate.lazy(MODID);
+    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
 
     public CreateSifter() {
         modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        CreateRegistrate r = registrate.get();
+        REGISTRATE.registerEventListeners(modEventBus);
+
 
         new ModGroup("main");
 
@@ -42,7 +41,7 @@ public class CreateSifter {
 
         ModBlocks.register();
         ModItems.register();
-        ModTiles.register();
+        ModBlockEntities.register();
 
 
 
@@ -66,7 +65,7 @@ public class CreateSifter {
         registrate().addRawLang("itemGroup.createsifter:main", "Create sifting");
     }
     public static CreateRegistrate registrate() {
-        return registrate.get();
+        return REGISTRATE;
     }
 
     @SubscribeEvent

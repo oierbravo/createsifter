@@ -5,16 +5,14 @@ import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedSifter;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
 import com.oierbravo.createsifter.foundation.gui.ModGUITextures;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.content.contraptions.processing.ProcessingOutput;
+import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
-import mezz.jei.api.gui.builder.IRecipeSlotBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.Iterator;

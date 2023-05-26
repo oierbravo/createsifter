@@ -2,8 +2,8 @@ package com.oierbravo.createsifter.content.contraptions.components.meshes;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
-import com.simibubi.create.content.curiosities.tools.SandPaperItemRenderer;
-import com.simibubi.create.foundation.item.render.CreateCustomRenderedItemModel;
+import com.oierbravo.createsifter.CreateSifter;
+import com.simibubi.create.foundation.item.render.CustomRenderedItemModel;
 import com.simibubi.create.foundation.item.render.CustomRenderedItemModelRenderer;
 import com.simibubi.create.foundation.item.render.PartialItemModelRenderer;
 import com.simibubi.create.foundation.utility.AnimationTickHolder;
@@ -17,11 +17,9 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
-public class MeshItemRenderer extends CustomRenderedItemModelRenderer<MeshItemRenderer.MeshModel> {
-
+public class MeshItemRenderer extends CustomRenderedItemModelRenderer {
 	@Override
-	protected void render(ItemStack stack, MeshModel model, PartialItemModelRenderer renderer,
-		TransformType transformType, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
+	protected void render(ItemStack stack, CustomRenderedItemModel model, PartialItemModelRenderer renderer, TransformType transformType, PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
 		ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
 		LocalPlayer player = Minecraft.getInstance().player;
 		float partialTicks = AnimationTickHolder.getPartialTicks();
@@ -42,8 +40,6 @@ public class MeshItemRenderer extends CustomRenderedItemModelRenderer<MeshItemRe
 				ms.scale(.75f, .75f, .75f);
 			} else {
 				int modifier = leftHand ? -1 : 1;
-				//ms.mulPose(Vector3f.YP.rotationDegrees(modifier * 20));
-				//ms.mulPose(Vector3f.ZP.rotationDegrees(modifier * 20));
 				ms.mulPose(Vector3f.YP.rotationDegrees(modifier * 40));
 			}
 
@@ -87,17 +83,20 @@ public class MeshItemRenderer extends CustomRenderedItemModelRenderer<MeshItemRe
 		ms.popPose();
 	}
 
-	@Override
-	public MeshModel createModel(BakedModel originalModel) {
-		return new MeshModel(originalModel);
-	}
 
-	public static class MeshModel extends CreateCustomRenderedItemModel {
+	public static class MeshModel extends CreateSifterCustomRenderedItemModel {
 
 		public MeshModel(BakedModel template) {
 			super(template, "");
 		}
 
 	}
+	public static class CreateSifterCustomRenderedItemModel extends CustomRenderedItemModel {
 
+		public CreateSifterCustomRenderedItemModel(BakedModel template, String basePath) {
+			//super(template, CreateSifter.MODID, basePath);
+			super(template);
+		}
+
+	}
 }

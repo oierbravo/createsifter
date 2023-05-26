@@ -2,11 +2,9 @@ package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 import com.oierbravo.createsifter.content.contraptions.components.meshes.BaseMesh;
 import com.oierbravo.createsifter.register.*;
-import com.simibubi.create.AllShapes;
-import com.simibubi.create.AllTileEntities;
-import com.simibubi.create.content.contraptions.base.KineticBlock;
-import com.simibubi.create.content.contraptions.relays.elementary.ICogWheel;
-import com.simibubi.create.foundation.block.ITE;
+import com.simibubi.create.content.kinetics.base.KineticBlock;
+import com.simibubi.create.content.kinetics.simpleRelays.ICogWheel;
+import com.simibubi.create.foundation.block.IBE;
 import com.simibubi.create.foundation.item.ItemHelper;
 import com.simibubi.create.foundation.utility.Iterate;
 import net.minecraft.core.BlockPos;
@@ -38,7 +36,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class SifterBlock  extends KineticBlock implements ITE<SifterTileEntity>, ICogWheel {
+public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>, ICogWheel {
     public SifterBlock(Properties properties) {
         super(properties);
         registerDefaultState(super.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
@@ -58,7 +56,7 @@ public class SifterBlock  extends KineticBlock implements ITE<SifterTileEntity>,
     @Override
     public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand handIn,
                                  BlockHitResult hit) {
-        SifterTileEntity sifterTileEntity = (SifterTileEntity) worldIn.getBlockEntity(pos);
+        SifterBlockEntity sifterBlockEntity = (SifterBlockEntity) worldIn.getBlockEntity(pos);
         ItemStack handInStack = player.getItemInHand(handIn);
 
         if (worldIn.isClientSide)
@@ -66,14 +64,14 @@ public class SifterBlock  extends KineticBlock implements ITE<SifterTileEntity>,
         //if(handInStack.is())
         if(handInStack.getItem() instanceof BaseMesh){
         //if(handInStack.is(ModTags.ModItemTags.MESHES.tag)){
-            sifterTileEntity.insertMesh(handInStack, player);
+            sifterBlockEntity.insertMesh(handInStack, player);
       //  }
       //  if(handInStack.sameItem(new ItemStack(ModItems.ANDESITE_MESH.get(),1))){
         //if(handInStack.sameItem(new ItemStack(ModItems.ANDESITE_MESH.get(),1))){
 
         }
-        if(handInStack.isEmpty() && sifterTileEntity.hasMesh() && player.isShiftKeyDown()){
-            sifterTileEntity.removeMesh(player);
+        if(handInStack.isEmpty() && sifterBlockEntity.hasMesh() && player.isShiftKeyDown()){
+            sifterBlockEntity.removeMesh(player);
         }
         if (!handInStack.isEmpty())
             return InteractionResult.PASS;
@@ -81,7 +79,7 @@ public class SifterBlock  extends KineticBlock implements ITE<SifterTileEntity>,
 
         //}
 
-        withTileEntityDo(worldIn, pos, sifter -> {
+        withBlockEntityDo(worldIn, pos, sifter -> {
             boolean emptyOutput = true;
             IItemHandlerModifiable inv = sifter.outputInv;
             for (int slot = 0; slot < inv.getSlots(); slot++) {
@@ -120,10 +118,10 @@ public class SifterBlock  extends KineticBlock implements ITE<SifterTileEntity>,
         if (!entityIn.isAlive())
             return;
 
-        SifterTileEntity sifter = null;
+        SifterBlockEntity sifter = null;
         for (BlockPos pos : Iterate.hereAndBelow(entityIn.blockPosition()))
             if (sifter == null)
-                sifter = getTileEntity(worldIn, pos);
+                sifter = getBlockEntity(worldIn, pos);
 
         if (sifter == null)
             return;
@@ -145,7 +143,7 @@ public class SifterBlock  extends KineticBlock implements ITE<SifterTileEntity>,
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
         if (state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {
-            withTileEntityDo(worldIn, pos, te -> {
+            withBlockEntityDo(worldIn, pos, te -> {
                 ItemHelper.dropContents(worldIn, pos, te.inputInv);
                 ItemHelper.dropContents(worldIn, pos, te.meshInv);
                 ItemHelper.dropContents(worldIn, pos, te.outputInv);
@@ -161,13 +159,13 @@ public class SifterBlock  extends KineticBlock implements ITE<SifterTileEntity>,
     }
 
     @Override
-    public Class<SifterTileEntity> getTileEntityClass() {
-        return SifterTileEntity.class;
+    public Class<SifterBlockEntity> getBlockEntityClass() {
+        return SifterBlockEntity.class;
     }
 
     @Override
-    public BlockEntityType<? extends SifterTileEntity> getTileEntityType() {
-        return ModTiles.SIFTER.get();
+    public BlockEntityType<? extends SifterBlockEntity> getBlockEntityType() {
+        return ModBlockEntities.SIFTER.get();
     }
 
     @Override
