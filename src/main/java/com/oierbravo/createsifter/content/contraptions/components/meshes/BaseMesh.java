@@ -2,7 +2,6 @@ package com.oierbravo.createsifter.content.contraptions.components.meshes;
 
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
 import com.simibubi.create.AllSoundEvents;
-import com.simibubi.create.content.curiosities.tools.SandPaperItemRenderer;
 import com.simibubi.create.foundation.item.CustomUseEffectsItem;
 import com.simibubi.create.foundation.item.render.SimpleCustomRenderer;
 import com.simibubi.create.foundation.mixin.accessor.LivingEntityAccessor;
@@ -37,6 +36,7 @@ import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.IFluidBlock;
 
+import javax.json.JsonObject;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
@@ -45,9 +45,7 @@ public abstract class BaseMesh extends Item implements CustomUseEffectsItem {
     protected MeshTypes mesh;
     public BaseMesh(Properties pProperties) {
         super(pProperties);
-    }
-    public MeshTypes getMesh(){
-        return this.mesh;
+
     }
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
@@ -234,4 +232,8 @@ public abstract class BaseMesh extends Item implements CustomUseEffectsItem {
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(SimpleCustomRenderer.create(this, new MeshItemRenderer()));
     }
+
+/*    public BaseMesh fromJson(JsonObject json){
+
+    }*/
 }

@@ -7,11 +7,11 @@ import com.oierbravo.createsifter.content.contraptions.components.sifter.Sifting
 import com.oierbravo.createsifter.register.ModBlocks;
 import com.simibubi.create.compat.jei.*;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
-import com.simibubi.create.foundation.config.AllConfigs;
-import com.simibubi.create.foundation.config.CRecipes;
 import com.simibubi.create.foundation.config.ConfigBase;
+import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.recipe.IRecipeTypeInfo;
+import com.simibubi.create.infrastructure.config.AllConfigs;
+import com.simibubi.create.infrastructure.config.CRecipes;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -231,7 +231,7 @@ public class CreateSifterJEI implements IModPlugin {
 
         public CreateRecipeCategory<T> build(String name, CreateRecipeCategory.Factory<T> factory) {
             Supplier<List<T>> recipesSupplier;
-            if (predicate.test(AllConfigs.SERVER.recipes)) {
+            if (predicate.test(AllConfigs.server().recipes)) {
                 recipesSupplier = () -> {
                     List<T> recipes = new ArrayList<>();
                     for (Consumer<List<T>> consumer : recipeListConsumers)

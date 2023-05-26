@@ -4,16 +4,9 @@ package com.oierbravo.createsifter.foundation.data.recipe;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.MeshTypes;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.content.contraptions.processing.ProcessingRecipe;
-import com.simibubi.create.foundation.data.recipe.ProcessingRecipeGen;
 import net.minecraft.data.DataGenerator;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
-import org.jetbrains.annotations.NotNull;
 
 public class SiftingRecipeGen extends ModProcessingRecipes {
     GeneratedRecipe GRAVEL_ANDESITE = create("gravel_andesite_mesh", b ->  b.duration(500)
