@@ -4,18 +4,15 @@ import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlock;
 import com.oierbravo.createsifter.groups.ModGroup;
 import com.simibubi.create.Create;
-import com.simibubi.create.content.AllSections;
-import com.simibubi.create.content.contraptions.processing.burner.BlazeBurnerBlockItem;
-import com.simibubi.create.foundation.block.BlockStressDefaults;
+import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.world.level.material.MaterialColor;
 
-import static com.simibubi.create.AllTags.pickaxeOnly;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
+import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
 public class ModBlocks {
 
@@ -26,7 +23,7 @@ public class ModBlocks {
 
     public static void register() {
 
-        Create.REGISTRATE.addToSection(SIFTER, AllSections.KINETICS);
+        //Create.REGISTRATE.addToSection(SIFTER, AllSections.KINETICS);
     }
     public static final BlockEntry<SifterBlock> SIFTER = REGISTRATE.block("sifter", SifterBlock::new)
             .initialProperties(SharedProperties::stone)

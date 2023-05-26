@@ -1,0 +1,100 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"frame": "block/stripped_oak_log",
+		"mesh": "createsifter:item/andesite_mesh",
+		"particle": "block/stripped_oak_log"
+	},
+	"elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [1, 1, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 1, 1], "texture": "#frame"},
+				"east": {"uv": [0, 0, 16, 1], "texture": "#frame"},
+				"south": {"uv": [0, 0, 1, 1], "texture": "#frame"},
+				"west": {"uv": [0, 0, 16, 1], "texture": "#frame"},
+				"up": {"uv": [0, 0, 1, 16], "texture": "#frame"},
+				"down": {"uv": [0, 0, 1, 16], "texture": "#frame"}
+			}
+		},
+		{
+			"from": [15, 0, 0],
+			"to": [16, 1, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 1, 1], "texture": "#frame"},
+				"east": {"uv": [0, 0, 16, 1], "texture": "#frame"},
+				"south": {"uv": [0, 0, 1, 1], "texture": "#frame"},
+				"west": {"uv": [0, 0, 16, 1], "texture": "#frame"},
+				"up": {"uv": [0, 0, 1, 16], "texture": "#frame"},
+				"down": {"uv": [0, 0, 1, 16], "texture": "#frame"}
+			}
+		},
+		{
+			"from": [1, 0, 0],
+			"to": [15, 1, 1],
+			"faces": {
+				"north": {"uv": [0, 0, 14, 1], "texture": "#frame"},
+				"east": {"uv": [0, 0, 1, 1], "texture": "#frame"},
+				"south": {"uv": [0, 0, 14, 1], "texture": "#frame"},
+				"west": {"uv": [0, 0, 1, 1], "texture": "#frame"},
+				"up": {"uv": [0, 0, 14, 1], "texture": "#frame"},
+				"down": {"uv": [0, 0, 14, 1], "texture": "#frame"}
+			}
+		},
+		{
+			"from": [1, 0, 15],
+			"to": [15, 1, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 14, 1], "texture": "#frame"},
+				"east": {"uv": [0, 0, 1, 1], "texture": "#frame"},
+				"south": {"uv": [0, 0, 14, 1], "texture": "#frame"},
+				"west": {"uv": [0, 0, 1, 1], "texture": "#frame"},
+				"up": {"uv": [0, 0, 14, 1], "texture": "#frame"},
+				"down": {"uv": [0, 0, 14, 1], "texture": "#frame"}
+			}
+		},
+		{
+			"from": [1, 0, 1],
+			"to": [15, 0, 15],
+			"faces": {
+				"north": {"uv": [0, 0, 14, 0], "texture": "#mesh"},
+				"east": {"uv": [0, 0, 14, 0], "texture": "#mesh"},
+				"south": {"uv": [0, 0, 14, 0], "texture": "#mesh"},
+				"west": {"uv": [0, 0, 14, 0], "texture": "#mesh"},
+				"up": {"uv": [1, 1, 15, 15], "texture": "#mesh"},
+				"down": {"uv": [0, 0, 14, 14], "texture": "#mesh"}
+			}
+		}
+	],
+	"display": {
+		"thirdperson_righthand": {
+			"translation": [-6, 3.5, -5.25],
+			"scale": [0.78, 0.78, 0.78]
+		},
+		"thirdperson_lefthand": {
+			"translation": [-6, 4.75, -5.75],
+			"scale": [0.78, 0.78, 0.78]
+		},
+		"firstperson_righthand": {
+			"translation": [0, 8.5, -4.5]
+		},
+		"firstperson_lefthand": {
+			"translation": [0, 8.5, -4.5]
+		},
+		"ground": {
+			"translation": [0, 0, 0]
+		},
+		"gui": {
+			"rotation": [90, 0, 0],
+			"scale": [0.91, 0.91, 0.91]
+		},
+		"head": {
+			"translation": [0, 14.5, 0]
+		},
+		"fixed": {
+			"rotation": [-90, 0, 0],
+			"translation": [0, 0, -8.25]
+		}
+	}
+}

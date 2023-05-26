@@ -2,6 +2,9 @@ package com.oierbravo.createsifter.compat.kubejs;
 
 import com.google.gson.JsonArray;
 
+import com.google.gson.JsonObject;
+import com.simibubi.create.content.processing.recipe.ProcessingOutput;
+import dev.latvian.mods.kubejs.item.ItemStackJS;
 import dev.latvian.mods.kubejs.recipe.*;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
