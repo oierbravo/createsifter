@@ -1,0 +1,11 @@
+{
+  "block.createsifter.sifter": "Tamis",
+  "create.recipe.sifting": "Tamisage",
+  "createsifter.recipe.sifting": "Tamisage",
+  "item.createsifter.andesite_mesh": "Maille en andésite",
+  "item.createsifter.brass_mesh": "Maille en laiton",
+  "item.createsifter.custom_mesh": "Maille personnalisée",
+  "item.createsifter.string_mesh": "Maille en ficelle",
+  "item.createsifter.zinc_mesh": "Maille en zinc",
+  "itemGroup.createsifter:main": "Tamis Create"
+}
