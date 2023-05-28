@@ -10,19 +10,19 @@
   ],
   "results": [
     {
-      "item": "create:crushed_copper_ore",
+      "item": "create:crushed_raw_copper",
       "chance": 0.2
     },
     {
-      "item": "create:crushed_zinc_ore",
+      "item": "create:crushed_raw_zinc",
       "chance": 0.2
     },
     {
-      "item": "create:crushed_gold_ore",
+      "item": "create:crushed_raw_gold",
       "chance": 0.15
     },
     {
-      "item": "create:crushed_iron_ore",
+      "item": "create:crushed_raw_iron",
       "chance": 0.25
     },
     {
