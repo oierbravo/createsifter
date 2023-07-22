@@ -30,8 +30,8 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
@@ -61,23 +61,14 @@ public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>
 
         if (worldIn.isClientSide)
             return InteractionResult.SUCCESS;
-        //if(handInStack.is())
         if(handInStack.getItem() instanceof BaseMesh){
-        //if(handInStack.is(ModTags.ModItemTags.MESHES.tag)){
             sifterBlockEntity.insertMesh(handInStack, player);
-      //  }
-      //  if(handInStack.sameItem(new ItemStack(ModItems.ANDESITE_MESH.get(),1))){
-        //if(handInStack.sameItem(new ItemStack(ModItems.ANDESITE_MESH.get(),1))){
-
         }
         if(handInStack.isEmpty() && sifterBlockEntity.hasMesh() && player.isShiftKeyDown()){
             sifterBlockEntity.removeMesh(player);
         }
         if (!handInStack.isEmpty())
             return InteractionResult.PASS;
-       //if(player.getItemInHand(handIn).isEmpty() &&){
-
-        //}
 
         withBlockEntityDo(worldIn, pos, sifter -> {
             boolean emptyOutput = true;
@@ -111,7 +102,7 @@ public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>
     public void updateEntityAfterFallOn(BlockGetter worldIn, Entity entityIn) {
         super.updateEntityAfterFallOn(worldIn, entityIn);
 
-        if (entityIn.level.isClientSide)
+        if (entityIn.level().isClientSide)
             return;
         if (!(entityIn instanceof ItemEntity))
             return;
@@ -127,7 +118,7 @@ public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>
             return;
 
         ItemEntity itemEntity = (ItemEntity) entityIn;
-        LazyOptional<IItemHandler> capability = sifter.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+        LazyOptional<IItemHandler> capability = sifter.getCapability(ForgeCapabilities.ITEM_HANDLER);
         if (!capability.isPresent())
             return;
 

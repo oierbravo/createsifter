@@ -1,6 +1,5 @@
 package com.oierbravo.createsifter.compat.jei.category;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedSifter;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
 import com.oierbravo.createsifter.foundation.gui.ModGUITextures;
@@ -13,6 +12,7 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.world.item.crafting.Ingredient;
 
 import java.util.Iterator;
@@ -50,27 +50,31 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     }
 
 
-    public void draw(SiftingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
+    public void draw(SiftingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
 
 
         List<ProcessingOutput> results = recipe.getRollableResults();
         boolean single = results.size() == 1;
         if(single){
-            AllGuiTextures.JEI_ARROW.render(matrixStack, 85, 32); //Output arrow
+            AllGuiTextures.JEI_ARROW.render(graphics, 85, 32); //Output arrow
         } else {
-            ModGUITextures.JEI_SHORT_ARROW.render(matrixStack, 75, 32); //Output arrow
+            ModGUITextures.JEI_SHORT_ARROW.render(graphics, 75, 32); //Output arrow
         }
 
-        AllGuiTextures.JEI_DOWN_ARROW.render(matrixStack, 43, 4);
-        sifter.draw(matrixStack, 48, 27);
-        drawWaterlogged(recipe, matrixStack, 35,50);
+        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 43, 4);
+        sifter.draw(graphics, 48, 27);
+        drawWaterlogged(recipe, graphics, 35,50);
     }
-    protected void drawWaterlogged(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
+    protected void drawWaterlogged(SiftingRecipe recipe, GuiGraphics guiGraphics, int x, int y) {
         boolean waterlogged = recipe.isWaterlogged();
         if (waterlogged) {
             Minecraft minecraft = Minecraft.getInstance();
             Font fontRenderer = minecraft.font;
-            fontRenderer.draw(poseStack, "Waterlogged", x, y, 0xFF808080);
+            String waterLoggedString = "Waterlogged";
+            int stringWidth = fontRenderer.width(waterLoggedString);
+
+            guiGraphics.drawString(fontRenderer,  waterLoggedString, getWidth() - stringWidth, y, 0xFF808080, false);
+
         }
     }
 }

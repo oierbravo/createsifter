@@ -10,7 +10,6 @@ public class ModBlockEntities {
     public static final BlockEntityEntry<SifterBlockEntity> SIFTER = CreateSifter.registrate()
             .blockEntity("sifter", SifterBlockEntity::new)
             .instance(() -> SifterInstance::new)
-            //.instance(() -> MeshInstance::new)
             .validBlocks(ModBlocks.SIFTER)
             .renderer(() -> SifterRenderer::new)
             .register();

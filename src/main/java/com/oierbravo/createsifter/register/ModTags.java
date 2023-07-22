@@ -1,7 +1,6 @@
 package com.oierbravo.createsifter.register;
 
 import com.oierbravo.createsifter.CreateSifter;
-import com.oierbravo.createsifter.groups.ModGroup;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -20,11 +19,10 @@ import net.minecraftforge.registries.IForgeRegistry;
 import java.util.Collections;
 
 import static com.oierbravo.createsifter.register.ModTags.NameSpace.MOD;
+import static com.simibubi.create.Create.REGISTRATE;
 
 public class ModTags {
-    private static final CreateRegistrate REGISTRATE = CreateSifter.registrate()
-            .creativeModeTab(() -> ModGroup.MAIN);
-
+    static { REGISTRATE.useCreativeTab(ModCreativeTabs.MAIN_TAB); }
 
     public static <T> TagKey<T> optionalTag(IForgeRegistry<T> registry,
                                             ResourceLocation id) {
@@ -79,7 +77,7 @@ public class ModTags {
                 tag = ItemTags.create(id);
             }
             if (alwaysDatagen) {
-                REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.tag(tag));
+                REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.addTag(tag));
             }
         }
 
@@ -94,20 +92,20 @@ public class ModTags {
         }
 
         public void add(Item... values) {
-            REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.tag(tag)
+            REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.addTag(tag)
                     .add(values));
         }
 
         public void addOptional(Mods mod, String... ids) {
             REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> {
-                TagsProvider.TagAppender<Item> builder = prov.tag(tag);
+                TagsProvider.TagAppender<Item> builder = prov.addTag(tag);
                 for (String id : ids)
                     builder.addOptional(mod.asResource(id));
             });
         }
 
         public void includeIn(TagKey<Item> parent) {
-            REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.tag(parent)
+            REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.addTag(parent)
                     .addTag(tag));
         }
 
@@ -116,7 +114,7 @@ public class ModTags {
         }
 
         public void includeAll(TagKey<Item> child) {
-            REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.tag(tag)
+            REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, prov -> prov.addTag(tag)
                     .addTag(child));
         }
     }

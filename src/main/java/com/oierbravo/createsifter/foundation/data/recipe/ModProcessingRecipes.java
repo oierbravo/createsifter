@@ -10,12 +10,14 @@ import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
@@ -25,10 +27,23 @@ public abstract class ModProcessingRecipes extends CreateRecipeProvider {
     protected static final List<ModProcessingRecipes> GENERATORS = new ArrayList<>();
 
 
-    public static void registerAllProcessingProviders(DataGenerator generator) {
-        GENERATORS.add(new SiftingRecipeGen(generator));
+    public static void registerAllProcessingProviders(DataGenerator gen, PackOutput output) {
+        GENERATORS.add(new SiftingRecipeGen(output));
+        gen.addProvider(true, new DataProvider() {
 
-        generator.addProvider(true, new DataProvider() {
+            @Override
+            public String getName() {
+                return "Create's Processing Recipes";
+            }
+
+            @Override
+            public CompletableFuture<?> run(CachedOutput dc) {
+                return CompletableFuture.allOf(GENERATORS.stream()
+                        .map(gen -> gen.run(dc))
+                        .toArray(CompletableFuture[]::new));
+            }
+        });
+        /*generator.addProvider(true, new DataProvider() {
             @Override
             public void run(CachedOutput dc) throws IOException {
                 GENERATORS.forEach(g -> {
@@ -44,12 +59,12 @@ public abstract class ModProcessingRecipes extends CreateRecipeProvider {
             public @NotNull String getName() {
                 return "Create: Sifter's Processing Recipes";
             }
-        });
+        });*/
     }
 
 
-    public ModProcessingRecipes(DataGenerator generator) {
-        super(generator);
+    public ModProcessingRecipes(PackOutput output) {
+        super(output);
     }
 
 

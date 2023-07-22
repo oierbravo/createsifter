@@ -1,13 +1,10 @@
 package com.oierbravo.createsifter;
 
 import com.oierbravo.createsifter.foundation.data.recipe.ModProcessingRecipes;
-import com.oierbravo.createsifter.groups.ModGroup;
-import com.oierbravo.createsifter.register.ModBlocks;
-import com.oierbravo.createsifter.register.ModItems;
-import com.oierbravo.createsifter.register.ModBlockEntities;
-import com.oierbravo.createsifter.register.ModPonders;
+import com.oierbravo.createsifter.register.*;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
@@ -32,12 +29,12 @@ public class CreateSifter {
         modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         REGISTRATE.registerEventListeners(modEventBus);
 
-        new ModGroup("main");
+
 
         ModBlocks.register();
         ModItems.register();
         ModBlockEntities.register();
-
+        ModCreativeTabs.register(modEventBus);
         ModRecipeTypes.register(modEventBus);
         modEventBus.addListener(this::doClientStuff);
 
@@ -58,11 +55,12 @@ public class CreateSifter {
 
     public static void gatherData(GatherDataEvent event) {
         DataGenerator gen = event.getGenerator();
+        PackOutput output = gen.getPackOutput();
         if (event.includeClient()) {
 
         }
         if (event.includeServer()) {
-            ModProcessingRecipes.registerAllProcessingProviders(gen);
+            ModProcessingRecipes.registerAllProcessingProviders(gen, output);
         }
 
     }

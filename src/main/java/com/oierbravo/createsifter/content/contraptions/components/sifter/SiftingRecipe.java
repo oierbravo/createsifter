@@ -90,43 +90,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
             return true;
         return false;
     }
-    /*@Override
-    public boolean matches(RecipeWrapper inv, Level worldIn) {
 
-        if (inv.isEmpty())
-            return false;
-
-        return ingredients.get(0)
-                .test(inv.getItem(0));
-    }*/
-    /*public boolean matches(RecipeWrapper pInv, Level pLevel) {
-        if (pInv.isEmpty())
-            return false;
-        StackedContents stackedcontents = new StackedContents();
-        java.util.List<ItemStack> inputs = new java.util.ArrayList<>();
-        int i = 0;
-
-        for(int j = 0; j < pInv.getContainerSize(); ++j) {
-            ItemStack itemstack = pInv.getItem(j);
-            if (!itemstack.isEmpty()) {
-                ++i;
-                if (isSimple)
-                    stackedcontents.accountStack(itemstack, 1);
-                else inputs.add(itemstack);
-            }
-        }
-
-        return i == this.ingredients.size() && (isSimple ? stackedcontents.canCraft(this, (IntList)null) : net.minecraftforge.common.util.RecipeMatcher.findMatches(inputs,  this.ingredients) != null);
-    }*/
-    //From ShapelessRecipe
-    //@Override
-    //@Override
-    /*public boolean matches(SifterInv inv, Level worldIn) {
-        if (inv.isEmpty())
-            return false;
-        return ingredients.get(0)
-                .test(inv.getItem(0)) && ( inv.getMeshType() == mesh);
-    }*/
     @Override
     public String toString() {
         return CreateSifter.MODID+":sifting";
