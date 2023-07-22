@@ -78,8 +78,6 @@ public class CreateSifterJEI implements IModPlugin {
         ingredientManager = registration.getIngredientManager();
 
         modCategories.forEach(c -> c.registerRecipes(registration));
-
-        //registration.addRecipes(RecipeTypes.CRAFTING, ToolboxColoringRecipeMaker.createRecipes().toList());
     }
 
     @Override

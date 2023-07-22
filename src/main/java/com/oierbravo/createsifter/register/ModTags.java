@@ -3,7 +3,6 @@ package com.oierbravo.createsifter.register;
 import com.oierbravo.createsifter.CreateSifter;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
-import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.recipe.Mods;
 import com.simibubi.create.foundation.utility.Lang;
 import com.tterrag.registrate.providers.ProviderType;

@@ -12,9 +12,6 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -43,23 +40,7 @@ public abstract class ModProcessingRecipes extends CreateRecipeProvider {
                         .toArray(CompletableFuture[]::new));
             }
         });
-        /*generator.addProvider(true, new DataProvider() {
-            @Override
-            public void run(CachedOutput dc) throws IOException {
-                GENERATORS.forEach(g -> {
-                    try {
-                        g.run(dc);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
 
-            @Override
-            public @NotNull String getName() {
-                return "Create: Sifter's Processing Recipes";
-            }
-        });*/
     }
 
 

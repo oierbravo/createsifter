@@ -9,11 +9,7 @@ import static com.oierbravo.createsifter.CreateSifter.REGISTRATE;
 
 public class ModItems {
     static { REGISTRATE.useCreativeTab(AllCreativeModeTabs.MAIN_TAB); }
-
-
-
     public static void register() {}
-
     public static final ItemEntry<StringMesh> STRING_MESH =
             REGISTRATE.item("string_mesh", StringMesh::new)
                     .model(AssetLookup.existingItemModel())

@@ -5,7 +5,6 @@ import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterB
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterInstance;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterRenderer;
 import com.tterrag.registrate.util.entry.BlockEntityEntry;
-import com.simibubi.create.content.kinetics.millstone.MillstoneCogInstance;
 public class ModBlockEntities {
     public static final BlockEntityEntry<SifterBlockEntity> SIFTER = CreateSifter.registrate()
             .blockEntity("sifter", SifterBlockEntity::new)

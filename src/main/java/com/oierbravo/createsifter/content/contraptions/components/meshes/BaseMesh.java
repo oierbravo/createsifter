@@ -36,9 +36,7 @@ import net.minecraftforge.common.ToolActions;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fluids.IFluidBlock;
 
-import javax.json.JsonObject;
 import java.util.List;
-import java.util.Random;
 import java.util.function.Consumer;
 
 public abstract class BaseMesh extends Item implements CustomUseEffectsItem {

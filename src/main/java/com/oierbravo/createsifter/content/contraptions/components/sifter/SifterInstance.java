@@ -5,7 +5,6 @@ import com.jozufozu.flywheel.api.MaterialManager;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.SingleRotatingInstance;
 import com.simibubi.create.content.kinetics.base.flwdata.RotatingData;
-import com.simibubi.create.content.kinetics.millstone.MillstoneBlockEntity;
 
     public class SifterInstance extends SingleRotatingInstance<SifterBlockEntity> {
 
