@@ -219,7 +219,7 @@ dependencies {
 
 
 jar {
-    archiveClassifier = 'slim'
+    archiveClassifier = ''
 
     manifest {
         attributes([

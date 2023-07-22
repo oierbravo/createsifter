@@ -30,7 +30,7 @@ Gather resources sifting
 [[dependencies.createsifter]]
     modId = "create"
     mandatory = true
-    versionRange="[0.5.1.c,)"
+    versionRange="[0.5.1.d,)"
     ordering = "AFTER"
     side = "BOTH"
 
