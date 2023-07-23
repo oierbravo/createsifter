@@ -1,11 +1,10 @@
 package com.oierbravo.createsifter;
 
-import com.oierbravo.createsifter.foundation.data.recipe.ModProcessingRecipes;
+import com.oierbravo.createsifter.foundation.data.recipe.ModProcessingRecipeGen;
 import com.oierbravo.createsifter.groups.ModGroup;
 import com.oierbravo.createsifter.register.ModBlocks;
 import com.oierbravo.createsifter.register.ModItems;
 import com.oierbravo.createsifter.register.ModBlockEntities;
-import com.oierbravo.createsifter.register.ModPonders;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -62,7 +61,7 @@ public class CreateSifter {
 
         }
         if (event.includeServer()) {
-            ModProcessingRecipes.registerAllProcessingProviders(gen);
+            ModProcessingRecipeGen.registerAll(gen);
         }
 
     }

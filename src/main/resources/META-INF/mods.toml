@@ -34,3 +34,15 @@ Gather resources sifting
     ordering = "AFTER"
     side = "BOTH"
 
+[[dependencies.createsifter]]
+    modId = "kubejs"
+    mandatory = false
+    versionRange = "[1902.6.1-build.300,)"
+    ordering = "AFTER"
+    side = "BOTH"
+[[dependencies.createsifter]]
+    modId = "kubejs_create"
+    mandatory = false
+    versionRange = "[1902.2.4-build.20,)"
+    ordering = "AFTER"
+    side = "BOTH"

@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter.foundation.data.recipe;
 
 
+import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.MeshTypes;
 import com.simibubi.create.AllItems;
@@ -8,8 +9,8 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
-public class SiftingRecipeGen extends ModProcessingRecipes {
-    GeneratedRecipe GRAVEL_ANDESITE = create("gravel_andesite_mesh", b ->  b.duration(500)
+public class SiftingRecipeGen extends ModProcessingRecipeGen {
+    GeneratedRecipe GRAVEL_ANDESITE = create(CreateSifter.asResource("gravel_andesite_mesh"), b ->  b.duration(500)
 
             .require(MeshTypes.ANDESITE.getItem())
             .require(Blocks.GRAVEL)
@@ -20,7 +21,7 @@ public class SiftingRecipeGen extends ModProcessingRecipes {
             .output(.10f, Items.COAL,1)
             .output(.1f, Items.FLINT, 1));
 
-    GeneratedRecipe GRAVEL_ZINC = create("gravel_zinc_mesh", b ->  b.duration(500)
+    GeneratedRecipe GRAVEL_ZINC = create(CreateSifter.asResource("gravel_zinc_mesh"), b ->  b.duration(500)
 
             .require(MeshTypes.ZINC.getItem())
             .require(Blocks.GRAVEL)
@@ -33,7 +34,7 @@ public class SiftingRecipeGen extends ModProcessingRecipes {
             .output(.1f, Items.FLINT, 1)
             .output(.10f, AllItems.EXP_NUGGET.get(), 1));
 
-    GeneratedRecipe GRAVEL_BRASS = create("gravel_brass_mesh", b ->  b.duration(500)
+    GeneratedRecipe GRAVEL_BRASS = create(CreateSifter.asResource("gravel_brass_mesh"), b ->  b.duration(500)
 
             .require(MeshTypes.BRASS.getItem())
             .require(Blocks.GRAVEL)
@@ -46,27 +47,27 @@ public class SiftingRecipeGen extends ModProcessingRecipes {
             .output(.1f, Items.FLINT, 1)
             .output(.15f, AllItems.EXP_NUGGET.get(), 1));
 
-    GeneratedRecipe SAND_STRING = create("sand_string_mesh", b -> b.duration(500)
+    GeneratedRecipe SAND_STRING = create(CreateSifter.asResource("sand_string_mesh"), b -> b.duration(500)
             .require(Blocks.SAND)
             .require(MeshTypes.STRING.getItem())
             .output(.05f, Items.REDSTONE,1)
             .output(.4f, Items.BONE_MEAL,1));
 
-    GeneratedRecipe SAND_ANDESITE = create("sand_andesite_mesh", b -> b.duration(500)
+    GeneratedRecipe SAND_ANDESITE = create(CreateSifter.asResource("sand_andesite_mesh"), b -> b.duration(500)
             .require(Blocks.SAND)
             .require(MeshTypes.ANDESITE.getItem())
             .output(.1f, Items.REDSTONE,1)
             .output(.4f, Items.BONE_MEAL,1)
             .output(.10f, AllItems.EXP_NUGGET.get(), 1));
 
-    GeneratedRecipe SAND_ZINC = create("sand_zinc_mesh", b -> b.duration(500)
+    GeneratedRecipe SAND_ZINC = create(CreateSifter.asResource("sand_zinc_mesh"), b -> b.duration(500)
             .require(Blocks.SAND)
             .require(MeshTypes.ZINC.getItem())
             .output(.15f, Items.REDSTONE,1)
             .output(.4f, Items.BONE_MEAL,1)
             .output(.10f, AllItems.EXP_NUGGET.get(), 1));
 
-    GeneratedRecipe SAND_BRASS = create("sand_brass_mesh", b -> b.duration(500)
+    GeneratedRecipe SAND_BRASS = create(CreateSifter.asResource("sand_brass_mesh"), b -> b.duration(500)
             .require(Blocks.SAND)
             .require(MeshTypes.BRASS.getItem())
             .output(.25f, Items.REDSTONE,2)
@@ -74,17 +75,6 @@ public class SiftingRecipeGen extends ModProcessingRecipes {
             .output(.4f, Items.BONE_MEAL,1)
             .output(.05f, Items.BLAZE_POWDER,1)
             .output(.20f, AllItems.EXP_NUGGET.get(), 1));
-    /* GeneratedRecipe COBBLE_STONE = create("cobblestone", b ->
-            b.duration(100).require(Blocks.DIRT)
-            .output(Blocks.COBBLESTONE)
-    );
-   /* GeneratedRecipe STONE = create(ResourceLocation.tryParse("dirt"), b -> b.duration(100)
-            .require(ItemTags.)
-            .output(Items.STRING));*/
-
-
-
-
 
     public SiftingRecipeGen(DataGenerator generator) {
         super(generator);
