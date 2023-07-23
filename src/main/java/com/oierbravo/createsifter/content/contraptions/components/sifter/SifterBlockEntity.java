@@ -1,14 +1,17 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 import com.oierbravo.createsifter.ModRecipeTypes;
+import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.sound.SoundScapes;
+import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.VecHelper;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +30,7 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Optional;
 
 public class SifterBlockEntity extends KineticBlockEntity {
@@ -41,6 +45,23 @@ public class SifterBlockEntity extends KineticBlockEntity {
     protected CombinedInvWrapper inputAndMeshCombined ;
 
     protected int totalTime;
+
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        return false;
+        /*boolean fullfilled = isSpeedRequirementFulfilled();
+
+        String processingString = "Not Processing";
+
+        if(isProcessing()){
+            Lang.text("Processing").forGoggles(tooltip);
+            return true;
+        }
+        if(isSpeedRequirementFulfilled())
+            return false;
+        Lang.text("Not enought speed to continue processing").forGoggles(tooltip);
+        return true;*/
+    }
 
     public SifterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -86,6 +107,12 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
         if (getSpeed() == 0)
             return;
+        /*if(!canProcess(inputInv.getStackInSlot(0))){
+            return;
+        }*/
+        if(!isSpeedRequirementFulfilled()){
+            return;
+        }
         for (int i = 0; i < outputInv.getSlots(); i++)
             if (outputInv.getStackInSlot(i)
                     .getCount() == outputInv.getSlotLimit(i))
@@ -108,8 +135,8 @@ public class SifterBlockEntity extends KineticBlockEntity {
             return;
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level,this.isWaterlogged())) {
-            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level, this.isWaterlogged());
+        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed())) {
+            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level, this.isWaterlogged(),getAbsSpeed());
             if (!recipe.isPresent()) {
                 timer = 100;
                 totalTime = 100;
@@ -138,8 +165,8 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
 
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level, this.isWaterlogged())) {
-            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged());
+        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level, this.isWaterlogged(),getAbsSpeed())) {
+            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged(), getAbsSpeed());
             if (!recipe.isPresent())
                 return;
             lastRecipe = recipe.get();
@@ -153,7 +180,6 @@ public class SifterBlockEntity extends KineticBlockEntity {
         sendData();
         setChanged();
     }
-
     public void spawnParticles() {
         ItemStack stackInSlot = inputInv.getStackInSlot(0);
         if (stackInSlot.isEmpty())
@@ -190,6 +216,28 @@ public class SifterBlockEntity extends KineticBlockEntity {
         super.read(compound, clientPacket);
     }
 
+    @Override
+    public boolean isSpeedRequirementFulfilled() {
+        if(hasRecipeSpeedRequeriment()){
+
+            float currentSpeed = getAbsSpeed();
+
+            return getAbsSpeed() >= lastRecipe.getSpeedRequiriment();
+
+        }
+        return super.isSpeedRequirementFulfilled();
+    }
+
+    private boolean hasRecipeSpeedRequeriment() {
+        if(lastRecipe == null)
+            return false;
+        if(lastRecipe.hasSpeedRequeriment()){
+            return true;
+
+        }
+        return false;
+    }
+
     public int getProcessingSpeed() {
         return Mth.clamp((int) Math.abs(getSpeed() / 16f), 1, 512);
     }
@@ -214,11 +262,12 @@ public class SifterBlockEntity extends KineticBlockEntity {
         tester.setStackInSlot(1, this.meshInv.getStackInSlot(0));
         RecipeWrapper inventoryIn = new RecipeWrapper(tester);
 
-        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level,this.isWaterlogged()))
+        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed()))
             return true;
-        return ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged())
+        return ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged(),getAbsSpeed())
                 .isPresent();
     }
+
 
     public void insertMesh(ItemStack meshStack, Player player) {
         if(meshInv.getStackInSlot(0).isEmpty()){
@@ -241,9 +290,28 @@ public class SifterBlockEntity extends KineticBlockEntity {
         return this.getBlockState().getValue(BlockStateProperties.WATERLOGGED);
     }
 
+    public float getAbsSpeed(){
+        return Math.abs(getSpeed());
+    }
+
     public ItemStack getInputItemStack(){
         return this.inputInv.getStackInSlot(0);
     }
+
+    public boolean isProcessing() {
+        return timer != totalTime;
+    }
+
+    @Override
+    public float calculateStressApplied() {
+        return 512;
+    }
+
+    @Override
+    public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        return super.addToTooltip(tooltip, isPlayerSneaking);
+    }
+
     private class SifterInventoryHandler extends CombinedInvWrapper {
 
         public SifterInventoryHandler() {
