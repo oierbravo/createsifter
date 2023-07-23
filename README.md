@@ -130,23 +130,22 @@ event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5).toJ
 event.create('example_mesh','createsifter:mesh').displayName('Example mesh')
 ```
 
-### KubeJS 6 integration (tested with `1902.6.0-build.121` version)
+### KubeJS 6 integration (tested with `1902.6.1-build.329` version)
 - For minecraft `1.19.2`
 - KubeJS 6 is in a very active development phase. Breaking changes may happen... be patient plz. I'll try to keep up with updates.
-- `withChance` method needs `toJson` to work properly.
 #### Adding recipes (server script)
 ```
 // event.recipes.createsifterSifting(output[], input[])
 // Optional .waterlogged() .processingTime(int time)
 
 // Basic Example
-event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5).toJson(),Item.of('minecraft:redstone').withChance(0.1).toJson()], ['minecraft:sand','createsifter:string_mesh'])
+event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5).toJson(),Item.of('minecraft:redstone').withChance(0.1)], ['minecraft:sand','createsifter:string_mesh'])
 
 // Waterlogged example
-event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5).toJson()], ['minecraft:sand','createsifter:string_mesh']).waterlogged()
+event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5)], ['minecraft:sand','createsifter:string_mesh']).waterlogged()
 
 // Custom mesh example. Custom mesh ID comes from the Startup Script
-event.recipes.createsifterSifting([Item.of('minecraft:glowstone_dust').withChance(0.5).toJson(),Item.of('minecraft:redstone').withChance(0.1).toJson()], ['minecraft:sand','kubejs:example_mesh'])
+event.recipes.createsifterSifting([Item.of('minecraft:glowstone_dust').withChance(0.5),Item.of('minecraft:redstone').withChance(0.1).toJson()], ['minecraft:sand','kubejs:example_mesh'])
 
 ```
 
