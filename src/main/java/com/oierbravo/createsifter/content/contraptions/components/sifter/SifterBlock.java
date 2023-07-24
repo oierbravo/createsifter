@@ -61,27 +61,20 @@ public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>
 
         if (worldIn.isClientSide)
             return InteractionResult.SUCCESS;
-        //if(handInStack.is())
         if(handInStack.getItem() instanceof BaseMesh){
-        //if(handInStack.is(ModTags.ModItemTags.MESHES.tag)){
             sifterBlockEntity.insertMesh(handInStack, player);
-      //  }
-      //  if(handInStack.sameItem(new ItemStack(ModItems.ANDESITE_MESH.get(),1))){
-        //if(handInStack.sameItem(new ItemStack(ModItems.ANDESITE_MESH.get(),1))){
+        }
 
-        }
-        if(handInStack.isEmpty() && sifterBlockEntity.hasMesh() && player.isShiftKeyDown()){
-            sifterBlockEntity.removeMesh(player);
-        }
         if (!handInStack.isEmpty())
             return InteractionResult.PASS;
-       //if(player.getItemInHand(handIn).isEmpty() &&){
-
-        //}
 
         withBlockEntityDo(worldIn, pos, sifter -> {
             boolean emptyOutput = true;
             IItemHandlerModifiable inv = sifter.outputInv;
+            if(handInStack.isEmpty() && sifterBlockEntity.hasMesh() && player.isShiftKeyDown()){
+                sifterBlockEntity.removeMesh(player);
+            }
+
             for (int slot = 0; slot < inv.getSlots(); slot++) {
                 ItemStack stackInSlot = inv.getStackInSlot(slot);
                 if (!stackInSlot.isEmpty())
@@ -105,6 +98,16 @@ public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>
         });
 
         return InteractionResult.SUCCESS;
+    }
+
+    @Override
+    public boolean hideStressImpact() {
+        return false;
+    }
+
+    @Override
+    public boolean showCapacityWithAnnotation() {
+        return true;
     }
 
     @Override
@@ -186,5 +189,10 @@ public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(BlockStateProperties.WATERLOGGED);
         super.createBlockStateDefinition(builder);
+    }
+
+    @Override
+    public SpeedLevel getMinimumRequiredSpeedLevel() {
+        return super.getMinimumRequiredSpeedLevel();
     }
 }
