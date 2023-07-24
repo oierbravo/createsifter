@@ -36,7 +36,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
         this.meshStack = getMeshItemStack();
         this.siftableIngredienStack = getSiftableItemStack();
         this.waterlogged = false;
-        this.minimumSpeed = 0;
+        this.minimumSpeed = SifterBlockEntity.DEFAULT_MINIMUM_SPEED;
 
     }
     public boolean matches(RecipeWrapper    inv, Level worldIn, boolean waterlogged, float speed) {
@@ -135,7 +135,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     public void readAdditional(JsonObject json) {
         super.readAdditional(json);
         waterlogged = GsonHelper.getAsBoolean(json, "waterlogged", false);
-        minimumSpeed = GsonHelper.getAsFloat(json, "minimumSpeed", .0f);
+        minimumSpeed = GsonHelper.getAsFloat(json, "minimumSpeed", SifterBlockEntity.DEFAULT_MINIMUM_SPEED);
     }
 
     @Override
@@ -172,7 +172,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
         }
         return false;
     }
-    public float getSpeedRequiriment(){
+    public float getSpeedRequeriment(){
         return this.minimumSpeed;
     }
 

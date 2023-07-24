@@ -44,7 +44,9 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
     protected CombinedInvWrapper inputAndMeshCombined ;
 
+    public static float DEFAULT_MINIMUM_SPEED = IRotate.SpeedLevel.NONE.getSpeedValue();
     protected int totalTime;
+    protected float minimumSpeed = DEFAULT_MINIMUM_SPEED;
 
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
@@ -140,11 +142,13 @@ public class SifterBlockEntity extends KineticBlockEntity {
             if (!recipe.isPresent()) {
                 timer = 100;
                 totalTime = 100;
+                minimumSpeed = DEFAULT_MINIMUM_SPEED;
                 sendData();
             } else {
                 lastRecipe = recipe.get();
                 timer = lastRecipe.getProcessingDuration();
                 totalTime =  lastRecipe.getProcessingDuration();
+                minimumSpeed = lastRecipe.getSpeedRequeriment();
                 sendData();
             }
             return;
@@ -152,6 +156,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
         timer = lastRecipe.getProcessingDuration();
         totalTime =  lastRecipe.getProcessingDuration();
+        minimumSpeed = lastRecipe.getSpeedRequeriment();
         sendData();
     }
 
@@ -203,6 +208,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
         compound.put("OutputInventory", outputInv.serializeNBT());
         compound.put("MeshInventory", meshInv.serializeNBT());
         compound.putInt("TotalTime", totalTime);
+        compound.putFloat("MinimumSpeed", minimumSpeed);
         super.write(compound, clientPacket);
     }
 
@@ -213,27 +219,25 @@ public class SifterBlockEntity extends KineticBlockEntity {
         outputInv.deserializeNBT(compound.getCompound("OutputInventory"));
         meshInv.deserializeNBT(compound.getCompound("MeshInventory"));
         totalTime = compound.getInt("TotalTime");
+        minimumSpeed = compound.getFloat("MinimumSpeed");
         super.read(compound, clientPacket);
     }
 
     @Override
     public boolean isSpeedRequirementFulfilled() {
-        if(hasRecipeSpeedRequeriment()){
+        //if(hasRecipeSpeedRequeriment()){
 
-            float currentSpeed = getAbsSpeed();
+          //  float currentSpeed = getAbsSpeed();
 
-            return getAbsSpeed() >= lastRecipe.getSpeedRequiriment();
+            return getAbsSpeed() >= minimumSpeed;
 
-        }
-        return super.isSpeedRequirementFulfilled();
+        //}
+        //return super.isSpeedRequirementFulfilled();
     }
 
     private boolean hasRecipeSpeedRequeriment() {
-        if(lastRecipe == null)
-            return false;
-        if(lastRecipe.hasSpeedRequeriment()){
+        if(minimumSpeed != DEFAULT_MINIMUM_SPEED){
             return true;
-
         }
         return false;
     }
