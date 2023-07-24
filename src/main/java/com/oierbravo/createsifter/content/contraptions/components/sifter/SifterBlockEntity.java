@@ -207,14 +207,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
     public boolean isSpeedRequirementFulfilled() {
         return getAbsSpeed() >= minimumSpeed;
     }
-
-    private boolean hasRecipeSpeedRequeriment() {
-        if(minimumSpeed != DEFAULT_MINIMUM_SPEED){
-            return true;
-        }
-        return false;
-    }
-
+    
     public int getProcessingSpeed() {
         return Mth.clamp((int) Math.abs(getSpeed() / 16f), 1, 512);
     }
