@@ -40,20 +40,6 @@ minecraft {
     accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
-        /*client {
-            workingDirectory project.file('run')
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            args "--debug", "--stacktrace", "--scan", "-mixin.config=${modid}.mixins.json".toString()
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                "${modid}" {
-                    source sourceSets.main
-                }
-            }
-        }*/
         client {
             workingDirectory project.file('run')
             //arg '-mixin.config=create.mixins.json'
@@ -82,21 +68,7 @@ minecraft {
             }
         }
 
-        /*data {
-            workingDirectory project.file('run')
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
 
-            args "--mod", modid, "--all", "--output", file('src/generated/resources/'), "--existing", file('src/main/resources/')
-
-            mods {
-                "${modid}" {
-                    source sourceSets.main
-                }
-            }
-        }*/
         data {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES,REGISTRYDUMP'
@@ -260,20 +232,6 @@ compileJava {
     options.compilerArgs = ['-Xdiags:verbose']
 }
 
-
-
-//java {
-//    withSourcesJar()
-//    withJavadocJar()
-//}
-
-
-//task deobfJar(type: Jar) {
-//    from sourceSets.main.output
-//    classifier 'deobf'
-//}
-
-//build.dependsOn deobfJar
 
 jar.finalizedBy('reobfJar')
 tasks.jarJar.finalizedBy('reobfJarJar')
