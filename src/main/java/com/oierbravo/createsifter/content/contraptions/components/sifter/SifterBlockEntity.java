@@ -47,24 +47,6 @@ public class SifterBlockEntity extends KineticBlockEntity {
     public static float DEFAULT_MINIMUM_SPEED = IRotate.SpeedLevel.NONE.getSpeedValue();
     protected int totalTime;
     protected float minimumSpeed = DEFAULT_MINIMUM_SPEED;
-
-    @Override
-    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        return false;
-        /*boolean fullfilled = isSpeedRequirementFulfilled();
-
-        String processingString = "Not Processing";
-
-        if(isProcessing()){
-            Lang.text("Processing").forGoggles(tooltip);
-            return true;
-        }
-        if(isSpeedRequirementFulfilled())
-            return false;
-        Lang.text("Not enought speed to continue processing").forGoggles(tooltip);
-        return true;*/
-    }
-
     public SifterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
 
@@ -109,9 +91,6 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
         if (getSpeed() == 0)
             return;
-        /*if(!canProcess(inputInv.getStackInSlot(0))){
-            return;
-        }*/
         if(!isSpeedRequirementFulfilled()){
             return;
         }
@@ -225,14 +204,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
     @Override
     public boolean isSpeedRequirementFulfilled() {
-        //if(hasRecipeSpeedRequeriment()){
-
-          //  float currentSpeed = getAbsSpeed();
-
-            return getAbsSpeed() >= minimumSpeed;
-
-        //}
-        //return super.isSpeedRequirementFulfilled();
+        return getAbsSpeed() >= minimumSpeed;
     }
 
     private boolean hasRecipeSpeedRequeriment() {
@@ -300,20 +272,6 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
     public ItemStack getInputItemStack(){
         return this.inputInv.getStackInSlot(0);
-    }
-
-    public boolean isProcessing() {
-        return timer != totalTime;
-    }
-
-    @Override
-    public float calculateStressApplied() {
-        return 512;
-    }
-
-    @Override
-    public boolean addToTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
-        return super.addToTooltip(tooltip, isPlayerSneaking);
     }
 
     private class SifterInventoryHandler extends CombinedInvWrapper {

@@ -85,7 +85,6 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
 
     }
     public static boolean isMeshItemStack(ItemStack itemStack){
-        //if(itemStack.getTags().anyMatch(tag -> tag == ModTags.ModItemTags.MESHES.tag ))
         if(itemStack.getItem() instanceof BaseMesh)
             return true;
         return false;
