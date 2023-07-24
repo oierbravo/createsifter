@@ -6,6 +6,7 @@ import com.oierbravo.createsifter.foundation.gui.ModGUITextures;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
+import com.simibubi.create.foundation.utility.Lang;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -64,17 +65,21 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
         AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 43, 4);
         sifter.draw(graphics, 48, 27);
         drawWaterlogged(recipe, graphics, 35,50);
+        drawRequiredSpeed(recipe, graphics, 35, 65);
     }
     protected void drawWaterlogged(SiftingRecipe recipe, GuiGraphics guiGraphics, int x, int y) {
         boolean waterlogged = recipe.isWaterlogged();
         if (waterlogged) {
             Minecraft minecraft = Minecraft.getInstance();
             Font fontRenderer = minecraft.font;
-            String waterLoggedString = "Waterlogged";
-            int stringWidth = fontRenderer.width(waterLoggedString);
-
-            guiGraphics.drawString(fontRenderer,  waterLoggedString, getWidth() - stringWidth, y, 0xFF808080, false);
-
+            guiGraphics.drawString(fontRenderer, "Waterlogged", x, y, 0xFF808080,false);
+        }
+    }
+    protected void drawRequiredSpeed(SiftingRecipe recipe, GuiGraphics guiGraphics, int x, int y) {
+        if (recipe.hasSpeedRequeriment()) {
+            Minecraft minecraft = Minecraft.getInstance();
+            Font fontRenderer = minecraft.font;
+            guiGraphics.drawString(fontRenderer, Lang.translateDirect("createsifter.recipe.sifting.minimumspeed",recipe.getSpeedRequeriment()), x, y, 0xFF808080,false);
         }
     }
 }

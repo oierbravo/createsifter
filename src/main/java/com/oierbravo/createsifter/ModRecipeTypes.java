@@ -102,11 +102,12 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
         return world.getRecipeManager()
                 .getRecipeFor(getType(), inv, world);
     }
-    public Optional<SiftingRecipe> find(Container inv, Level world,boolean waterlogged) {
+
+    public Optional<SiftingRecipe> find(Container inv, Level world,boolean waterlogged, float speed) {
         if(world.isClientSide())
             return Optional.empty();
         List<SiftingRecipe> siftingRecipes = world.getRecipeManager().getAllRecipesFor(ModRecipeTypes.SIFTING.getType());
-        Stream<SiftingRecipe> siftingRecipesFiltered = siftingRecipes.stream().filter(siftingRecipe -> siftingRecipe.matches((RecipeWrapper) inv,world, waterlogged));
+        Stream<SiftingRecipe> siftingRecipesFiltered = siftingRecipes.stream().filter(siftingRecipe -> siftingRecipe.matches((RecipeWrapper) inv,world, waterlogged, speed));
         return siftingRecipesFiltered.findAny();
 
 

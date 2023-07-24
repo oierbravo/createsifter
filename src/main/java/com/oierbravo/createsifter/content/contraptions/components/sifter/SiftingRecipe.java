@@ -28,25 +28,24 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     ItemStack meshStack;
     ItemStack siftableIngredienStack;
     private boolean waterlogged;
-
+    private float minimumSpeed;
 
     public SiftingRecipe( ProcessingRecipeBuilder.ProcessingRecipeParams params) {
         super(ModRecipeTypes.SIFTING, params);
         this.meshStack = getMeshItemStack();
         this.siftableIngredienStack = getSiftableItemStack();
         this.waterlogged = false;
-
+        this.minimumSpeed = SifterBlockEntity.DEFAULT_MINIMUM_SPEED;
 
     }
-    public boolean matches(RecipeWrapper    inv, Level worldIn, boolean waterlogged) {
+    public boolean matches(RecipeWrapper    inv, Level worldIn, boolean waterlogged, float speed) {
         if (inv.isEmpty())
             return false;
         if(isWaterlogged() != waterlogged)
             return false;
+        if(hasSpeedRequeriment() && speed < minimumSpeed)
+            return false;
         return getSiftableIngredient().test(inv.getItem(0)) && getMeshIngredient().test(inv.getItem(1));
-        //return siftableIngredienStack.is(inv.getItem(0).getItem()) &&
-        //        meshStack.is(inv.getItem(1).getItem());
-
     }
     public ItemStack getMeshItemStack(){
         for(int i = 0; i < ingredients.size();i++){
@@ -85,7 +84,6 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
 
     }
     public static boolean isMeshItemStack(ItemStack itemStack){
-        //if(itemStack.getTags().anyMatch(tag -> tag == ModTags.ModItemTags.MESHES.tag ))
         if(itemStack.getItem() instanceof BaseMesh)
             return true;
         return false;
@@ -106,13 +104,13 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     }
 
     public static boolean canHandSift(Level world, ItemStack stack, ItemStack mesh, boolean waterlogged) {
-        return getMatchingInHandRecipes(world, stack, mesh, waterlogged);
+        return getMatchingInHandRecipes(world, stack, mesh, waterlogged,0);
     }
 
     public static List<ItemStack> applyHandSift(Level world, Vec3 position, ItemStack stack, ItemStack mesh, boolean waterlogged) {
 
         RecipeWrapper inventoryIn = new SifterInv(stack,mesh);
-        Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, world,waterlogged);
+        Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, world,waterlogged,0);
 
         if(recipe.isPresent()){
             return recipe.get().rollResults();
@@ -136,6 +134,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     public void readAdditional(JsonObject json) {
         super.readAdditional(json);
         waterlogged = GsonHelper.getAsBoolean(json, "waterlogged", false);
+        minimumSpeed = GsonHelper.getAsFloat(json, "minimumSpeed", SifterBlockEntity.DEFAULT_MINIMUM_SPEED);
     }
 
     @Override
@@ -143,31 +142,46 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
         super.writeAdditional(json);
         if (waterlogged)
             json.addProperty("waterlogged", waterlogged);
+        if(hasSpeedRequeriment()){
+            json.addProperty("minimumSpeed", minimumSpeed);
+        }
     }
 
     @Override
     public void readAdditional(FriendlyByteBuf buffer) {
         super.readAdditional(buffer);
         waterlogged = buffer.readBoolean();
+        minimumSpeed = buffer.readFloat();
     }
 
     @Override
     public void writeAdditional(FriendlyByteBuf buffer) {
         super.writeAdditional(buffer);
         buffer.writeBoolean(waterlogged);
+        buffer.writeFloat(minimumSpeed);
     }
 
     public boolean isWaterlogged() {
         return waterlogged;
     }
 
-    public static boolean getMatchingInHandRecipes(Level world, ItemStack stack, ItemStack mesh, boolean waterlogged) {
-        return ModRecipeTypes.SIFTING.find( new SiftingRecipe.SifterInv(stack,mesh), world, waterlogged).isPresent();
+    public boolean hasSpeedRequeriment(){
+        if(this.minimumSpeed > 0){
+            return true;
+        }
+        return false;
+    }
+    public float getSpeedRequeriment(){
+        return this.minimumSpeed;
+    }
+
+    public static boolean getMatchingInHandRecipes(Level world, ItemStack stack, ItemStack mesh, boolean waterlogged, float speed) {
+        return ModRecipeTypes.SIFTING.find( new SiftingRecipe.SifterInv(stack,mesh), world, waterlogged, speed).isPresent();
     }
 
     @Override
     public boolean matches(RecipeWrapper pContainer, Level pLevel) {
-        return matches(pContainer, pLevel, false);
+        return matches(pContainer, pLevel, false,0);
     }
 
 

@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 import com.oierbravo.createsifter.ModRecipeTypes;
+import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.sound.SoundScapes;
 import com.simibubi.create.foundation.utility.VecHelper;
@@ -40,7 +41,10 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
     protected CombinedInvWrapper inputAndMeshCombined ;
 
+    public static float DEFAULT_MINIMUM_SPEED = IRotate.SpeedLevel.NONE.getSpeedValue();
     protected int totalTime;
+    protected float minimumSpeed = DEFAULT_MINIMUM_SPEED;
+
 
     public SifterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
@@ -86,6 +90,10 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
         if (getSpeed() == 0)
             return;
+
+        if(!isSpeedRequirementFulfilled()){
+            return;
+        }
         for (int i = 0; i < outputInv.getSlots(); i++)
             if (outputInv.getStackInSlot(i)
                     .getCount() == outputInv.getSlotLimit(i))
@@ -108,16 +116,18 @@ public class SifterBlockEntity extends KineticBlockEntity {
             return;
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level,this.isWaterlogged())) {
-            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level, this.isWaterlogged());
+        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed())) {
+            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level, this.isWaterlogged(),getAbsSpeed());
             if (!recipe.isPresent()) {
                 timer = 100;
                 totalTime = 100;
+                minimumSpeed = DEFAULT_MINIMUM_SPEED;
                 sendData();
             } else {
                 lastRecipe = recipe.get();
                 timer = lastRecipe.getProcessingDuration();
                 totalTime =  lastRecipe.getProcessingDuration();
+                minimumSpeed = lastRecipe.getSpeedRequeriment();
                 sendData();
             }
             return;
@@ -125,6 +135,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
         timer = lastRecipe.getProcessingDuration();
         totalTime =  lastRecipe.getProcessingDuration();
+        minimumSpeed = lastRecipe.getSpeedRequeriment();
         sendData();
     }
 
@@ -138,8 +149,8 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
 
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level, this.isWaterlogged())) {
-            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged());
+        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level, this.isWaterlogged(),getAbsSpeed())) {
+            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged(), getAbsSpeed());
             if (!recipe.isPresent())
                 return;
             lastRecipe = recipe.get();
@@ -177,6 +188,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
         compound.put("OutputInventory", outputInv.serializeNBT());
         compound.put("MeshInventory", meshInv.serializeNBT());
         compound.putInt("TotalTime", totalTime);
+        compound.putFloat("MinimumSpeed", minimumSpeed);
         super.write(compound, clientPacket);
     }
 
@@ -187,7 +199,20 @@ public class SifterBlockEntity extends KineticBlockEntity {
         outputInv.deserializeNBT(compound.getCompound("OutputInventory"));
         meshInv.deserializeNBT(compound.getCompound("MeshInventory"));
         totalTime = compound.getInt("TotalTime");
+        minimumSpeed = compound.getFloat("MinimumSpeed");
         super.read(compound, clientPacket);
+    }
+
+    @Override
+    public boolean isSpeedRequirementFulfilled() {
+        return getAbsSpeed() >= minimumSpeed;
+    }
+
+    private boolean hasRecipeSpeedRequeriment() {
+        if(minimumSpeed != DEFAULT_MINIMUM_SPEED){
+            return true;
+        }
+        return false;
     }
 
     public int getProcessingSpeed() {
@@ -214,9 +239,9 @@ public class SifterBlockEntity extends KineticBlockEntity {
         tester.setStackInSlot(1, this.meshInv.getStackInSlot(0));
         RecipeWrapper inventoryIn = new RecipeWrapper(tester);
 
-        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level,this.isWaterlogged()))
+        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed()))
             return true;
-        return ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged())
+        return ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged(),getAbsSpeed())
                 .isPresent();
     }
 
@@ -239,6 +264,10 @@ public class SifterBlockEntity extends KineticBlockEntity {
     }
     public boolean isWaterlogged() {
         return this.getBlockState().getValue(BlockStateProperties.WATERLOGGED);
+    }
+
+    public float getAbsSpeed(){
+        return Math.abs(getSpeed());
     }
 
     public ItemStack getInputItemStack(){
