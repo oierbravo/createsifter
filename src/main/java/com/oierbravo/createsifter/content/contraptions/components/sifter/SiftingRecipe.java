@@ -100,7 +100,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
 
     @Override
     protected int getMaxOutputCount() {
-        return 16;
+        return SifterConfig.SIFTER_OUTPUT_CAPACITY.get();
     }
 
     public static boolean canHandSift(Level world, ItemStack stack, ItemStack mesh, boolean waterlogged) {

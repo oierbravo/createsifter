@@ -30,6 +30,7 @@ import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -101,16 +102,6 @@ public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>
     }
 
     @Override
-    public boolean hideStressImpact() {
-        return false;
-    }
-
-    @Override
-    public boolean showCapacityWithAnnotation() {
-        return true;
-    }
-
-    @Override
     public void updateEntityAfterFallOn(BlockGetter worldIn, Entity entityIn) {
         super.updateEntityAfterFallOn(worldIn, entityIn);
 
@@ -130,7 +121,7 @@ public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>
             return;
 
         ItemEntity itemEntity = (ItemEntity) entityIn;
-        LazyOptional<IItemHandler> capability = sifter.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY);
+        LazyOptional<IItemHandler> capability = sifter.getCapability(ForgeCapabilities.ITEM_HANDLER);
         if (!capability.isPresent())
             return;
 

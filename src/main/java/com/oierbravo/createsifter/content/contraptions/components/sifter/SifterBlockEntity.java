@@ -44,14 +44,14 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
     protected CombinedInvWrapper inputAndMeshCombined ;
 
-    public static float DEFAULT_MINIMUM_SPEED = IRotate.SpeedLevel.NONE.getSpeedValue();
+    public static float DEFAULT_MINIMUM_SPEED = SifterConfig.SIFTER_MINIMUM_SPEED.get().floatValue();
     protected int totalTime;
     protected float minimumSpeed = DEFAULT_MINIMUM_SPEED;
     public SifterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
 
         inputInv = new ItemStackHandler(1);
-        outputInv = new ItemStackHandler(16);
+        outputInv = new ItemStackHandler(SifterConfig.SIFTER_OUTPUT_CAPACITY.get());
         capability = LazyOptional.of(SifterInventoryHandler::new);
         meshInv = new ItemStackHandler(1){
             @Override
