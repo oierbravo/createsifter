@@ -21,6 +21,11 @@ This mod it's meant to be used in modpacks. Only contains very basic ore recipes
 
 Heavily inspired on ex nihilo sieve.
 
+## Configs
+- (Common) Strees impact.
+- (Common) Minimum Speed.
+- (Common) Output inventory capacity
+- (Client) Render in progress block
 
 ## Meshes
 > Works with the sifter or in hand (like create sandpaper)
@@ -43,7 +48,7 @@ Heavily inspired on ex nihilo sieve.
 - `results` is a list of items
 - Default `processingTime` is 200. You can override this value in the recipe.
 - Default `waterlogged` is `false`. You can override this value in the recipe.
-- Default `minimumSpeed` is `0.0` You can override this value in the recipe. In RPM as `float`. Maximum allowed value is `254.0`
+- Default `minimumSpeed` is `1.0` You can override this value in the recipe. In RPM as `float`. Maximum allowed value is `254.0`
 Example:
 ```
 {
