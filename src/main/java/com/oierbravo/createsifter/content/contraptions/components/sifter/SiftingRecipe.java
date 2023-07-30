@@ -166,7 +166,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     }
 
     public boolean hasSpeedRequeriment(){
-        if(this.minimumSpeed > 0){
+        if(this.minimumSpeed > SifterBlockEntity.DEFAULT_MINIMUM_SPEED){
             return true;
         }
         return false;
