@@ -29,7 +29,7 @@ public class CreateSifter {
         modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         REGISTRATE.registerEventListeners(modEventBus);
 
-
+        ModConfigs.register();
 
         ModBlocks.register();
         ModItems.register();

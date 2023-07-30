@@ -64,15 +64,17 @@ public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>
         if(handInStack.getItem() instanceof BaseMesh){
             sifterBlockEntity.insertMesh(handInStack, player);
         }
-        if(handInStack.isEmpty() && sifterBlockEntity.hasMesh() && player.isShiftKeyDown()){
-            sifterBlockEntity.removeMesh(player);
-        }
+
         if (!handInStack.isEmpty())
             return InteractionResult.PASS;
 
         withBlockEntityDo(worldIn, pos, sifter -> {
             boolean emptyOutput = true;
             IItemHandlerModifiable inv = sifter.outputInv;
+            if(handInStack.isEmpty() && sifterBlockEntity.hasMesh() && player.isShiftKeyDown()){
+                sifterBlockEntity.removeMesh(player);
+            }
+
             for (int slot = 0; slot < inv.getSlots(); slot++) {
                 ItemStack stackInSlot = inv.getStackInSlot(slot);
                 if (!stackInSlot.isEmpty())
