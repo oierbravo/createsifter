@@ -49,8 +49,10 @@ body:
             label: Mod Version
             description: The version of the mod you were using when the bug occured
             options:
-                - "0.0.9.c-36"
-                - "0.0.8.b-36"
+                - "1.6.1.c-36"
+                - "1.6.0.d-9"
+                - "1.6.0.c-36"
+                - "1.5.2.b-285"
         validations:
             required: true
     -   type: dropdown

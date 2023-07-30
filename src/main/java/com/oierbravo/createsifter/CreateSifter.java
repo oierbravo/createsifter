@@ -3,6 +3,7 @@ package com.oierbravo.createsifter;
 import com.oierbravo.createsifter.foundation.data.recipe.ModProcessingRecipeGen;
 import com.oierbravo.createsifter.groups.ModGroup;
 import com.oierbravo.createsifter.register.ModBlocks;
+import com.oierbravo.createsifter.register.ModConfigs;
 import com.oierbravo.createsifter.register.ModItems;
 import com.oierbravo.createsifter.register.ModBlockEntities;
 import com.simibubi.create.foundation.data.CreateRegistrate;
@@ -32,6 +33,7 @@ public class CreateSifter {
         REGISTRATE.registerEventListeners(modEventBus);
 
         new ModGroup("main");
+        ModConfigs.register();
 
         ModBlocks.register();
         ModItems.register();

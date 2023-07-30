@@ -43,16 +43,18 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
             ms.popPose();
         }
         //In progress Block renderer
-        ItemStack inProccessItemStack = be.getInputItemStack();
+        if(SifterConfig.SIFTER_RENDER_SIFTED_BLOCK.get()) {
+            ItemStack inProccessItemStack = be.getInputItemStack();
 
-        if(!inProccessItemStack.equals(ItemStack.EMPTY)){
-            float progress = be.getProcessingRemainingPercent();
-            ms.pushPose();
-            TransformStack.cast(ms)
-                    .scale((float) .9, progress,(float) .9)
-                .translate(new Vec3(0.05, 1.05 / progress, 0.05));
-            renderBlockFromItemStack(be.getInputItemStack(),ms,buffer,light, overlay);
-            ms.popPose();
+            if (!inProccessItemStack.equals(ItemStack.EMPTY)) {
+                float progress = be.getProcessingRemainingPercent();
+                ms.pushPose();
+                TransformStack.cast(ms)
+                        .scale((float) .9, progress, (float) .9)
+                        .translate(new Vec3(0.05, 1.05 / progress, 0.05));
+                renderBlockFromItemStack(be.getInputItemStack(), ms, buffer, light, overlay);
+                ms.popPose();
+            }
         }
         super.renderSafe(be, partialTicks, ms, buffer, light, overlay);
     }

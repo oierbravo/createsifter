@@ -18,6 +18,7 @@ public class ModConfigs {
     }
     private static void registerClientConfigs() {
         ForgeConfigSpec.Builder CLIENT_BUILDER = new ForgeConfigSpec.Builder();
+        SifterConfig.registerClientConfig(CLIENT_BUILDER);
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, CLIENT_BUILDER.build());
     }
 
