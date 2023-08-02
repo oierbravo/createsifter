@@ -190,23 +190,33 @@ event.create('example_mesh','createsifter:mesh').displayName('Example mesh')
 #### Adding recipes (server script)
 ```
 // event.recipes.createsifterSifting(output[], input[])
-// Optional .waterlogged() .processingTime(int time)
+// Optional .waterlogged() .processingTime(int time) .minimumSpeed(float speed)
 
 // Basic Example
-event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5).toJson(),Item.of('minecraft:redstone').withChance(0.1).toJson()], ['minecraft:sand','createsifter:string_mesh'])
+event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5),Item.of('minecraft:redstone').withChance(0.1)], ['minecraft:sand','createsifter:string_mesh'])
 
 // Waterlogged example
-event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5).toJson()], ['minecraft:sand','createsifter:string_mesh']).waterlogged()
+event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5)], ['minecraft:sand','createsifter:string_mesh']).waterlogged()
 
 // Minimum Speed Example
-event.recipes.createsifterSifting([Item.of('minecraft:redstone_block').withChance(0.5).toJson(),Item.of('minecraft:redstone').withChance(0.1).toJson()], ['minecraft:sand','createsifter:string_mesh']).minimumSpeed(64)
+event.recipes.createsifterSifting([Item.of('minecraft:redstone_block').withChance(0.5),Item.of('minecraft:redstone').withChance(0.1)], ['minecraft:sand','createsifter:string_mesh']).minimumSpeed(64)
 
 // Custom mesh example. Custom mesh ID comes from the Startup Script
-event.recipes.createsifterSifting([Item.of('minecraft:glowstone_dust').withChance(0.5).toJson(),Item.of('minecraft:redstone').withChance(0.1).toJson()], ['minecraft:sand','kubejs:example_mesh'])
+event.recipes.createsifterSifting([Item.of('minecraft:glowstone_dust').withChance(0.5),Item.of('minecraft:redstone').withChance(0.1)], ['minecraft:sand','kubejs:example_mesh'])
 
 ```
 
 #### Adding custom meshes (startup script)
 ```
 event.create('example_mesh','createsifter:mesh').displayName('Example Mesh').parentModel("createsifter:block/meshes/mesh").texture("mesh","kubejs:item/example_mesh").texture("frame","kubejs:block/example_mesh_frame");
+```
+
+## CraftTweaker Integration (1.19.2)
+## CraftTweaker Integration (1.19.2)
+```
+//addRecipe(String name, FluidStack outputFluid,Item inputItem, int processingTime, int minimumHeat)
+
+<recipetype:melter:melting>.addRecipe("test_recipe",<fluid:minecraft:water> * 500,<item:minecraft:gravel>, 1000,8);
+<recipetype:melter:melting>.addRecipe("test_recipe_2",<fluid:minecraft:lava> * 500,<item:minecraft:sand>, 200,2);
+
 ```

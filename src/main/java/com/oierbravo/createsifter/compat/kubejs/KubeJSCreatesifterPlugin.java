@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter.compat.kubejs;
 
 import com.oierbravo.createsifter.ModRecipeTypes;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipeSerializer;
 import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
 
@@ -24,7 +25,7 @@ public class KubeJSCreatesifterPlugin extends KubeJSPlugin {
     public void registerRecipeSchemas(RegisterRecipeSchemasEvent event) {
 
         for (var sifterRecipeType : ModRecipeTypes.values()) {
-            if (sifterRecipeType.getSerializer() instanceof ProcessingRecipeSerializer<?>) {
+            if (sifterRecipeType.getSerializer() instanceof SiftingRecipeSerializer) {
                 var schema = recipeSchemas.getOrDefault(sifterRecipeType, SiftingRecipeSchema.SIFTING);
                 event.register(sifterRecipeType.getId(), schema);
             }

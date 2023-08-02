@@ -59,7 +59,7 @@ public class PonderScenes {
                 .placeNearTarget();
         scene.idle(70);
 
-        ItemStack itemStack = new ItemStack(Items.GRAVEL);
+        ItemStack itemStack = new ItemStack(Items.GRAVEL,32);
         Vec3 entitySpawn = util.vector.topOf(sifter.above(3));
 
         ElementLink<EntityElement> entity1 =
@@ -88,7 +88,7 @@ public class PonderScenes {
                 .placeNearTarget();
         scene.idle(60);
 
-        ItemStack flour = AllItems.WHEAT_FLOUR.asStack();
+        ItemStack nugget = AllItems.COPPER_NUGGET.asStack();
         scene.overlay.showControls(
                 new InputWindowElement(util.vector.blockSurface(sifter, Direction.NORTH), Pointing.RIGHT).rightClick(),
                 40);
@@ -100,9 +100,9 @@ public class PonderScenes {
         scene.idle(15);
 
         BlockPos beltPos = util.grid.at(1, 1, 2);
-        scene.world.createItemOnBelt(beltPos, Direction.EAST, flour);
+        scene.world.createItemOnBelt(beltPos, Direction.EAST, nugget);
         scene.idle(15);
-        scene.world.createItemOnBelt(beltPos, Direction.EAST, new ItemStack(Items.WHEAT_SEEDS));
+        scene.world.createItemOnBelt(beltPos, Direction.EAST, new ItemStack(Items.COAL));
         scene.idle(20);
 
         scene.overlay.showText(50)
