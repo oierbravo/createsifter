@@ -76,6 +76,21 @@ public class SiftingRecipeGen extends ModProcessingRecipeGen {
             .output(.05f, Items.BLAZE_POWDER,1)
             .output(.20f, AllItems.EXP_NUGGET.get(), 1));
 
+
+    GeneratedRecipe DIRT_STRING_MESH_WATERLOGGED = create(CreateSifter.asResource("dirt_string_mesh_waterlogged"), b -> b.duration(500)
+            .require(Blocks.DIRT)
+            .require(MeshTypes.STRING.getItem())
+            .output(.20f, Items.KELP)
+            .output(.30f, Items.SEAGRASS)
+            .output(.05f, Items.TUBE_CORAL)
+            .output(.05f, Items.BRAIN_CORAL)
+            .output(.05f, Items.BUBBLE_CORAL)
+            .output(.05f, Items.FIRE_CORAL)
+            .output(.05f, Items.HORN_CORAL)
+            .isWaterlogged()
+    )
+            ;
+
     public SiftingRecipeGen(DataGenerator generator) {
         super(generator);
     }

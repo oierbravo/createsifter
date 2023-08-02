@@ -176,6 +176,21 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:jade-324717:${jade_id}")
 
 
+
+    if (ct_enabled.toBoolean()) {
+        def minecraftVersion= "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+        def ctDep = "com.blamejared.crafttweaker:CraftTweaker-forge-${ct_minecraft_version}:${ct_version}"
+        def ctCreateDep = "com.blamejared.crafttweaker:CraftTweaker-forge-${ct_minecraft_version}:${ct_version}"
+        compileOnly(ctDep)
+        runtimeOnly(fg.deobf(ctDep))
+
+        implementation fg.deobf("curse.maven:createtweaker-437717:${ct_create_id}")
+        annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:3.0.0.10'
+        annotationProcessor minecraftVersion
+        annotationProcessor ctDep
+        annotationProcessor ctCreateDep
+    }
+
     if (System.getProperty('idea.sync.active') != 'true') {
         annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
     }
@@ -214,3 +229,9 @@ task deobfJar(type: Jar) {
 build.dependsOn deobfJar
 
 jar.finalizedBy('reobfJar')
+
+compileJava {
+    if (ct_enabled.toBoolean()) {
+        options.compilerArgs << "-Acrafttweaker.processor.document.output_directory=${file('docsOut')}"
+    }
+}
