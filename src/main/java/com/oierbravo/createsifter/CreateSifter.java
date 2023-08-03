@@ -1,6 +1,6 @@
 package com.oierbravo.createsifter;
 
-import com.oierbravo.createsifter.foundation.data.recipe.ModProcessingRecipes;
+import com.oierbravo.createsifter.foundation.data.recipe.ModProcessingRecipeGen;
 import com.oierbravo.createsifter.register.*;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.data.DataGenerator;
@@ -49,6 +49,13 @@ public class CreateSifter {
         registrate().addRawLang("create.recipe.sifting", "Sifting recipe");
         registrate().addRawLang("create.createsifter.recipe.sifting.minimumspeed", "%1$s RPM");
         registrate().addRawLang("itemGroup.createsifter:main", "Create sifting");
+        //Ponder
+        registrate().addRawLang("createsifter.ponder.sifter.header", "Block sifting");
+        registrate().addRawLang("createsifter.ponder.sifter.text_1", "Sifter process items by sifting them");
+        registrate().addRawLang("createsifter.ponder.sifter.text_2", "They can be powered from the side using cogwheels");
+        registrate().addRawLang("createsifter.ponder.sifter.text_3", "Throw or Insert items at the top");
+        registrate().addRawLang("createsifter.ponder.sifter.text_4", "After some time, the result can be obtained via Right-click");
+        registrate().addRawLang("createsifter.ponder.sifter.text_5", "The outputs can also be extracted by automation");
     }
     public static CreateRegistrate registrate() {
         return REGISTRATE;
@@ -61,12 +68,12 @@ public class CreateSifter {
 
         }
         if (event.includeServer()) {
-            ModProcessingRecipes.registerAllProcessingProviders(gen, output);
+            ModProcessingRecipeGen.registerAll(gen);
         }
 
     }
     private void doClientStuff(final FMLClientSetupEvent event) {
-       // event.enqueueWork(ModPonders::register);
+       event.enqueueWork(ModPonders::register);
     }
 
     public static ResourceLocation asResource(String path) {

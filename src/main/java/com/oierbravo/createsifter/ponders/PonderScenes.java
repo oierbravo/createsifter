@@ -27,9 +27,9 @@ public class PonderScenes {
                 .substract(beltCog), Direction.UP);
 
         BlockPos sifter = util.grid.at(2, 2, 2);
-        Selection millstoneSelect = util.select.position(2, 2, 2);
+        Selection sifterSelect = util.select.position(2, 2, 2);
         Selection cogs = util.select.fromTo(3, 1, 2, 3, 2, 2);
-        scene.world.setKineticSpeed(millstoneSelect, 0);
+        scene.world.setKineticSpeed(sifterSelect, 0);
 
         scene.idle(5);
         scene.world.showSection(util.select.position(4, 1, 3), Direction.DOWN);
@@ -37,17 +37,17 @@ public class PonderScenes {
         scene.idle(10);
         scene.world.showSection(util.select.position(sifter), Direction.DOWN);
         scene.idle(10);
-        Vec3 millstoneTop = util.vector.topOf(sifter);
+        Vec3 sifterTop = util.vector.topOf(sifter);
         scene.overlay.showText(60)
                 .attachKeyFrame()
                 .text("Sifter process items by sifting them")
-                .pointAt(millstoneTop)
+                .pointAt(sifterTop)
                 .placeNearTarget();
         scene.idle(70);
 
         scene.world.showSection(cogs, Direction.DOWN);
         scene.idle(10);
-        scene.world.setKineticSpeed(millstoneSelect, 32);
+        scene.world.setKineticSpeed(sifterSelect, 32);
         scene.effects.indicateSuccess(sifter);
         scene.idle(10);
 
@@ -59,7 +59,7 @@ public class PonderScenes {
                 .placeNearTarget();
         scene.idle(70);
 
-        ItemStack itemStack = new ItemStack(Items.WHEAT);
+        ItemStack itemStack = new ItemStack(Items.GRAVEL,32);
         Vec3 entitySpawn = util.vector.topOf(sifter.above(3));
 
         ElementLink<EntityElement> entity1 =
@@ -69,13 +69,13 @@ public class PonderScenes {
         scene.world.modifyBlockEntity(sifter, SifterBlockEntity.class,
                 ms -> ms.inputInv.setStackInSlot(0, itemStack));
         scene.idle(10);
-        scene.overlay.showControls(new InputWindowElement(millstoneTop, Pointing.DOWN).withItem(itemStack), 30);
+        scene.overlay.showControls(new InputWindowElement(sifterTop, Pointing.DOWN).withItem(itemStack), 30);
         scene.idle(7);
 
         scene.overlay.showText(40)
                 .attachKeyFrame()
                 .text("Throw or Insert items at the top")
-                .pointAt(millstoneTop)
+                .pointAt(sifterTop)
                 .placeNearTarget();
         scene.idle(60);
 
@@ -88,10 +88,9 @@ public class PonderScenes {
                 .placeNearTarget();
         scene.idle(60);
 
-        ItemStack flour = AllItems.WHEAT_FLOUR.asStack();
+        ItemStack nugget = AllItems.COPPER_NUGGET.asStack();
         scene.overlay.showControls(
-                new InputWindowElement(util.vector.blockSurface(sifter, Direction.NORTH), Pointing.RIGHT).rightClick()
-                        .withItem(flour),
+                new InputWindowElement(util.vector.blockSurface(sifter, Direction.NORTH), Pointing.RIGHT).rightClick(),
                 40);
         scene.idle(50);
 
@@ -101,9 +100,9 @@ public class PonderScenes {
         scene.idle(15);
 
         BlockPos beltPos = util.grid.at(1, 1, 2);
-        scene.world.createItemOnBelt(beltPos, Direction.EAST, flour);
+        scene.world.createItemOnBelt(beltPos, Direction.EAST, nugget);
         scene.idle(15);
-        scene.world.createItemOnBelt(beltPos, Direction.EAST, new ItemStack(Items.WHEAT_SEEDS));
+        scene.world.createItemOnBelt(beltPos, Direction.EAST, new ItemStack(Items.COAL));
         scene.idle(20);
 
         scene.overlay.showText(50)

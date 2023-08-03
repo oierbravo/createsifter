@@ -2,8 +2,9 @@ package com.oierbravo.createsifter;
 
 import com.google.common.collect.ImmutableSet;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipeSerializer;
+import com.oierbravo.createsifter.foundation.data.recipe.SiftingRecipeBuilder;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import com.simibubi.create.foundation.utility.Lang;
 import com.simibubi.create.foundation.utility.RegisteredObjects;
@@ -61,8 +62,8 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
         typeObject = Registers.TYPE_REGISTER.register(name, () -> simpleType(id));
         type = typeObject;
     }
-    ModRecipeTypes(ProcessingRecipeBuilder.ProcessingRecipeFactory<?> processingFactory) {
-        this(() -> new ProcessingRecipeSerializer<>(processingFactory));
+    ModRecipeTypes(SiftingRecipeBuilder.SiftingRecipeFactory processingFactory) {
+        this(() -> new SiftingRecipeSerializer(processingFactory));
     }
 
     public static <T extends Recipe<?>> RecipeType<T> simpleType(ResourceLocation id) {
@@ -127,7 +128,7 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
 
     private static class Registers {
         private static final DeferredRegister<RecipeSerializer<?>> SERIALIZER_REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, CreateSifter.MODID);
-        private static final DeferredRegister<RecipeType<?>> TYPE_REGISTER = DeferredRegister.create(Registries.RECIPE_TYPE, CreateSifter.MODID);
+        private static final DeferredRegister<RecipeType<?>> TYPE_REGISTER = DeferredRegister.create(Registries.RECIPE_TYPE, Create.ID);
     }
 
 }

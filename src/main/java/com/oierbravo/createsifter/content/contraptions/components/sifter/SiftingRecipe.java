@@ -4,9 +4,10 @@ import com.google.gson.JsonObject;
 import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.BaseMesh;
+import com.oierbravo.createsifter.foundation.data.recipe.SiftingRecipeBuilder.SiftingRecipeParams;
 import com.simibubi.create.content.kinetics.crusher.AbstractCrushingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
@@ -25,19 +26,32 @@ import java.util.Optional;
 @ParametersAreNonnullByDefault
 public class SiftingRecipe  extends AbstractCrushingRecipe {
 
+    public NonNullList<ProcessingOutput> results;
     ItemStack meshStack;
     ItemStack siftableIngredienStack;
     private boolean waterlogged;
     private float minimumSpeed;
 
-    public SiftingRecipe( ProcessingRecipeBuilder.ProcessingRecipeParams params) {
+    @Override
+    public SiftingRecipeSerializer getSerializer() {
+        return ModRecipeTypes.SIFTING.getSerializer();
+    }
+
+    public SiftingRecipe(SiftingRecipeParams params) {
+
         super(ModRecipeTypes.SIFTING, params);
+        this.processingDuration = params.processingDuration;
+        this.ingredients = params.ingredients;
+        this.results = params.results;
+        this.id = params.id;
         this.meshStack = getMeshItemStack();
         this.siftableIngredienStack = getSiftableItemStack();
-        this.waterlogged = false;
-        this.minimumSpeed = SifterBlockEntity.DEFAULT_MINIMUM_SPEED;
+        this.waterlogged = params.waterlogged;
+        this.minimumSpeed = params.minimumSpeed;
 
     }
+
+
     public boolean matches(RecipeWrapper    inv, Level worldIn, boolean waterlogged, float speed) {
         if (inv.isEmpty())
             return false;
@@ -88,7 +102,6 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
             return true;
         return false;
     }
-
     @Override
     public String toString() {
         return CreateSifter.MODID+":sifting";
@@ -118,7 +131,16 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
         return Collections.singletonList(stack);
     }
 
-    @Override
+    public List<ProcessingOutput> getRollableResults() {
+        return results;
+    }
+    public List<ItemStack> rollResults(List<ProcessingOutput> rollableResults) {
+        return super.rollResults(rollableResults);
+    }
+    public List<ItemStack> rollResults() {
+        return rollResults(this.getRollableResults());
+    }
+    /*@Override
     public List<ItemStack> rollResults(List<ProcessingOutput> rollableResults) {
         List<ItemStack> results = new ArrayList<>();
         for (int i = 0; i < rollableResults.size(); i++) {
@@ -128,7 +150,8 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
                 results.add(stack);
         }
         return results;
-    }
+    }*/
+
 
     @Override
     public void readAdditional(JsonObject json) {
@@ -182,6 +205,10 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     @Override
     public boolean matches(RecipeWrapper pContainer, Level pLevel) {
         return matches(pContainer, pLevel, false,0);
+    }
+
+    public float getMinimumSpeed() {
+        return minimumSpeed;
     }
 
 
