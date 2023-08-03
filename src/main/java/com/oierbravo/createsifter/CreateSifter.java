@@ -68,7 +68,7 @@ public class CreateSifter {
 
         }
         if (event.includeServer()) {
-            ModProcessingRecipeGen.registerAll(gen);
+            ModProcessingRecipeGen.registerAll(gen,output);
         }
 
     }

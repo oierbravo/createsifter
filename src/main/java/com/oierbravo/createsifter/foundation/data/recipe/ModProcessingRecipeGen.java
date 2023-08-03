@@ -10,6 +10,7 @@ import com.simibubi.create.foundation.utility.RegisteredObjects;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
+import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -18,32 +19,30 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
 public abstract class ModProcessingRecipeGen extends CreateRecipeProvider {
     protected static final List<ModProcessingRecipeGen> GENERATORS = new ArrayList<>();
-    public ModProcessingRecipeGen(DataGenerator generator) {
+    public ModProcessingRecipeGen(PackOutput generator) {
         super(generator);
     }
-    public static void registerAll(DataGenerator generator) {
-        GENERATORS.add(new SiftingRecipeGen(generator));
+    public static void registerAll(DataGenerator gen, PackOutput output) {
+        GENERATORS.add(new SiftingRecipeGen(output));
 
-        generator.addProvider(true, new DataProvider() {
-            @Override
-            public void run(CachedOutput dc) throws IOException {
-                GENERATORS.forEach(g -> {
-                    try {
-                        g.run(dc);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
-            }
+        gen.addProvider(true, new DataProvider() {
 
             @Override
             public @NotNull String getName() {
                 return "Create Sifter's Processing Recipes";
+            }
+
+            @Override
+            public CompletableFuture<?> run(CachedOutput dc) {
+                return CompletableFuture.allOf(GENERATORS.stream()
+                        .map(gen -> gen.run(dc))
+                        .toArray(CompletableFuture[]::new));
             }
         });
     }
@@ -115,10 +114,5 @@ public abstract class ModProcessingRecipeGen extends CreateRecipeProvider {
         };
     }
 
-    @Override
-    public String getName() {
-        return "Create Sifter's Processing Recipes: " + getRecipeType().getId()
-                .getPath();
-    }
 
 }

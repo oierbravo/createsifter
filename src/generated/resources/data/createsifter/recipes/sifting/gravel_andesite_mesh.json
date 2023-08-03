@@ -34,6 +34,5 @@
       "chance": 0.1,
       "item": "minecraft:flint"
     }
-  ],
-  "minimumSpeed": 100
+  ]
 }

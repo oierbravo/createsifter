@@ -6,6 +6,7 @@ import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.MeshTypes;
 import com.simibubi.create.AllItems;
 import net.minecraft.data.DataGenerator;
+import net.minecraft.data.PackOutput;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 
@@ -91,7 +92,7 @@ public class SiftingRecipeGen extends ModProcessingRecipeGen {
     )
             ;
 
-    public SiftingRecipeGen(DataGenerator generator) {
+    public SiftingRecipeGen(PackOutput generator) {
         super(generator);
     }
 

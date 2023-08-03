@@ -208,12 +208,12 @@ jar {
 
     manifest {
         attributes([
-                "Specification-Title"     : modid,
-                "Specification-Vendor"    : author,
+                "Specification-Title"     : "createsifter",
+                "Specification-Vendor"    : "oierbravo",
                 "Specification-Version"   : "1", // We are version 1 of ourselves
-                "Implementation-Title"    : project.name,
-                "Implementation-Version"  : project.version,
-                "Implementation-Vendor"   : author,
+                'Implementation-Title'    : project.jar.archiveBaseName,
+                'Implementation-Version'  : version,
+                "Implementation-Vendor"   : "oierbravo",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "MixinConfigs"            : "${modid}.mixins.json"
         ])

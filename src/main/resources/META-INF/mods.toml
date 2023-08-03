@@ -7,6 +7,8 @@ license="MIT"
 
 modId = "createsifter"
 version = "${file.jarVersion}"
+updateJSONURL = "https://api.modrinth.com/updates/create-sifting/forge_updates.json"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/create-sifting"
 displayName = "Create Sifter"
 logoFile="logo.png"
 description = '''
