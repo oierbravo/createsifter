@@ -212,7 +212,6 @@ event.create('example_mesh','createsifter:mesh').displayName('Example Mesh').par
 ```
 
 ## CraftTweaker Integration (1.19.2)
-## CraftTweaker Integration (1.19.2)
 ```
 //addRecipe(String name, FluidStack outputFluid,Item inputItem, int processingTime, int minimumHeat)
 

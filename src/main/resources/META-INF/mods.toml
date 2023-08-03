@@ -7,6 +7,7 @@ license="MIT"
 
 modId = "createsifter"
 version = "${file.jarVersion}"
+updateJSONURL = "https://api.modrinth.com/updates/create-sifting/forge_updates.json"
 displayName = "Create Sifter"
 logoFile="logo.png"
 description = '''
@@ -37,12 +38,12 @@ Gather resources sifting
 [[dependencies.createsifter]]
     modId = "kubejs"
     mandatory = false
-    versionRange = "[1902.6.1-build.300,)"
+    versionRange = "[1902.6.1-build.348,)"
     ordering = "AFTER"
     side = "BOTH"
 [[dependencies.createsifter]]
     modId = "kubejs_create"
     mandatory = false
-    versionRange = "[1902.2.4-build.20,)"
+    versionRange = "[1902.2.4-build.27,)"
     ordering = "AFTER"
     side = "BOTH"
