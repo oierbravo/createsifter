@@ -11,8 +11,8 @@ import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 
 public interface SiftingRecipeSchema extends ProcessingRecipeSchema {
     RecipeKey<Boolean> WATERLOGGED = BooleanComponent.BOOLEAN.key("waterlogged").optional(false);
-    RecipeKey<Float> MINIMUM_SPEED = NumberComponent.FLOAT.key("minimumSpeed").optional(SifterBlockEntity.DEFAULT_MINIMUM_SPEED);
-    class SiftingRecipeJS extends ProcessingRecipeJS {
+    RecipeKey<Float> MINIMUM_SPEED = NumberComponent.FLOAT.key("minimumSpeed").optional(1.0f);
+    class SiftingRecipeJS extends RecipeJS {
         public RecipeJS waterlogged() {
             return setValue(WATERLOGGED, true);
         }

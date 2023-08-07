@@ -191,7 +191,7 @@ public class SiftingRecipeBuilder {
             results = NonNullList.create();
             processingDuration = 0;
             waterlogged = false;
-            minimumSpeed = SifterConfig.SIFTER_MINIMUM_SPEED.get().floatValue();
+            minimumSpeed = 1;
         }
 
     }

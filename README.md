@@ -213,9 +213,14 @@ event.create('example_mesh','createsifter:mesh').displayName('Example Mesh').par
 
 ## CraftTweaker Integration (1.19.2)
 ```
-//addRecipe(String name, FluidStack outputFluid,Item inputItem, int processingTime, int minimumHeat)
+import mods.createsifter.SiftingManager;
 
-<recipetype:melter:melting>.addRecipe("test_recipe",<fluid:minecraft:water> * 500,<item:minecraft:gravel>, 1000,8);
-<recipetype:melter:melting>.addRecipe("test_recipe_2",<fluid:minecraft:lava> * 500,<item:minecraft:sand>, 200,2);
 
+//addRecipe(String id, ProcessingOutput[] results, Ingredients[] input, int processingTime, boolean waterlogged, float minimumSpeed)
+<recipetype:createsifter:sifting>.addRecipe("test_1",
+    [<item:minecraft:glowstone_dust> % 10,
+        <item:minecraft:gunpowder> % 50,
+        <item:create:cinder_flour> % 75],
+[<item:minecraft:netherrack>,<item:createsifter:andesite_mesh>]
+, 300, false, 1);
 ```

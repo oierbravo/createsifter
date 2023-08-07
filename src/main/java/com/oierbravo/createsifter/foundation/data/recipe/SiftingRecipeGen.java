@@ -88,8 +88,7 @@ public class SiftingRecipeGen extends ModProcessingRecipeGen {
             .output(.05f, Items.FIRE_CORAL)
             .output(.05f, Items.HORN_CORAL)
             .isWaterlogged()
-    )
-            ;
+    );
 
     public SiftingRecipeGen(DataGenerator generator) {
         super(generator);
