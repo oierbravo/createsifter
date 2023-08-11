@@ -1,0 +1,11 @@
+{
+  "block.createsifter.sifter": "Просеиватель",
+  "create.recipe.sifting": "Рецепт просеивания",
+  "createsifter.recipe.sifting": "Рецепт просеивания",
+  "item.createsifter.andesite_mesh": "Андезитовая сетка",
+  "item.createsifter.brass_mesh": "Латунная сетка",
+  "item.createsifter.custom_mesh": "Пользовательская сетка",
+  "item.createsifter.string_mesh": "Сетка из струн",
+  "item.createsifter.zinc_mesh": "Цинковая сетка",
+  "itemGroup.createsifter:main": "Create просеивание"
+}
