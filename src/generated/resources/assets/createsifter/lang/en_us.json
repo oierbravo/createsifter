@@ -9,6 +9,7 @@
   "createsifter.ponder.sifter.text_4": "After some time, the result can be obtained via Right-click",
   "createsifter.ponder.sifter.text_5": "The outputs can also be extracted by automation",
   "createsifter.recipe.sifting": "Sifting recipe",
+  "createsifter.recipe.sifting.waterlogged": "Waterlogged",
   "item.createsifter.andesite_mesh": "Andesite Mesh",
   "item.createsifter.brass_mesh": "Brass Mesh",
   "item.createsifter.custom_mesh": "Custom Mesh",
