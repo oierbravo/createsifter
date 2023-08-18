@@ -46,13 +46,15 @@ public class CreateSifter {
         generateLangEntries();
 
         modEventBus.addListener(EventPriority.LOWEST, CreateSifter::gatherData);
-
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                () -> ModPartials::init);
     }
     private void generateLangEntries(){
 
         registrate().addRawLang("createsifter.recipe.sifting", "Sifting recipe");
         registrate().addRawLang("create.recipe.sifting", "Sifting recipe");
         registrate().addRawLang("create.createsifter.recipe.sifting.minimumspeed", "%1$s RPM");
+        registrate().addRawLang("createsifter.recipe.sifting.waterlogged", "Waterlogged");
         registrate().addRawLang("itemGroup.createsifter:main", "Create sifting");
         //Ponder
         registrate().addRawLang("createsifter.ponder.sifter.header", "Block sifting");

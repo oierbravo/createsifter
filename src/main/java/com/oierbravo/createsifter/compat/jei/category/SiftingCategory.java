@@ -14,8 +14,11 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.util.Iterator;
 import java.util.List;
@@ -29,11 +32,15 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
 
 
     public void setRecipe(IRecipeLayoutBuilder builder, SiftingRecipe recipe, IFocusGroup focuses) {
-        Ingredient siftable = recipe.getSiftableIngredient();
         builder.addSlot(RecipeIngredientRole.INPUT, 15, 9).setBackground(getRenderedSlot(), -1, -1).addIngredients(recipe.getSiftableIngredient());
 
         if(!recipe.getMeshIngredient().isEmpty())
             builder.addSlot(RecipeIngredientRole.CATALYST, 15, 24).setBackground(getRenderedSlot(), -1, -1).addIngredients(recipe.getMeshIngredient());
+
+        if(recipe.isWaterlogged()){
+            builder.addSlot(RecipeIngredientRole.CATALYST, 15, 42).setBackground(getRenderedSlot(), -1, -1).addFluidStack(Fluids.WATER.getSource(),1000);
+
+        }
 
         List<ProcessingOutput> results = recipe.getRollableResults();
         boolean single = results.size() == 1;
@@ -58,29 +65,29 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
         List<ProcessingOutput> results = recipe.getRollableResults();
         boolean single = results.size() == 1;
         if(single){
-            AllGuiTextures.JEI_ARROW.render(matrixStack, 85, 32); //Output arrow
+            AllGuiTextures.JEI_ARROW.render(matrixStack, 85, 31); //Output arrow
         } else {
-            ModGUITextures.JEI_SHORT_ARROW.render(matrixStack, 75, 32); //Output arrow
+            ModGUITextures.JEI_SHORT_ARROW.render(matrixStack, 75, 31); //Output arrow
         }
 
-        AllGuiTextures.JEI_DOWN_ARROW.render(matrixStack, 43, 4);
+        AllGuiTextures.JEI_DOWN_ARROW.render(matrixStack, 43, 2);
+        boolean waterlogged = recipe.isWaterlogged();
+        if(waterlogged)
+            drawWaterlogged(recipe, matrixStack, 41,56);
+        sifter.waterlogged(waterlogged);
         sifter.draw(matrixStack, 48, 27);
-        drawWaterlogged(recipe, matrixStack, 35,50);
+
         drawRequiredSpeed(recipe, matrixStack, 35, 65);
     }
     protected void drawWaterlogged(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
-        boolean waterlogged = recipe.isWaterlogged();
-        if (waterlogged) {
-            Minecraft minecraft = Minecraft.getInstance();
-            Font fontRenderer = minecraft.font;
-            fontRenderer.draw(poseStack, "Waterlogged", x, y, 0xFF808080);
-        }
+        Minecraft minecraft = Minecraft.getInstance();
+        Font fontRenderer = minecraft.font;
+        fontRenderer.draw(poseStack, Component.translatable("createsifter.recipe.sifting.waterlogged"), x, y, 0xFF808080);
     }
     protected void drawRequiredSpeed(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
         if (recipe.hasSpeedRequeriment()) {
             Minecraft minecraft = Minecraft.getInstance();
             Font fontRenderer = minecraft.font;
-            float mini = recipe.getSpeedRequeriment();
             fontRenderer.draw(poseStack, Lang.translateDirect("createsifter.recipe.sifting.minimumspeed",recipe.getSpeedRequeriment()), x, y, 0xFF808080);
         }
     }

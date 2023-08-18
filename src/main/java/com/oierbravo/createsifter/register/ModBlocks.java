@@ -23,7 +23,6 @@ public class ModBlocks {
 
     public static void register() {
 
-        //Create.REGISTRATE.addToSection(SIFTER, AllSections.KINETICS);
     }
     public static final BlockEntry<SifterBlock> SIFTER = REGISTRATE.block("sifter", SifterBlock::new)
             .initialProperties(SharedProperties::stone)
