@@ -214,8 +214,8 @@ jar {
                 'Implementation-Title'    : project.jar.archiveBaseName,
                 'Implementation-Version'  : version,
                 "Implementation-Vendor"   : "oierbravo",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs"            : "${modid}.mixins.json"
+                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+               // "MixinConfigs"            : "${modid}.mixins.json"
         ])
     }
 }

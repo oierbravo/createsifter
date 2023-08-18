@@ -6,9 +6,11 @@ import com.simibubi.create.foundation.data.CreateRegistrate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.data.event.GatherDataEvent;
 import net.minecraftforge.eventbus.api.EventPriority;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -41,13 +43,15 @@ public class CreateSifter {
         generateLangEntries();
 
         modEventBus.addListener(EventPriority.LOWEST, CreateSifter::gatherData);
-
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
+                () -> ModPartials::init);
     }
     private void generateLangEntries(){
 
         registrate().addRawLang("createsifter.recipe.sifting", "Sifting recipe");
         registrate().addRawLang("create.recipe.sifting", "Sifting recipe");
         registrate().addRawLang("create.createsifter.recipe.sifting.minimumspeed", "%1$s RPM");
+        registrate().addRawLang("createsifter.recipe.sifting.waterlogged", "Waterlogged");
         registrate().addRawLang("itemGroup.createsifter:main", "Create sifting");
         //Ponder
         registrate().addRawLang("createsifter.ponder.sifter.header", "Block sifting");

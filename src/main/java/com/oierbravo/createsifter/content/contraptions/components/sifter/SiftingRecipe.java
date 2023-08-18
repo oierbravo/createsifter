@@ -157,7 +157,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     public void readAdditional(JsonObject json) {
         super.readAdditional(json);
         waterlogged = GsonHelper.getAsBoolean(json, "waterlogged", false);
-        minimumSpeed = GsonHelper.getAsFloat(json, "minimumSpeed", SifterBlockEntity.DEFAULT_MINIMUM_SPEED);
+        minimumSpeed = GsonHelper.getAsFloat(json, "minimumSpeed", 1);
     }
 
     @Override
