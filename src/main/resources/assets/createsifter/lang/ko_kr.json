@@ -1,0 +1,19 @@
+{
+  "block.createsifter.sifter": "체",
+  "create.createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
+  "create.recipe.sifting": "체질",
+  "createsifter.ponder.sifter.header": "블록 체질하기",
+  "createsifter.ponder.sifter.text_1": "체는 아이템을 체에 걸러서 가공합니다.",
+  "createsifter.ponder.sifter.text_2": "체는 옆면의 톱니바퀴로 동력을 공급 받습니다.",
+  "createsifter.ponder.sifter.text_3": "체의 윗면에 아이템을 던지거나 투입한 뒤...",
+  "createsifter.ponder.sifter.text_4": "...일정 시간이 지나면 우클릭으로 결과물을 회수할 수 있습니다.",
+  "createsifter.ponder.sifter.text_5": "또한 자동화 과정으로 결과물을 빼낼 수도 있습니다.",
+  "createsifter.recipe.sifting": "체질",
+  "createsifter.recipe.sifting.waterlogged": "물에 잠김",
+  "item.createsifter.andesite_mesh": "안산암 그물망",
+  "item.createsifter.brass_mesh": "황동 그물망",
+  "item.createsifter.custom_mesh": "커스텀 그물망",
+  "item.createsifter.string_mesh": "실 그물망",
+  "item.createsifter.zinc_mesh": "아연 그물망",
+  "itemGroup.createsifter:main": "Create sifting"
+}
