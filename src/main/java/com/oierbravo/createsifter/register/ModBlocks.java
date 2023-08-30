@@ -1,11 +1,15 @@
 package com.oierbravo.createsifter.register;
 
 import com.oierbravo.createsifter.CreateSifter;
+import com.oierbravo.createsifter.content.contraptions.components.brasss_sifter.BrassSifterBlock;
+import com.oierbravo.createsifter.content.contraptions.components.brasss_sifter.BrassSifterConfig;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlock;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterConfig;
 import com.oierbravo.createsifter.groups.ModGroup;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.kinetics.BlockStressDefaults;
 import com.simibubi.create.foundation.data.AssetLookup;
+import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -29,7 +33,18 @@ public class ModBlocks {
             .properties(p -> p.color(MaterialColor.METAL))
             .transform(pickaxeOnly())
             .blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
-            .transform(BlockStressDefaults.setImpact(4.0))
+            .transform(BlockStressDefaults.setImpact(SifterConfig.SIFTER_STRESS_IMPACT.get()))
+            .item()
+            .transform(customItemModel())
+            .register();
+    public static final BlockEntry<BrassSifterBlock> BRASS_SIFTER = REGISTRATE.block("brass_sifter", BrassSifterBlock::new)
+            .initialProperties(SharedProperties::stone)
+            .properties(p -> p.color(MaterialColor.METAL))
+            .properties(p -> p.noOcclusion())
+            .properties(p -> p.isRedstoneConductor((level, pos, state) -> false))
+            .transform(pickaxeOnly())
+            .blockstate((c, p) -> BlockStateGen.simpleBlock(c, p, AssetLookup.forPowered(c, p)))
+            .transform(BlockStressDefaults.setImpact(BrassSifterConfig.BRASS_SIFTER_MINIMUM_SPEED.get()))
             .item()
             .transform(customItemModel())
             .register();

@@ -1,4 +1,5 @@
 {
+  "block.createsifter.brass_sifter": "Brass Sifter",
   "block.createsifter.sifter": "Sifter",
   "create.createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
   "create.recipe.sifting": "Sifting recipe",

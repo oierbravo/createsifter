@@ -65,13 +65,7 @@ public class MeshItemRenderer extends CustomRenderedItemModelRenderer {
 			int itemInUseCount = player.getUseItemRemainingTicks();
 			if (itemInUseCount > 0) {
 				int modifier = leftHand ? -1 : 1;
-				//int modifier = 0;
 				ms.translate(0, 0, 0);
-				//ms.translate(0, 0, 0);
-				//ms.translate(modifier * .5f, 0, -.25f);
-				//ms.mulPose(Vector3f.ZP.rotationDegrees(modifier * 40));
-				//ms.mulPose(Vector3f.XP.rotationDegrees(modifier * 10));
-				//ms.mulPose(Vector3f.YP.rotationDegrees(modifier * 90));
 				ms.mulPose(Vector3f.ZP.rotationDegrees(modifier * 1));
 				ms.mulPose(Vector3f.XP.rotationDegrees(modifier * 1));
 				ms.mulPose(Vector3f.YP.rotationDegrees(modifier * 1));
@@ -83,19 +77,9 @@ public class MeshItemRenderer extends CustomRenderedItemModelRenderer {
 
 		ms.popPose();
 	}
-
-
-	public static class MeshModel extends CreateSifterCustomRenderedItemModel {
-
-		public MeshModel(BakedModel template) {
-			super(template, "");
-		}
-
-	}
 	public static class CreateSifterCustomRenderedItemModel extends CustomRenderedItemModel {
 
 		public CreateSifterCustomRenderedItemModel(BakedModel template, String basePath) {
-			//super(template, CreateSifter.MODID, basePath);
 			super(template);
 		}
 
