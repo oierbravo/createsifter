@@ -15,6 +15,7 @@ buildscript {
 
 plugins {
     id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
+    id "com.modrinth.minotaur" version "2.+"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -222,6 +223,26 @@ jar {
 sourceSets.main.java {
     if (!cc_tweaked_enable.toBoolean()) {
         exclude 'com/oierbravo/createsifter/compat/computercraft/implementation/**'
+    }
+}
+if(System.getenv('MODRINTH_TOKEN') != null) {
+
+    modrinth {
+        token = System.getenv("MODRINTH_TOKEN")
+        projectId = "create-sifting"
+        versionNumber = "${version}"
+        versionName = "${display_name} - v${mod_version} for Mc ${minecraft_version}"
+        versionType = "release" // This is the default -- can also be `beta` or `alpha`
+        uploadFile = tasks.jar // With Loom, this MUST be set to `remapJar` instead of `jar`!
+        gameVersions = ["${minecraft_version}"] // Must be an array, even with only one version
+        loaders = ["forge"] // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
+        dependencies { // A special DSL for creating dependencies
+            optional.project "kubejs"
+            optional.project "jei"
+            optional.project "crafttweaker"
+            required.project "create"
+        }
+        changelog = rootProject.file("changes/${minecraft_version}-${mod_version}.md").text
     }
 }
 /*sourceSets.main.resources {
