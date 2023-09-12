@@ -4,19 +4,16 @@ buildscript {
         mavenCentral()
         maven { url = 'https://repo.spongepowered.org/repository/maven-public' }
         maven { url = 'https://maven.parchmentmc.org' }
-
     }
     dependencies {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: "${forgegradle_version}", changing: false
-        classpath 'gradle.plugin.com.matthewprenger:CurseGradle:1.1.0'
         classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
         classpath "org.parchmentmc:librarian:1.+"
     }
 }
 
 plugins {
-    id 'com.matthewprenger.cursegradle' version "${cursegradle_version}"
-    id "com.modrinth.minotaur" version "2.+"
+    id "me.shedaniel.unified-publishing" version "0.1.+"
 }
 
 apply plugin: 'net.minecraftforge.gradle'
@@ -39,7 +36,7 @@ minecraft {
         mappings channel: 'official', version: "${minecraft_version}"
     }
 
-    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+    //accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
     runs {
         client {
@@ -218,7 +215,7 @@ jar {
         ])
     }
 }
-if(System.getenv('MODRINTH_TOKEN') != null) {
+/*if(System.getenv('MODRINTH_TOKEN') != null) {
 
     modrinth {
         token = System.getenv("MODRINTH_TOKEN")
@@ -237,7 +234,7 @@ if(System.getenv('MODRINTH_TOKEN') != null) {
         }
         changelog = rootProject.file("changes/${minecraft_version}-${mod_version}.md").text
     }
-}
+}*/
 
 
 mixin {
@@ -255,5 +252,50 @@ jar.finalizedBy('reobfJar')
 compileJava {
     if (ct_enabled.toBoolean()) {
         options.compilerArgs << "-Acrafttweaker.processor.document.output_directory=${file('docsOut')}"
+    }
+}
+
+unifiedPublishing {
+    project {
+        changelog = rootProject.file("changes/${minecraft_version}-${mod_version}.md").text // Optional, in markdown format
+        releaseType = "release" // Optional, use "release", "beta" or "alpha"
+        gameVersions = ["${minecraft_version}"]
+        gameLoaders = ["forge"]
+
+        mainPublication tasks.jar // Declares the publicated jar
+
+        var cfToken = System.getenv("CF_TOKEN")
+        if(cfToken != null) {
+            curseforge {
+                token = cfToken
+                id = "${curseforge_id}" // Required, must be a string, ID of CurseForge project
+                //id = "661938" // Required, must be a string, ID of CurseForge project
+                //gameVersions.addAll "Java 17"
+                relations {
+                    depends "create"
+                    optional "jei"
+                    optional "kubejs"
+                    optional "kubejs-create"
+                    optional "crafttweaker"
+                }
+            }
+        }
+
+        var mrToken = System.getenv("MODRINTH_TOKEN")
+        if(mrToken != null) {
+            modrinth {
+                token = mrToken
+
+                //id = "r018adCw"// Required, must be a string, ID of Modrinth project
+                id = "${modrinth_id}"// Required, must be a string, ID of Modrinth project
+                relations {
+                    depends "create"
+                    optional "jei"
+                    optional "kubejs"
+                    optional "kubejs-create"
+                    optional "crafttweaker"
+                }
+            }
+        }
     }
 }
