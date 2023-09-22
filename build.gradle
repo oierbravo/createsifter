@@ -182,7 +182,7 @@ dependencies {
         compileOnly(ctDep)
         runtimeOnly(fg.deobf(ctDep))
 
-        implementation fg.deobf("curse.maven:createtweaker-437717:${ct_create_id}")
+        implementation fg.deobf("com.blamejared.createtweaker:CreateTweaker-1.19.2:${ct_create_version}")
         annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:3.0.0.10'
         annotationProcessor minecraftVersion
         annotationProcessor ctDep
