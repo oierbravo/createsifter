@@ -1,0 +1,30 @@
+{
+  "type": "createsifter:sifting",
+  "ingredients": [
+    {
+      "item": "minecraft:soul_sand"
+    },
+    {
+      "item": "createsifter:advanced_brass_mesh"
+    }
+  ],
+  "processingTime": 500,
+  "results": [
+    {
+      "chance": 0.45,
+      "item": "minecraft:quartz"
+    },
+    {
+      "chance": 0.15,
+      "item": "minecraft:quartz"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:ghast_tear"
+    },
+    {
+      "chance": 0.2,
+      "item": "create:experience_nugget"
+    }
+  ]
+}

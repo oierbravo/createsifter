@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " S ",
+    "SMS",
+    " S "
+  ],
+  "key": {
+    "S": {
+      "item": "create:brass_sheed"
+    },
+    "M": {
+      "item": "createsifter:brass_mesh"
+    }
+  },
+  "result": {
+    "item": "createsifter:advanced_brass_mesh",
+    "count": 1
+  }
+}

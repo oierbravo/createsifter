@@ -36,14 +36,18 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
         VertexConsumer vb = buffer.getBuffer(RenderType.cutout());
         ItemStack meshItemStack = be.meshInv.getStackInSlot(0);
 
+        Double xPos = 0.0;
+        if(SifterConfig.SIFTER_RENDER_MOVING_MESH.get())
+            xPos = Math.sin(be.getProgress())/40;
+
         if(!meshItemStack.isEmpty()){
             ms.pushPose();
-            TransformStack.cast(ms).translate(new Vec3(0.5, 1.51, 0.5));
-            renderStaticBlock(ms,buffer,light, overlay,meshItemStack,be);
+            TransformStack.cast(ms).translate(new Vec3(0.5 - xPos, 1.51, 0.5));
+            renderStaticBlock(ms,buffer,light, overlay,meshItemStack);
             ms.popPose();
         }
         //In progress Block renderer
-        if(SifterConfig.SIFTER_RENDER_SIFTED_BLOCK.get()) {
+        if(!meshItemStack.isEmpty() && SifterConfig.SIFTER_RENDER_SIFTED_BLOCK.get()) {
             ItemStack inProccessItemStack = be.getInputItemStack();
 
             if (!inProccessItemStack.equals(ItemStack.EMPTY)) {
@@ -51,7 +55,7 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
                 ms.pushPose();
                 TransformStack.cast(ms)
                         .scale((float) .9, progress, (float) .9)
-                        .translate(new Vec3(0.05, 1.05 / progress, 0.05));
+                        .translate(new Vec3(-xPos + 0.05, 1.05 / progress, 0.05));
                 renderBlockFromItemStack(be.getInputItemStack(), ms, buffer, light, overlay);
                 ms.popPose();
             }
@@ -60,7 +64,7 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
     }
     @Override
     protected SuperByteBuffer getRotatedModel(SifterBlockEntity be, BlockState state) {
-        return CachedBufferer.partial(AllPartialModels.MILLSTONE_COG, state);
+        return CachedBufferer.partial(ModPartials.SIFTER_COG, state);
     }
     protected void renderStaticBlock(PoseStack ms, MultiBufferSource buffer, int light, int overlay, ItemStack itemStack, SifterBlockEntity entity) {
         Minecraft.getInstance()
@@ -79,6 +83,4 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
                 .getBlockRenderer()
                 .renderSingleBlock(blockState, ms,buffer,light,overlay, ModelData.EMPTY,RenderType.solid());
     }
-
-
 }

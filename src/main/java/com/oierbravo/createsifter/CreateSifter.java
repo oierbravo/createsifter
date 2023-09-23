@@ -60,6 +60,9 @@ public class CreateSifter {
         registrate().addRawLang("createsifter.ponder.sifter.text_3", "Throw or Insert items at the top");
         registrate().addRawLang("createsifter.ponder.sifter.text_4", "After some time, the result can be obtained via Right-click");
         registrate().addRawLang("createsifter.ponder.sifter.text_5", "The outputs can also be extracted by automation");
+
+        registrate().addRawLang("createsifter.recipe.sifting.brass_required", "Brass sifter required");
+
     }
     public static CreateRegistrate registrate() {
         return REGISTRATE;

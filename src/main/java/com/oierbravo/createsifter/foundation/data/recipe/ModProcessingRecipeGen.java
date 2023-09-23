@@ -113,6 +113,4 @@ public abstract class ModProcessingRecipeGen extends CreateRecipeProvider {
             return CreateSifter.asResource(registryName.getPath() + suffix);
         };
     }
-
-
 }

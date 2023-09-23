@@ -181,4 +181,9 @@ public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>
         builder.add(BlockStateProperties.WATERLOGGED);
         super.createBlockStateDefinition(builder);
     }
+
+    @Override
+    public SpeedLevel getMinimumRequiredSpeedLevel() {
+        return super.getMinimumRequiredSpeedLevel();
+    }
 }

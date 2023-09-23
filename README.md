@@ -13,13 +13,33 @@
 [![Modrinth](https://modrinth-utils.vercel.app/api/badge/downloads?id=r018adCw&logo=true)][MODRINTH]
 <!-- modrinth_exclude.end -->
 
-[![](https://img.shields.io/badge/REQUIRES%20CREATE%20v0.5.0d-gold?logo=curseforge&labelColor=gray&style=for-the-badge)][CREATE]
+[![](https://img.shields.io/badge/REQUIRES%20CREATE%20v0.5.1c%20for%201.18.2%2F1.19.2-gold?logo=curseforge&labelColor=gray&style=for-the-badge)][CREATE]
+[![](https://img.shields.io/badge/REQUIRES%20CREATE%20v0.5.1d%20for%201.20.1-gold?logo=curseforge&labelColor=gray&style=for-the-badge)][CREATE]
 
 A simple sifter for the amazing create mod.
 This mod it's meant to be used in modpacks. Only contains very basic ore recipes.
 
 Heavily inspired on ex nihilo sieve.
 
+## 23/09/2023 Update
+- Brass sifter
+- Advanced mesh, works only with the brass sifter
+- Crushed end stone. No recipes just an utility block for modpacks.
+- Dust. No recipes just an utility block for modpacks.
+- Nerfed all included recipes.
+- Changed sifting animation.
+
+### Brass Sifter
+- `High` redstone disables processing
+- Filters for allow or deny outputs.
+- 8x processing per cycle, configurable.
+- Bigger output capaticy, configurable.
+
+## Configs
+- (Common) Strees impact.
+- (Common) Minimum Speed.
+- (Common) Output inventory capacity
+- (Client) Render in progress block
 
 ## Meshes
 > Works with the sifter or in hand (like create sandpaper)
@@ -42,7 +62,7 @@ Heavily inspired on ex nihilo sieve.
 - `results` is a list of items
 - Default `processingTime` is 200. You can override this value in the recipe.
 - Default `waterlogged` is `false`. You can override this value in the recipe.
-- Default `minimumSpeed` is `0.0` You can override this value in the recipe. In RPM as `float`. Maximum allowed value is `254.0`
+- Default `minimumSpeed` is `1.0` You can override this value in the recipe. In RPM as `float`. Maximum allowed value is `254.0`
 Example:
 ```
 {
@@ -165,41 +185,57 @@ Code inspiration from [Create Craft & Additions](https://www.curseforge.com/mine
 // Optional .waterlogged() .processingTime(int time)
 
 // Basic Example
-event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5).toJson(),Item.of('minecraft:redstone').withChance(0.1).toJson()], ['minecraft:sand','createsifter:string_mesh'])
+event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5),Item.of('minecraft:redstone').withChance(0.1).toJson()], ['minecraft:sand','createsifter:string_mesh'])
 
 //Waterlogged example
-event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5).toJson()], ['minecraft:sand','createsifter:string_mesh']).waterlogged()
+event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5)], ['minecraft:sand','createsifter:string_mesh']).waterlogged()
 ```
 
 #### Adding custom meshes (startup script)
+
 ```
 event.create('example_mesh','createsifter:mesh').displayName('Example mesh')
 ```
 
-### KubeJS 6 integration (tested with `1902.6.0-build.121` version)
+### KubeJS 6.1 integration (tested with `1902.6.1-build.300` version)
 - For minecraft `1.19.2`
-- KubeJS 6 is in a very active development phase. Breaking changes may happen... be patient plz. I'll try to keep up with updates.
-- `withChance` method needs `toJson` to work properly.
+- KubeJS 6.1 is in a very active development phase. Breaking changes may happen... be patient plz. I'll try to keep up with updates.
+
 #### Adding recipes (server script)
 ```
 // event.recipes.createsifterSifting(output[], input[])
-// Optional .waterlogged() .processingTime(int time)
+// Optional .waterlogged() .processingTime(int time) .minimumSpeed(float speed)
 
 // Basic Example
-event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5).toJson(),Item.of('minecraft:redstone').withChance(0.1).toJson()], ['minecraft:sand','createsifter:string_mesh'])
+event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5),Item.of('minecraft:redstone').withChance(0.1)], ['minecraft:sand','createsifter:string_mesh'])
 
 // Waterlogged example
-event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5).toJson()], ['minecraft:sand','createsifter:string_mesh']).waterlogged()
+event.recipes.createsifterSifting([Item.of('minecraft:clay').withChance(0.5)], ['minecraft:sand','createsifter:string_mesh']).waterlogged()
 
 // Minimum Speed Example
-event.recipes.createsifterSifting([Item.of('minecraft:redstone_block').withChance(0.5).toJson(),Item.of('minecraft:redstone').withChance(0.1).toJson()], ['minecraft:sand','createsifter:string_mesh']).minimumSpeed(64)
+event.recipes.createsifterSifting([Item.of('minecraft:redstone_block').withChance(0.5),Item.of('minecraft:redstone').withChance(0.1)], ['minecraft:sand','createsifter:string_mesh']).minimumSpeed(64)
 
 // Custom mesh example. Custom mesh ID comes from the Startup Script
-event.recipes.createsifterSifting([Item.of('minecraft:glowstone_dust').withChance(0.5).toJson(),Item.of('minecraft:redstone').withChance(0.1).toJson()], ['minecraft:sand','kubejs:example_mesh'])
+event.recipes.createsifterSifting([Item.of('minecraft:glowstone_dust').withChance(0.5),Item.of('minecraft:redstone').withChance(0.1)], ['minecraft:sand','kubejs:example_mesh'])
 
 ```
 
 #### Adding custom meshes (startup script)
 ```
-event.create('example_mesh','createsifter:mesh').displayName('Example mesh')
+event.create('example_mesh','createsifter:mesh').displayName('Example Mesh').parentModel("createsifter:block/meshes/mesh").texture("mesh","kubejs:item/example_mesh").texture("frame","kubejs:block/example_mesh_frame");
 ```
+
+## CraftTweaker Integration (1.19.2)
+```
+import mods.createsifter.SiftingManager;
+
+
+//addRecipe(String id, ProcessingOutput[] results, Ingredients[] input, int processingTime, boolean waterlogged, float minimumSpeed)
+<recipetype:createsifter:sifting>.addRecipe("test_1",
+    [<item:minecraft:glowstone_dust> % 10,
+        <item:minecraft:gunpowder> % 50,
+        <item:create:cinder_flour> % 75],
+[<item:minecraft:netherrack>,<item:createsifter:andesite_mesh>]
+, 300, false, 1);
+```
+

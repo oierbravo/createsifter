@@ -78,19 +78,9 @@ public class MeshItemRenderer extends CustomRenderedItemModelRenderer {
 
 		ms.popPose();
 	}
-
-
-	public static class MeshModel extends CreateSifterCustomRenderedItemModel {
-
-		public MeshModel(BakedModel template) {
-			super(template, "");
-		}
-
-	}
 	public static class CreateSifterCustomRenderedItemModel extends CustomRenderedItemModel {
 
 		public CreateSifterCustomRenderedItemModel(BakedModel template, String basePath) {
-			//super(template, CreateSifter.MODID, basePath);
 			super(template);
 		}
 

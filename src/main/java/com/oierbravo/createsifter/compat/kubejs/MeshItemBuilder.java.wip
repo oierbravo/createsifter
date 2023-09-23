@@ -25,13 +25,6 @@ public class MeshItemBuilder extends ItemBuilder {
 
     @Override
     public Item createObject() {
-        /*return
-        REGISTRATE.item(resourceLocation.getPath(), CustomMesh::new)
-                .model(AssetLookup.customGenericItemModel("meshes", "custom_mesh"))
-                .tag(ModTags.ModItemTags.MESHES.tag)
-                .register()
-                .get();*/
-        //return ModItems.CUSTOM_MESH.get();
         return new CustomMesh(createItemProperties()) ;
     }
 }

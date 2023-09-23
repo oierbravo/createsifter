@@ -5,6 +5,8 @@ import com.simibubi.create.AllCreativeModeTabs;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.tterrag.registrate.util.entry.ItemEntry;
 
+import static com.simibubi.create.foundation.data.BlockStateGen.simpleCubeAll;
+
 import static com.oierbravo.createsifter.CreateSifter.REGISTRATE;
 
 public class ModItems {
@@ -35,4 +37,17 @@ public class ModItems {
                     .model(AssetLookup.existingItemModel())
                     .tag(ModTags.ModItemTags.MESHES.tag)
                     .register();
+
+    public static final ItemEntry<AdvancedBrassMesh> ADVANCED_BRASS_MESH =
+            REGISTRATE.item("advanced_brass_mesh", AdvancedBrassMesh::new)
+                    .model(AssetLookup.existingItemModel())
+                    .tag(ModTags.ModItemTags.MESHES.tag)
+                    .register();
+
+    public static final ItemEntry<AdvancedBrassMesh> ADVANCED_CUSTOM_MESH =
+            REGISTRATE.item("advanced_custom_mesh", AdvancedBrassMesh::new)
+                    .model(AssetLookup.existingItemModel())
+                    .tag(ModTags.ModItemTags.MESHES.tag)
+                    .register();
+
 }

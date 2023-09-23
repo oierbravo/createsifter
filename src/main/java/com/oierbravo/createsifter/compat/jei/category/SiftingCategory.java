@@ -22,6 +22,7 @@ import java.util.List;
 
 public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     private AnimatedSifter sifter = new AnimatedSifter();
+    private AnimatedBrassSifter brassSifter = new AnimatedBrassSifter();
 
     public SiftingCategory(CreateRecipeCategory.Info<SiftingRecipe> info) {
         super(info);
@@ -56,37 +57,51 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     }
 
 
-    public void draw(SiftingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
+    public void draw(SiftingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, PoseStack matrixStack, double mouseX, double mouseY) {
 
 
         List<ProcessingOutput> results = recipe.getRollableResults();
         boolean single = results.size() == 1;
         if(single){
-            AllGuiTextures.JEI_ARROW.render(graphics, 85, 32); //Output arrow
+            AllGuiTextures.JEI_ARROW.render(matrixStack, 85, 32); //Output arrow
         } else {
-            ModGUITextures.JEI_SHORT_ARROW.render(graphics, 75, 32); //Output arrow
+            ModGUITextures.JEI_SHORT_ARROW.render(matrixStack, 75, 32); //Output arrow
         }
 
-        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 43, 2);
+        AllGuiTextures.JEI_DOWN_ARROW.render(matrixStack, 43, 2);
         boolean waterlogged = recipe.isWaterlogged();
         if(waterlogged)
-            drawWaterlogged(recipe, graphics, 41,56);
-        sifter.waterlogged(waterlogged);
-        sifter.draw(graphics, 48, 27);
+            drawWaterlogged(recipe, matrixStack, 41,56);
+        drawRequiredSpeed(recipe, matrixStack, 35, 65);
 
-        drawRequiredSpeed(recipe, graphics, 35, 65);
+        if(recipe.requiresAdvancedMesh()){
+            brassSifter.waterlogged(waterlogged);
+            brassSifter.draw(matrixStack, 48, 27);
+            drawBrassRequiriment(recipe, matrixStack, 35, 80);
+
+            return;
+        }
+        sifter.waterlogged(waterlogged);
+        sifter.draw(matrixStack, 48, 27);
+
+
     }
-    protected void drawWaterlogged(SiftingRecipe recipe, GuiGraphics guiGraphics, int x, int y) {
+    protected void drawWaterlogged(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
         Minecraft minecraft = Minecraft.getInstance();
         Font fontRenderer = minecraft.font;
-        guiGraphics.drawString(fontRenderer, Component.translatable("createsifter.recipe.sifting.waterlogged"), x, y, 0xFF808080,false);
-
+        fontRenderer.draw(poseStack, Component.translatable("createsifter.recipe.sifting.waterlogged"), x, y, 0xFF808080);
     }
-    protected void drawRequiredSpeed(SiftingRecipe recipe, GuiGraphics guiGraphics, int x, int y) {
+    protected void drawRequiredSpeed(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
         if (recipe.hasSpeedRequeriment()) {
             Minecraft minecraft = Minecraft.getInstance();
             Font fontRenderer = minecraft.font;
+            fontRenderer.draw(poseStack, Lang.translateDirect("createsifter.recipe.sifting.minimumspeed",recipe.getSpeedRequeriment()), x, y, 0xFF808080);
             guiGraphics.drawString(fontRenderer, Lang.translateDirect("createsifter.recipe.sifting.minimumspeed",recipe.getSpeedRequeriment()), x, y, 0xFF808080,false);
         }
+    }
+    protected void drawBrassRequiriment(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
+        Minecraft minecraft = Minecraft.getInstance();
+        Font fontRenderer = minecraft.font;
+        fontRenderer.draw(poseStack, Lang.translateDirect("createsifter.recipe.sifting.brass_required"), x, y, 0xFF808080);
     }
 }

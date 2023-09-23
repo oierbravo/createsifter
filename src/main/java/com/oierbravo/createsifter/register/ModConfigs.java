@@ -3,6 +3,7 @@ package com.oierbravo.createsifter.register;
 import com.electronwill.nightconfig.core.file.CommentedFileConfig;
 import com.electronwill.nightconfig.core.io.WritingMode;
 import com.oierbravo.createsifter.CreateSifter;
+import com.oierbravo.createsifter.content.contraptions.components.brasss_sifter.BrassSifterConfig;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterConfig;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.fml.ModLoadingContext;
@@ -25,6 +26,7 @@ public class ModConfigs {
     private static void registerCommonConfigs() {
         ForgeConfigSpec.Builder COMMON_BUILDER = new ForgeConfigSpec.Builder();
         SifterConfig.registerCommonConfig(COMMON_BUILDER);
+        BrassSifterConfig.registerCommonConfig(COMMON_BUILDER);
         COMMON = COMMON_BUILDER.build();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, COMMON);
         ModConfigs.loadConfig(COMMON, FMLPaths.CONFIGDIR.get().resolve(CreateSifter.MODID + "-common.toml"));

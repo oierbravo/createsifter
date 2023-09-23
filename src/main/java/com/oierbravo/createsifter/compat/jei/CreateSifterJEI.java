@@ -49,12 +49,12 @@ public class CreateSifterJEI implements IModPlugin {
     private void loadCategories() {
         this.modCategories.clear();
         CreateRecipeCategory<?>
-
                 sifting = builder(SiftingRecipe.class)
                 .addTypedRecipes(ModRecipeTypes.SIFTING)
                 .catalyst(ModBlocks.SIFTER::get)
+                .catalyst(ModBlocks.BRASS_SIFTER::get)
                 .doubleItemIcon(ModBlocks.SIFTER.get(), Blocks.GRAVEL)
-                .emptyBackground(177, 75)
+                .emptyBackground(177, 85)
                 .build("sifting", SiftingCategory::new);
     }
     private <T extends Recipe<?>> CategoryBuilder<T> builder(Class<? extends T> recipeClass) {
