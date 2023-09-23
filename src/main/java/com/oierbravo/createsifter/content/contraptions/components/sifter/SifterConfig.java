@@ -8,7 +8,7 @@ public class SifterConfig {
     public static ForgeConfigSpec.IntValue SIFTER_OUTPUT_CAPACITY;
 
     public static ForgeConfigSpec.BooleanValue SIFTER_RENDER_SIFTED_BLOCK;
-    public static ForgeConfigSpec.BooleanValue SIFTER_WOODEN;
+    public static ForgeConfigSpec.BooleanValue SIFTER_RENDER_MOVING_MESH;
     public static void registerCommonConfig(ForgeConfigSpec.Builder COMMON_BUILDER) {
         COMMON_BUILDER.comment("Settings for the mechanical sifter").push("sifter");
         SIFTER_STRESS_IMPACT = COMMON_BUILDER
@@ -28,6 +28,9 @@ public class SifterConfig {
 
         SIFTER_RENDER_SIFTED_BLOCK = CLIENT_BUILDER
                 .comment("Render sifted block").define("renderSiftedBlock",true);
+
+        SIFTER_RENDER_MOVING_MESH = CLIENT_BUILDER
+                .comment("Render moving mesh").define("renderMovingMesh",true);
 
         CLIENT_BUILDER.pop();
     }

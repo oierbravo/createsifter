@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "createsifter:block/brass_sifter/block"
+    },
+    "powered=true": {
+      "model": "createsifter:block/brass_sifter/block_powered"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter.compat.jei.category;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedBrassSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedSifter;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
 import com.oierbravo.createsifter.foundation.gui.ModGUITextures;
@@ -25,6 +26,7 @@ import java.util.List;
 
 public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     private AnimatedSifter sifter = new AnimatedSifter();
+    private AnimatedBrassSifter brassSifter = new AnimatedBrassSifter();
 
     public SiftingCategory(CreateRecipeCategory.Info<SiftingRecipe> info) {
         super(info);
@@ -74,10 +76,19 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
         boolean waterlogged = recipe.isWaterlogged();
         if(waterlogged)
             drawWaterlogged(recipe, matrixStack, 41,56);
+        drawRequiredSpeed(recipe, matrixStack, 35, 65);
+
+        if(recipe.requiresAdvancedMesh()){
+            brassSifter.waterlogged(waterlogged);
+            brassSifter.draw(matrixStack, 48, 27);
+            drawBrassRequiriment(recipe, matrixStack, 35, 80);
+
+            return;
+        }
         sifter.waterlogged(waterlogged);
         sifter.draw(matrixStack, 48, 27);
 
-        drawRequiredSpeed(recipe, matrixStack, 35, 65);
+
     }
     protected void drawWaterlogged(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -90,5 +101,10 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
             Font fontRenderer = minecraft.font;
             fontRenderer.draw(poseStack, Lang.translateDirect("createsifter.recipe.sifting.minimumspeed",recipe.getSpeedRequeriment()), x, y, 0xFF808080);
         }
+    }
+    protected void drawBrassRequiriment(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
+        Minecraft minecraft = Minecraft.getInstance();
+        Font fontRenderer = minecraft.font;
+        fontRenderer.draw(poseStack, Lang.translateDirect("createsifter.recipe.sifting.brass_required"), x, y, 0xFF808080);
     }
 }

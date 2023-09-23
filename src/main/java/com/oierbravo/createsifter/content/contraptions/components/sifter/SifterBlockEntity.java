@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 import com.oierbravo.createsifter.ModRecipeTypes;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedBaseMesh;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.sound.SoundScapes;
@@ -46,12 +47,14 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
     public static float DEFAULT_MINIMUM_SPEED = SifterConfig.SIFTER_MINIMUM_SPEED.get().floatValue();
     protected int totalTime;
-    protected float minimumSpeed = DEFAULT_MINIMUM_SPEED;
+    protected float minimumSpeed = getDefaultMinimumSpeed();
+
+    protected int itemsProcessedPerCycle = 1;
     public SifterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
 
-        inputInv = new ItemStackHandler(1);
-        outputInv = new ItemStackHandler(SifterConfig.SIFTER_OUTPUT_CAPACITY.get());
+        inputInv = createInputInv();
+        outputInv = createOutputInv();
         capability = LazyOptional.of(SifterInventoryHandler::new);
         meshInv = new ItemStackHandler(1){
             @Override
@@ -69,7 +72,12 @@ public class SifterBlockEntity extends KineticBlockEntity {
         };
         inputAndMeshCombined = new CombinedInvWrapper(inputInv,meshInv);
     }
-
+    protected ItemStackHandler createInputInv(){
+        return new ItemStackHandler(1);
+    }
+    protected ItemStackHandler createOutputInv(){
+        return new ItemStackHandler(SifterConfig.SIFTER_OUTPUT_CAPACITY.get());
+    }
     @Override
     @OnlyIn(Dist.CLIENT)
     public void tickAudio() {
@@ -94,6 +102,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
         if(!isSpeedRequirementFulfilled()){
             return;
         }
+
         for (int i = 0; i < outputInv.getSlots(); i++)
             if (outputInv.getStackInSlot(i)
                     .getCount() == outputInv.getSlotLimit(i))
@@ -116,12 +125,12 @@ public class SifterBlockEntity extends KineticBlockEntity {
             return;
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed())) {
+        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed(),hasAdvancedMesh())) {
             Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level, this.isWaterlogged(),getAbsSpeed());
             if (!recipe.isPresent()) {
                 timer = 100;
                 totalTime = 100;
-                minimumSpeed = DEFAULT_MINIMUM_SPEED;
+                minimumSpeed = getDefaultMinimumSpeed();
                 sendData();
             } else {
                 lastRecipe = recipe.get();
@@ -149,27 +158,40 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
 
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level, this.isWaterlogged(),getAbsSpeed())) {
+        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level, this.isWaterlogged(),getAbsSpeed(),hasAdvancedMesh())) {
             Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged(), getAbsSpeed());
             if (!recipe.isPresent())
                 return;
             lastRecipe = recipe.get();
         }
+        for(int i = 0;i < getItemsProcessedPerCycle();i++){
+            processCycle();
+        }
 
-        ItemStack stackInSlot = inputInv.getStackInSlot(0);
-        stackInSlot.shrink(1);
-        inputInv.setStackInSlot(0, stackInSlot);
-        lastRecipe.rollResults()
-                .forEach(stack -> ItemHandlerHelper.insertItemStacked(outputInv, stack, false));
         sendData();
         setChanged();
     }
-    public void spawnParticles() {
+    private void processCycle() {
         ItemStack stackInSlot = inputInv.getStackInSlot(0);
-        if (stackInSlot.isEmpty())
+        if(!stackInSlot.isEmpty()){
+            stackInSlot.shrink(1);
+            inputInv.setStackInSlot(0, stackInSlot);
+            lastRecipe.rollResults()
+                    .forEach(stack -> tryToInsertOutputItem(outputInv, stack, false));
+        }
+    }
+    protected void tryToInsertOutputItem(ItemStackHandler outputInv,ItemStack stack, boolean simulate){
+        ItemHandlerHelper.insertItemStacked(outputInv, stack, simulate);
+    }
+    protected int getItemsProcessedPerCycle(){
+        return itemsProcessedPerCycle;
+    }
+
+    public void spawnParticles() {
+        if (inputInv.getStackInSlot(0).isEmpty() || meshInv.getStackInSlot(0).isEmpty())
             return;
 
-        ItemParticleOption data = new ItemParticleOption(ParticleTypes.ITEM, stackInSlot);
+        ItemParticleOption data = new ItemParticleOption(ParticleTypes.ITEM, inputInv.getStackInSlot(0));
         float angle = level.random.nextFloat() * 360;
         Vec3 offset = new Vec3(0, 0, 0.5f);
         offset = VecHelper.rotate(offset, angle, Direction.Axis.Y);
@@ -208,7 +230,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
     }
 
     private boolean hasRecipeSpeedRequeriment() {
-        if(minimumSpeed != DEFAULT_MINIMUM_SPEED){
+        if(minimumSpeed != getDefaultMinimumSpeed()){
             return true;
         }
         return false;
@@ -216,6 +238,9 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
     public int getProcessingSpeed() {
         return Mth.clamp((int) Math.abs(getSpeed() / 16f), 1, 512);
+    }
+    protected float getDefaultMinimumSpeed() {
+        return DEFAULT_MINIMUM_SPEED;
     }
     public float getProcessingRemainingPercent() {
         float timer = this.timer;
@@ -238,7 +263,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
         tester.setStackInSlot(1, this.meshInv.getStackInSlot(0));
         RecipeWrapper inventoryIn = new RecipeWrapper(tester);
 
-        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed()))
+        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed(),hasAdvancedMesh()))
             return true;
         return ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged(),getAbsSpeed())
                 .isPresent();
@@ -258,9 +283,18 @@ public class SifterBlockEntity extends KineticBlockEntity {
         return !meshInv.getStackInSlot(0).isEmpty();
     }
 
+    public boolean hasAdvancedMesh(){
+        return !meshInv.getStackInSlot(0).isEmpty() && meshInv.getStackInSlot(0).getItem() instanceof AdvancedBaseMesh;
+    }
+
+
     public void removeMesh(Player player) {
         player.getInventory().placeItemBackInInventory(meshInv.getStackInSlot(0));
         meshInv.setStackInSlot(0, ItemStack.EMPTY);
+        timer = 100;
+        totalTime = 100;
+        minimumSpeed = getDefaultMinimumSpeed();
+        sendData();
     }
     public boolean isWaterlogged() {
         return this.getBlockState().getValue(BlockStateProperties.WATERLOGGED);
@@ -272,6 +306,10 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
     public ItemStack getInputItemStack(){
         return this.inputInv.getStackInSlot(0);
+    }
+
+    public float getProgress() {
+        return timer;
     }
 
     private class SifterInventoryHandler extends CombinedInvWrapper {
