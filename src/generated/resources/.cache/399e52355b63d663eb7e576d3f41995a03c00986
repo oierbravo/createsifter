@@ -1,10 +1,10 @@
-// 1.19.2	2023-09-23T01:26:45.754604904	Registrate Provider for createsifter [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+// 1.19.2	2023-09-23T16:03:53.545104967	Registrate Provider for createsifter [Recipes, Advancements, Loot tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
 d9dbad30255b64233e922d850b855f702c69071f assets/createsifter/blockstates/brass_sifter.json
 823a8aed585c73fa6018da90e8a3f6de84a2c74f assets/createsifter/blockstates/crushed_end_stone.json
 0ae9397138a0836fde056e1d28d6ae9cadc78392 assets/createsifter/blockstates/dust.json
 9f90dc6f23ce5cca32dca8c9193a8702368b9a43 assets/createsifter/blockstates/sifter.json
-73450603eda466afa2b1c418636bd10a167f0ede assets/createsifter/lang/en_ud.json
-1fd12f1056fb6c4c3e2ec91d817f3ca2fd92256d assets/createsifter/lang/en_us.json
+b7aa596928f85fd88d9207138dd07a63cdae8c56 assets/createsifter/lang/en_ud.json
+f41b4e2de68bb4fd00040a7424c851633bf0eb0f assets/createsifter/lang/en_us.json
 f711edd5b87942993aa87bbafb04607131d24996 assets/createsifter/models/block/crushed_end_stone.json
 f9662aca60cc1fcfab1e361268588252ba0fc581 assets/createsifter/models/block/dust.json
 ec28695d36fe5de59fe5f5683aee31f551aabe65 assets/createsifter/models/item/brass_sifter.json

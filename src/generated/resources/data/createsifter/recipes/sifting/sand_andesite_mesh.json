@@ -2,17 +2,21 @@
   "type": "createsifter:sifting",
   "ingredients": [
     {
-      "item": "minecraft:soul_sand"
+      "item": "minecraft:sand"
     },
     {
-      "item": "createsifter:brass_mesh"
+      "item": "createsifter:andesite_mesh"
     }
   ],
   "processingTime": 500,
   "results": [
     {
       "chance": 0.1,
-      "item": "minecraft:quartz"
+      "item": "minecraft:redstone"
+    },
+    {
+      "chance": 0.4,
+      "item": "minecraft:bone_meal"
     },
     {
       "chance": 0.1,

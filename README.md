@@ -27,10 +27,13 @@ Heavily inspired on ex nihilo sieve.
 - Crushed end stone. No recipes just an utility block for modpacks.
 - Dust. No recipes just an utility block for modpacks.
 - Nerfed all included recipes.
+- Changed sifting animation.
+
 ### Brass Sifter
 - `High` redstone disables processing
 - Filters for allow or deny outputs.
-- 8x processing per cycle, configurable
+- 8x processing per cycle, configurable.
+- Bigger output capaticy, configurable.
 
 ## Configs
 - (Common) Strees impact.

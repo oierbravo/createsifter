@@ -12,6 +12,7 @@
   "createsifter.ponder.sifter.text_4": "After some time, the result can be obtained via Right-click",
   "createsifter.ponder.sifter.text_5": "The outputs can also be extracted by automation",
   "createsifter.recipe.sifting": "Sifting recipe",
+  "createsifter.recipe.sifting.brass_required": "Brass sifter required",
   "createsifter.recipe.sifting.waterlogged": "Waterlogged",
   "item.createsifter.advanced_brass_mesh": "Advanced Brass Mesh",
   "item.createsifter.advanced_custom_mesh": "Advanced Custom Mesh",

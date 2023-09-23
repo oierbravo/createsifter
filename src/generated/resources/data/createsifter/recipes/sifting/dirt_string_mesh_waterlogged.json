@@ -1,0 +1,43 @@
+{
+  "type": "createsifter:sifting",
+  "ingredients": [
+    {
+      "item": "minecraft:dirt"
+    },
+    {
+      "item": "createsifter:string_mesh"
+    }
+  ],
+  "processingTime": 500,
+  "results": [
+    {
+      "chance": 0.2,
+      "item": "minecraft:kelp"
+    },
+    {
+      "chance": 0.3,
+      "item": "minecraft:seagrass"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:tube_coral"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:brain_coral"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:bubble_coral"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:fire_coral"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:horn_coral"
+    }
+  ],
+  "waterlogged": true
+}

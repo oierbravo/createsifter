@@ -89,7 +89,7 @@ public class SiftingRecipeGen extends ModProcessingRecipeGen {
             .output(.05f, Items.BLAZE_POWDER,1)
             .output(.20f, AllItems.EXP_NUGGET.get(), 1));
 
-    GeneratedRecipe SOUL_SAND_BRASS = create(CreateSifter.asResource("soul_sand_advanced_brass_mesh"), b -> b.duration(500)
+    GeneratedRecipe SOUL_SAND_BRASS = create(CreateSifter.asResource("soul_sand_brass_mesh"), b -> b.duration(500)
             .require(Blocks.SOUL_SAND)
             .require(MeshTypes.BRASS.getItem())
             .output(.10f, Items.QUARTZ,1)

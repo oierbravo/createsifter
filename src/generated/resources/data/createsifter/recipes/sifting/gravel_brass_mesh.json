@@ -2,7 +2,7 @@
   "type": "createsifter:sifting",
   "ingredients": [
     {
-      "item": "createsifter:advanced_brass_mesh"
+      "item": "createsifter:brass_mesh"
     },
     {
       "item": "minecraft:gravel"
@@ -23,7 +23,7 @@
       "item": "create:crushed_raw_gold"
     },
     {
-      "chance": 0.15,
+      "chance": 0.1,
       "item": "create:crushed_raw_iron"
     },
     {
@@ -31,12 +31,12 @@
       "item": "minecraft:lapis_lazuli"
     },
     {
-      "chance": 0.05,
-      "item": "minecraft:diamond"
+      "chance": 0.15,
+      "item": "minecraft:coal"
     },
     {
-      "chance": 0.02,
-      "item": "minecraft:emerald"
+      "chance": 0.1,
+      "item": "minecraft:flint"
     },
     {
       "chance": 0.1,

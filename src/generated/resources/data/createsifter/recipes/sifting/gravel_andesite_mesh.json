@@ -1,0 +1,38 @@
+{
+  "type": "createsifter:sifting",
+  "ingredients": [
+    {
+      "item": "createsifter:andesite_mesh"
+    },
+    {
+      "item": "minecraft:gravel"
+    }
+  ],
+  "processingTime": 500,
+  "results": [
+    {
+      "chance": 0.05,
+      "item": "create:copper_nugget"
+    },
+    {
+      "chance": 0.01,
+      "item": "create:zinc_nugget"
+    },
+    {
+      "chance": 0.01,
+      "item": "minecraft:iron_nugget"
+    },
+    {
+      "chance": 0.05,
+      "item": "minecraft:gold_nugget"
+    },
+    {
+      "chance": 0.1,
+      "item": "minecraft:coal"
+    },
+    {
+      "chance": 0.1,
+      "item": "minecraft:flint"
+    }
+  ]
+}

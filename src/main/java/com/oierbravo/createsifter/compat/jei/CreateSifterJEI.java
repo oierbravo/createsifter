@@ -54,7 +54,7 @@ public class CreateSifterJEI implements IModPlugin {
                 .catalyst(ModBlocks.SIFTER::get)
                 .catalyst(ModBlocks.BRASS_SIFTER::get)
                 .doubleItemIcon(ModBlocks.SIFTER.get(), Blocks.GRAVEL)
-                .emptyBackground(177, 75)
+                .emptyBackground(177, 85)
                 .build("sifting", SiftingCategory::new);
     }
     private <T extends Recipe<?>> CategoryBuilder<T> builder(Class<? extends T> recipeClass) {
