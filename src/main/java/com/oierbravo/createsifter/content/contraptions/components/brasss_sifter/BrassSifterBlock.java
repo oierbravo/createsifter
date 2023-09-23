@@ -1,5 +1,6 @@
 package com.oierbravo.createsifter.content.contraptions.components.brasss_sifter;
 
+import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedBaseMesh;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.BaseMesh;
 import com.oierbravo.createsifter.register.ModBlockEntities;
 import com.oierbravo.createsifter.register.ModShapes;
@@ -111,7 +112,7 @@ public class BrassSifterBlock extends KineticBlock implements IBE<BrassSifterBlo
 
         if (worldIn.isClientSide)
             return InteractionResult.SUCCESS;
-        if(handInStack.getItem() instanceof BaseMesh){
+        if(handInStack.getItem() instanceof BaseMesh || handInStack.getItem() instanceof AdvancedBaseMesh){
             sifterBlockEntity.insertMesh(handInStack, player);
         }
 

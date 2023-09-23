@@ -21,6 +21,17 @@ This mod it's meant to be used in modpacks. Only contains very basic ore recipes
 
 Heavily inspired on ex nihilo sieve.
 
+## 23/09/2023 Update
+- Brass sifter
+- Advanced mesh, works only with the brass sifter
+- Crushed end stone. No recipes just an utility block for modpacks.
+- Dust. No recipes just an utility block for modpacks.
+- Nerfed all included recipes.
+### Brass Sifter
+- `High` redstone disables processing
+- Filters for allow or deny outputs.
+- 8x processing per cycle, configurable
+
 ## Configs
 - (Common) Strees impact.
 - (Common) Minimum Speed.
@@ -224,3 +235,4 @@ import mods.createsifter.SiftingManager;
 [<item:minecraft:netherrack>,<item:createsifter:andesite_mesh>]
 , 300, false, 1);
 ```
+

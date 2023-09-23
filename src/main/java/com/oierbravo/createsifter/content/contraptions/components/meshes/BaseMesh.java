@@ -41,7 +41,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Consumer;
 
-public abstract class BaseMesh extends Item implements CustomUseEffectsItem {
+public abstract class BaseMesh extends Item implements CustomUseEffectsItem, IMesh{
     protected MeshTypes mesh;
     public BaseMesh(Properties pProperties) {
         super(pProperties);

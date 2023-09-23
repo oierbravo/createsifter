@@ -109,10 +109,15 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
         if(world.isClientSide())
             return Optional.empty();
         List<SiftingRecipe> siftingRecipes = world.getRecipeManager().getAllRecipesFor(ModRecipeTypes.SIFTING.getType());
-        Stream<SiftingRecipe> siftingRecipesFiltered = siftingRecipes.stream().filter(siftingRecipe -> siftingRecipe.matches((RecipeWrapper) inv,world, waterlogged, speed));
+        Stream<SiftingRecipe> siftingRecipesFiltered = siftingRecipes.stream().filter(siftingRecipe -> siftingRecipe.matches((RecipeWrapper) inv,world, waterlogged, speed, false));
         return siftingRecipesFiltered.findAny();
-
-
+    }
+    public Optional<SiftingRecipe> findAdvanced(Container inv, Level world,boolean waterlogged, float speed) {
+        if(world.isClientSide())
+            return Optional.empty();
+        List<SiftingRecipe> siftingRecipes = world.getRecipeManager().getAllRecipesFor(ModRecipeTypes.SIFTING.getType());
+        Stream<SiftingRecipe> siftingRecipesFiltered = siftingRecipes.stream().filter(siftingRecipe -> siftingRecipe.matches((RecipeWrapper) inv,world, waterlogged, speed, true));
+        return siftingRecipesFiltered.findAny();
     }
 
     public static final Set<ResourceLocation> RECIPE_DENY_SET =

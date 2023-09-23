@@ -3,7 +3,9 @@ package com.oierbravo.createsifter.content.contraptions.components.sifter;
 import com.google.gson.JsonObject;
 import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModRecipeTypes;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedBaseMesh;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.BaseMesh;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.IMesh;
 import com.oierbravo.createsifter.foundation.data.recipe.SiftingRecipeBuilder.SiftingRecipeParams;
 import com.simibubi.create.content.kinetics.crusher.AbstractCrushingRecipe;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
@@ -18,10 +20,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.RecipeWrapper;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.lang.reflect.Constructor;
 
 @ParametersAreNonnullByDefault
@@ -32,6 +31,8 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     ItemStack siftableIngredienStack;
     private boolean waterlogged;
     private float minimumSpeed;
+
+    private boolean advanced;
 
     @Override
     public SiftingRecipeSerializer getSerializer() {
@@ -46,6 +47,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
         this.results = params.results;
         this.id = params.id;
         this.meshStack = getMeshItemStack();
+        this.advanced = isAdvancedMesh(this.meshStack);
         this.siftableIngredienStack = getSiftableItemStack();
         this.waterlogged = params.waterlogged;
         this.minimumSpeed = params.minimumSpeed;
@@ -53,13 +55,16 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     }
 
 
-    public boolean matches(RecipeWrapper    inv, Level worldIn, boolean waterlogged, float speed) {
+    public boolean matches(RecipeWrapper    inv, Level worldIn, boolean waterlogged, float speed, boolean advanced) {
         if (inv.isEmpty())
             return false;
         if(isWaterlogged() != waterlogged)
             return false;
         if(hasSpeedRequeriment() && speed < minimumSpeed)
             return false;
+        if(advanced && meshStack.getItem() instanceof BaseMesh){
+            return false;
+        }
         return getSiftableIngredient().test(inv.getItem(0)) && getMeshIngredient().test(inv.getItem(1));
     }
     public ItemStack getMeshItemStack(){
@@ -99,9 +104,15 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
 
     }
     public static boolean isMeshItemStack(ItemStack itemStack){
-        if(itemStack.getItem() instanceof BaseMesh)
+        if(itemStack.getItem() instanceof IMesh)
             return true;
         return false;
+    }
+    private boolean isAdvancedMesh(ItemStack meshStack){
+        return this.meshStack.getItem() instanceof AdvancedBaseMesh;
+    }
+    public boolean requiresAdvancedMesh(){
+        return advanced;
     }
     @Override
     public String toString() {
@@ -205,7 +216,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
 
     @Override
     public boolean matches(RecipeWrapper pContainer, Level pLevel) {
-        return matches(pContainer, pLevel, false,0);
+        return matches(pContainer, pLevel, false,0,false);
     }
 
     public float getMinimumSpeed() {

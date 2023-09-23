@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 import com.oierbravo.createsifter.ModRecipeTypes;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedBaseMesh;
 import com.simibubi.create.content.kinetics.base.IRotate;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.sound.SoundScapes;
@@ -124,7 +125,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
             return;
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed())) {
+        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed(),hasAdvancedMesh())) {
             Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level, this.isWaterlogged(),getAbsSpeed());
             if (!recipe.isPresent()) {
                 timer = 100;
@@ -157,7 +158,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
 
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level, this.isWaterlogged(),getAbsSpeed())) {
+        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level, this.isWaterlogged(),getAbsSpeed(),hasAdvancedMesh())) {
             Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged(), getAbsSpeed());
             if (!recipe.isPresent())
                 return;
@@ -262,7 +263,7 @@ public class SifterBlockEntity extends KineticBlockEntity {
         tester.setStackInSlot(1, this.meshInv.getStackInSlot(0));
         RecipeWrapper inventoryIn = new RecipeWrapper(tester);
 
-        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed()))
+        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed(),hasAdvancedMesh()))
             return true;
         return ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged(),getAbsSpeed())
                 .isPresent();
@@ -281,6 +282,11 @@ public class SifterBlockEntity extends KineticBlockEntity {
     public boolean hasMesh(){
         return !meshInv.getStackInSlot(0).isEmpty();
     }
+
+    public boolean hasAdvancedMesh(){
+        return !meshInv.getStackInSlot(0).isEmpty() && meshInv.getStackInSlot(0).getItem() instanceof AdvancedBaseMesh;
+    }
+
 
     public void removeMesh(Player player) {
         player.getInventory().placeItemBackInInventory(meshInv.getStackInSlot(0));

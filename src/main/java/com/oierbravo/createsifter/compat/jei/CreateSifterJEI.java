@@ -49,10 +49,10 @@ public class CreateSifterJEI implements IModPlugin {
     private void loadCategories() {
         this.modCategories.clear();
         CreateRecipeCategory<?>
-
                 sifting = builder(SiftingRecipe.class)
                 .addTypedRecipes(ModRecipeTypes.SIFTING)
                 .catalyst(ModBlocks.SIFTER::get)
+                .catalyst(ModBlocks.BRASS_SIFTER::get)
                 .doubleItemIcon(ModBlocks.SIFTER.get(), Blocks.GRAVEL)
                 .emptyBackground(177, 75)
                 .build("sifting", SiftingCategory::new);
@@ -78,8 +78,6 @@ public class CreateSifterJEI implements IModPlugin {
         ingredientManager = registration.getIngredientManager();
 
         modCategories.forEach(c -> c.registerRecipes(registration));
-
-        //registration.addRecipes(RecipeTypes.CRAFTING, ToolboxColoringRecipeMaker.createRecipes().toList());
     }
 
     @Override

@@ -4,7 +4,6 @@ import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.oierbravo.createsifter.register.ModPartials;
-import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.render.CachedBufferer;
 import com.simibubi.create.foundation.render.SuperByteBuffer;
@@ -83,6 +82,4 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
                 .getBlockRenderer()
                 .renderSingleBlock(blockState, ms,buffer,light,overlay, ModelData.EMPTY,RenderType.solid());
     }
-
-
 }
