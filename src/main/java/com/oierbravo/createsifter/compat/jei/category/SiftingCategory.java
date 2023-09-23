@@ -5,6 +5,7 @@ import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedBrassSi
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedSifter;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
 import com.oierbravo.createsifter.foundation.gui.ModGUITextures;
+import com.oierbravo.createsifter.foundation.util.ModLang;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
@@ -105,6 +106,6 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     protected void drawBrassRequiriment(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
         Minecraft minecraft = Minecraft.getInstance();
         Font fontRenderer = minecraft.font;
-        fontRenderer.draw(poseStack, Lang.translateDirect("createsifter.recipe.sifting.brass_required"), x, y, 0xFF808080);
+        fontRenderer.draw(poseStack, ModLang.translate("recipe.sifting.brass_required").string(), x, y, 0xFF808080);
     }
 }
