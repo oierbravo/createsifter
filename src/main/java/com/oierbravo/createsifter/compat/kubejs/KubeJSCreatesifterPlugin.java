@@ -17,6 +17,7 @@ public class KubeJSCreatesifterPlugin extends KubeJSPlugin {
     @Override
     public void init() {
         RegistryInfo.ITEM.addType("createsifter:mesh", MeshItemBuilder.class, MeshItemBuilder::new);
+        RegistryInfo.ITEM.addType("createsifter:advanced_mesh", AdvancedMeshItemBuilder.class, AdvancedMeshItemBuilder::new);
     }
 
     @Override
