@@ -54,11 +54,10 @@ minecraft {
         }
 
         server {
-            workingDirectory project.file('server')
+            workingDirectory project.file('run/server')
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
-            args "--debug", "--stacktrace", "--scan", "-mixin.config=${modid}.mixins.json".toString()
-            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            args "-mixin.config=${modid}.mixins.json".toString()
             property 'forge.logging.console.level', 'debug'
 
             mods {
