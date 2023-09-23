@@ -22,7 +22,7 @@ public class ModCreativeTabs {
     public static final RegistryObject<CreativeModeTab> MAIN_TAB = TAB_REGISTER.register("main",
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.createsifter:main"))
-                    .withTabsBefore(AllCreativeModeTabs.BUILDING_BLOCKS_TAB.getId())
+                    .withTabsBefore(AllCreativeModeTabs.PALETTES_CREATIVE_TAB.getId())
                     .icon(ModBlocks.SIFTER::asStack)
                     .displayItems((pParameters, pOutput) -> {
                         for (RegistryEntry<Block> entry : CreateSifter.REGISTRATE.getAll(Registries.BLOCK)) {

@@ -11,8 +11,12 @@ public class ModPonders {
     public static void register() {
 
         HELPER.addStoryBoard(ModBlocks.SIFTER, "sifter", PonderScenes::sifter, AllPonderTags.KINETIC_APPLIANCES);
+        HELPER.addStoryBoard(ModBlocks.BRASS_SIFTER, "sifter", PonderScenes::sifter, AllPonderTags.KINETIC_APPLIANCES);
 
         PonderRegistry.TAGS.forTag(AllPonderTags.KINETIC_APPLIANCES)
                 .add(ModBlocks.SIFTER);
+
+        PonderRegistry.TAGS.forTag(AllPonderTags.KINETIC_APPLIANCES)
+                .add(ModBlocks.BRASS_SIFTER);
     }
 }

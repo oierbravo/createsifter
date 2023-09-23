@@ -33,9 +33,9 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
     ItemStack siftableIngredienStack;
     private boolean waterlogged;
     private float minimumSpeed;
-    private float minimumSpeed;
-
     private boolean advanced;
+
+
 
     @Override
     public SiftingRecipeSerializer getSerializer() {
@@ -219,7 +219,7 @@ public class SiftingRecipe  extends AbstractCrushingRecipe {
 
     @Override
     public boolean matches(RecipeWrapper pContainer, Level pLevel) {
-        return matches(pContainer, pLevel, false,0);
+        return matches(pContainer, pLevel, false,0,false);
     }
 
     public float getMinimumSpeed() {

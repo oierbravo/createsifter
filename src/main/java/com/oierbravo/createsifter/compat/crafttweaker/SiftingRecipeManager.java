@@ -7,8 +7,7 @@ import com.blamejared.crafttweaker.api.annotation.ZenRegister;
 import com.blamejared.crafttweaker.api.ingredient.IIngredient;
 import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.util.random.Percentaged;
-import com.blamejared.crafttweaker_annotations.annotations.Document;
-import com.blamejared.createtweaker.managers.base.IProcessingRecipeManager;
+import com.blamejared.createtweaker.recipe.manager.base.IProcessingRecipeManager;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipeSerializer;
@@ -26,7 +25,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @docParam this <recipetype:create:milling>
+ * @docParam this <recipetype:createsifting:sifter>
  */
 @ZenRegister
 @ZenCodeType.Name("mods.createsifter.SiftingManager")

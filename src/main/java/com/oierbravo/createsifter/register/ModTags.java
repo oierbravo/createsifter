@@ -21,7 +21,7 @@ import static com.oierbravo.createsifter.register.ModTags.NameSpace.MOD;
 import static com.simibubi.create.Create.REGISTRATE;
 
 public class ModTags {
-    static { REGISTRATE.useCreativeTab(ModCreativeTabs.MAIN_TAB); }
+    static { REGISTRATE.setCreativeTab(ModCreativeTabs.MAIN_TAB); }
 
     public static <T> TagKey<T> optionalTag(IForgeRegistry<T> registry,
                                             ResourceLocation id) {

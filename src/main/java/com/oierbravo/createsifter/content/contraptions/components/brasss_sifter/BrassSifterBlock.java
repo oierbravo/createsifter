@@ -2,6 +2,7 @@ package com.oierbravo.createsifter.content.contraptions.components.brasss_sifter
 
 import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedBaseMesh;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.BaseMesh;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.ISifterBlock;
 import com.oierbravo.createsifter.register.ModBlockEntities;
 import com.oierbravo.createsifter.register.ModShapes;
 import com.simibubi.create.content.kinetics.base.KineticBlock;
@@ -42,7 +43,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class BrassSifterBlock extends KineticBlock implements IBE<BrassSifterBlockEntity>, ICogWheel, SimpleWaterloggedBlock {
+public class BrassSifterBlock extends KineticBlock implements IBE<BrassSifterBlockEntity>, ICogWheel, SimpleWaterloggedBlock, ISifterBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
@@ -154,7 +155,7 @@ public class BrassSifterBlock extends KineticBlock implements IBE<BrassSifterBlo
     public void updateEntityAfterFallOn(BlockGetter worldIn, Entity entityIn) {
         super.updateEntityAfterFallOn(worldIn, entityIn);
 
-        if (entityIn.level.isClientSide)
+        if (entityIn.level().isClientSide)
             return;
         if (!(entityIn instanceof ItemEntity))
             return;

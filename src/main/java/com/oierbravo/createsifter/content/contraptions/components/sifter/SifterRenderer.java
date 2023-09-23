@@ -3,6 +3,7 @@ package com.oierbravo.createsifter.content.contraptions.components.sifter;
 import com.jozufozu.flywheel.util.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.oierbravo.createsifter.register.ModPartials;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import com.simibubi.create.foundation.render.CachedBufferer;
@@ -43,7 +44,7 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
         if(!meshItemStack.isEmpty()){
             ms.pushPose();
             TransformStack.cast(ms).translate(new Vec3(0.5 - xPos, 1.51, 0.5));
-            renderStaticBlock(ms,buffer,light, overlay,meshItemStack);
+            renderStaticBlock(ms,buffer,light, overlay,meshItemStack,be);
             ms.popPose();
         }
         //In progress Block renderer

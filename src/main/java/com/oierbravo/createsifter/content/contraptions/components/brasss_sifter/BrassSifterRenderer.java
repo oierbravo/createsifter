@@ -19,6 +19,7 @@ import net.minecraft.client.renderer.block.model.ItemTransforms;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -55,7 +56,7 @@ public class BrassSifterRenderer extends KineticBlockEntityRenderer<BrassSifterB
         if(!meshItemStack.isEmpty()){
             ms.pushPose();
             TransformStack.cast(ms).translate(new Vec3( 0.5 - xPos, 1.51, 0.5));
-            renderStaticBlock(ms,buffer,light, overlay,meshItemStack);
+            renderStaticBlock(ms,buffer,light, overlay,meshItemStack,be);
             ms.popPose();
         }
         //In progress Block renderer
@@ -78,10 +79,11 @@ public class BrassSifterRenderer extends KineticBlockEntityRenderer<BrassSifterB
     protected SuperByteBuffer getRotatedModel(BrassSifterBlockEntity be, BlockState state) {
         return CachedBufferer.partial(ModPartials.BRASS_SIFTER_COG, state);
     }
-    protected void renderStaticBlock(PoseStack ms, MultiBufferSource buffer, int light, int overlay, ItemStack itemStack) {
+    protected void renderStaticBlock(PoseStack ms, MultiBufferSource buffer, int light, int overlay, ItemStack itemStack, SifterBlockEntity entity) {
         Minecraft.getInstance()
                 .getItemRenderer()
-                .renderStatic(itemStack, ItemTransforms.TransformType.NONE, light, overlay, ms, buffer, 0);
+                .renderStatic(itemStack, ItemDisplayContext.NONE, light, overlay, ms,
+                        buffer, entity.getLevel(), 0);
     }
     protected void renderBlockFromItemStack(ItemStack itemStack,PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         Item item = itemStack.getItem();

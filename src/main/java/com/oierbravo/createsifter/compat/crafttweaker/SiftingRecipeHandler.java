@@ -6,7 +6,7 @@ import com.blamejared.crafttweaker.api.recipe.component.IDecomposedRecipe;
 import com.blamejared.crafttweaker.api.recipe.handler.IRecipeHandler;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker.api.util.IngredientUtil;
-import com.blamejared.createtweaker.CreateTweaker;
+import com.blamejared.createtweaker.CreateTweakerHelper;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
 import com.oierbravo.createsifter.foundation.data.recipe.SiftingRecipeBuilder;
 import net.minecraft.core.NonNullList;
@@ -48,7 +48,7 @@ public class SiftingRecipeHandler implements IRecipeHandler<SiftingRecipe> {
                                 .stream()
                                 .map(IIngredient::fromIngredient)
                                 .toList())
-                        .with(BuiltinRecipeComponents.Output.CHANCED_ITEMS_SINGLE, recipe.getRollableResults().stream().map(CreateTweaker::mapProcessingResult).toList())
+                        .with(BuiltinRecipeComponents.Output.CHANCED_ITEMS, recipe.getRollableResults().stream().map(CreateTweakerHelper::mapProcessingResult).toList())
                         .with(BuiltinRecipeComponents.Processing.TIME, recipe.getProcessingDuration())
                         .with(RecipeComponents.Input.BOOLEAN, recipe.isWaterlogged())
                         .with(RecipeComponents.Input.FLOAT, recipe.getMinimumSpeed())
@@ -59,7 +59,7 @@ public class SiftingRecipeHandler implements IRecipeHandler<SiftingRecipe> {
     public Optional<SiftingRecipe> recompose(IRecipeManager<? super SiftingRecipe> manager, ResourceLocation name, IDecomposedRecipe recipe) {
         SiftingRecipeBuilder builder = new SiftingRecipeBuilder(this.factory(), name);
         builder.withItemIngredients((NonNullList)recipe.getOrThrow(BuiltinRecipeComponents.Input.INGREDIENTS).stream().map(IIngredient::asVanillaIngredient).collect(Collectors.toCollection(NonNullList::create)));
-        builder.withItemOutputs((NonNullList)recipe.getOrThrow(BuiltinRecipeComponents.Output.CHANCED_ITEMS_SINGLE).stream().map(CreateTweaker::mapPercentagedToProcessingOutput).collect(Collectors.toCollection(NonNullList::create)));
+        builder.withItemOutputs((NonNullList)recipe.getOrThrow(BuiltinRecipeComponents.Output.CHANCED_ITEMS).stream().map(CreateTweakerHelper::mapPercentagedToProcessingOutput).collect(Collectors.toCollection(NonNullList::create)));
         builder.duration((Integer)recipe.getOrThrowSingle(BuiltinRecipeComponents.Processing.TIME));
         builder.waterlogged((boolean)recipe.getOrThrowSingle(RecipeComponents.Input.BOOLEAN));
         builder.minimumSpeed((float)recipe.getOrThrowSingle(RecipeComponents.Input.FLOAT));

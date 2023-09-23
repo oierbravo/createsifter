@@ -132,9 +132,14 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
+    maven {
+        url "https://jitpack.io"
+        content {
+            includeGroup "com.github.llamalad7.mixinextras"
+        }
+    }
 
-
-    /*maven {
+    maven {
         url "https://maven.saps.dev/minecraft"
         content {
             includeGroup "dev.latvian.mods"
@@ -146,7 +151,7 @@ repositories {
         content {
             includeGroup "dev.architectury"
         }
-    }*/
+    }
     mavenLocal()
     flatDir {
         dirs 'libs'
@@ -161,9 +166,13 @@ dependencies {
     implementation fg.deobf("com.jozufozu.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
     implementation fg.deobf("com.tterrag.registrate:Registrate:${registrate_version}")
 
-//    implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
-//    implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
-//    implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
+    implementation fg.deobf("dev.latvian.mods:rhino-forge:${rhino_version}")
+    implementation fg.deobf("dev.architectury:architectury-forge:${architectury_version}")
+    implementation fg.deobf("dev.latvian.mods:kubejs-forge:${kubejs_version}")
+
+    annotationProcessor "com.github.llamalad7.mixinextras:mixinextras-common:${mixin_extras}"
+    implementation fg.deobf("com.github.llamalad7.mixinextras:mixinextras-forge:${mixin_extras}")
+
 
     compileOnly fg.deobf("mezz.jei:jei-${jei_minecraft_version}-common-api:${jei_version}")
     compileOnly fg.deobf("mezz.jei:jei-${jei_minecraft_version}-forge-api:${jei_version}")
@@ -192,7 +201,7 @@ dependencies {
         compileOnly(ctDep)
         runtimeOnly(fg.deobf(ctDep))
 
-        implementation fg.deobf("curse.maven:createtweaker-437717:${ct_create_id}")
+        implementation fg.deobf("com.blamejared.createtweaker:CreateTweaker-forge-${ct_minecraft_version}:${ct_create_version}")
         annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:3.0.0.10'
         annotationProcessor minecraftVersion
         annotationProcessor ctDep
@@ -224,51 +233,6 @@ sourceSets.main.java {
         exclude 'com/oierbravo/createsifter/compat/computercraft/implementation/**'
     }
 }
-if(System.getenv('MODRINTH_TOKEN') != null) {
-
-    modrinth {
-        token = System.getenv("MODRINTH_TOKEN")
-        projectId = "create-sifting"
-        versionNumber = "${version}"
-        versionName = "${display_name} - v${mod_version} for Mc ${minecraft_version}"
-        versionType = "release" // This is the default -- can also be `beta` or `alpha`
-        uploadFile = tasks.jar // With Loom, this MUST be set to `remapJar` instead of `jar`!
-        gameVersions = ["${minecraft_version}"] // Must be an array, even with only one version
-        loaders = ["forge"] // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
-        dependencies { // A special DSL for creating dependencies
-            optional.project "kubejs"
-            optional.project "jei"
-            optional.project "crafttweaker"
-            required.project "create"
-        }
-        changelog = rootProject.file("changes/${minecraft_version}-${mod_version}.md").text
-    }
-}
-/*sourceSets.main.resources {
-    srcDir 'src/generated/resources'
-    exclude '.cache/'
-}*/
-
-/*if(System.getenv('MODRINTH_TOKEN') != null) {
-
-    modrinth {
-        token = System.getenv("MODRINTH_TOKEN")
-        projectId = "create-sifting"
-        versionNumber = "${version}"
-        versionName = "${display_name} - v${mod_version} for Mc ${minecraft_version}"
-        versionType = "release" // This is the default -- can also be `beta` or `alpha`
-        uploadFile = tasks.jar // With Loom, this MUST be set to `remapJar` instead of `jar`!
-        gameVersions = ["${minecraft_version}"] // Must be an array, even with only one version
-        loaders = ["forge"] // Must also be an array - no need to specify this if you're using Loom or ForgeGradle
-        dependencies { // A special DSL for creating dependencies
-            optional.project "kubejs"
-            optional.project "jei"
-            optional.project "crafttweaker"
-            required.project "create"
-        }
-        changelog = rootProject.file("changes/${minecraft_version}-${mod_version}.md").text
-    }
-}*/
 
 
 mixin {

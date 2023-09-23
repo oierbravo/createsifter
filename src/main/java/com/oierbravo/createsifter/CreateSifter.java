@@ -52,6 +52,7 @@ public class CreateSifter {
         registrate().addRawLang("create.recipe.sifting", "Sifting recipe");
         registrate().addRawLang("create.createsifter.recipe.sifting.minimumspeed", "%1$s RPM");
         registrate().addRawLang("createsifter.recipe.sifting.waterlogged", "Waterlogged");
+        registrate().addRawLang("createsifter.recipe.sifting.brass_required", "Brass sifter required");
         registrate().addRawLang("itemGroup.createsifter:main", "Create sifting");
         //Ponder
         registrate().addRawLang("createsifter.ponder.sifter.header", "Block sifting");

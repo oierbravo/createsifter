@@ -37,7 +37,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
 
-public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>, ICogWheel , SimpleWaterloggedBlock {
+public class SifterBlock  extends KineticBlock implements IBE<SifterBlockEntity>, ICogWheel , SimpleWaterloggedBlock, ISifterBlock {
     public SifterBlock(Properties properties) {
         super(properties);
         registerDefaultState(super.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));

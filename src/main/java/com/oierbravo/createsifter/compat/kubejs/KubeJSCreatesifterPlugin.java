@@ -2,9 +2,7 @@ package com.oierbravo.createsifter.compat.kubejs;
 
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipeSerializer;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 import dev.latvian.mods.kubejs.KubeJSPlugin;
-
 import dev.latvian.mods.kubejs.recipe.schema.RecipeSchema;
 import dev.latvian.mods.kubejs.recipe.schema.RegisterRecipeSchemasEvent;
 import dev.latvian.mods.kubejs.registry.RegistryInfo;

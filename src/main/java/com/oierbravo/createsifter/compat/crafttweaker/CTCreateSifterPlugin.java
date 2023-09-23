@@ -4,7 +4,7 @@ import com.blamejared.crafttweaker.api.plugin.CraftTweakerPlugin;
 import com.blamejared.crafttweaker.api.plugin.ICraftTweakerPlugin;
 import com.blamejared.crafttweaker.api.plugin.IRecipeComponentRegistrationHandler;
 
-@CraftTweakerPlugin("createtweaker:main")
+@CraftTweakerPlugin("createtweaker:sifter")
 public class CTCreateSifterPlugin implements ICraftTweakerPlugin {
     @Override
     public void registerRecipeComponents(final IRecipeComponentRegistrationHandler handler) {

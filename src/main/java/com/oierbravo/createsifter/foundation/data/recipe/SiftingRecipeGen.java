@@ -120,8 +120,8 @@ public class SiftingRecipeGen extends ModProcessingRecipeGen {
             .isWaterlogged()
     );
 
-    public SiftingRecipeGen(DataGenerator generator) {
-        super(generator);
+    public SiftingRecipeGen(PackOutput output) {
+        super(output);
     }
 
     @Override
