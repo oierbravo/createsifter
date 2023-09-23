@@ -16,7 +16,9 @@ import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluids;
@@ -74,22 +76,29 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
         }
 
         AllGuiTextures.JEI_DOWN_ARROW.render(matrixStack, 43, 2);
-        boolean waterlogged = recipe.isWaterlogged();
-        if(waterlogged)
-            drawWaterlogged(recipe, matrixStack, 41,56);
-        drawRequiredSpeed(recipe, matrixStack, 35, 65);
 
-        if(recipe.requiresAdvancedMesh()){
+        NonNullList<MutableComponent> requirements = NonNullList.create();
+        if(recipe.isWaterlogged())
+            requirements.add(ModLang.translate("recipe.sifting.waterlogged").component());
+        if(recipe.hasSpeedRequeriment())
+            requirements.add(Lang.translate("createsifter.recipe.sifting.minimumspeed",recipe.getSpeedRequeriment()).component());
+        if(recipe.requiresAdvancedMesh())
+            requirements.add(ModLang.translate("recipe.sifting.brass_required").component());
+
+        drawRequirements(matrixStack,requirements);
+
+        drawSifter(matrixStack, 48, 27, recipe.requiresAdvancedMesh(), recipe.isWaterlogged());
+
+    }
+    protected void drawSifter(PoseStack pPoseStack, int x, int y, boolean advanced, boolean waterlogged){
+        if(advanced){
             brassSifter.waterlogged(waterlogged);
-            brassSifter.draw(matrixStack, 48, 27);
-            drawBrassRequiriment(recipe, matrixStack, 35, 80);
+            brassSifter.draw(pPoseStack, x, y);
 
             return;
         }
         sifter.waterlogged(waterlogged);
-        sifter.draw(matrixStack, 48, 27);
-
-
+        sifter.draw(pPoseStack, x, y);
     }
     protected void drawWaterlogged(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
         Minecraft minecraft = Minecraft.getInstance();
@@ -106,6 +115,16 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     protected void drawBrassRequiriment(SiftingRecipe recipe, PoseStack poseStack, int x, int y) {
         Minecraft minecraft = Minecraft.getInstance();
         Font fontRenderer = minecraft.font;
-        fontRenderer.draw(poseStack, ModLang.translate("recipe.sifting.brass_required").string(), x, y, 0xFF808080);
+    }
+    protected void drawRequirements(PoseStack poseStack, NonNullList<MutableComponent> requirements){
+        int startX = 41;
+        int startY = 56;
+
+        Minecraft minecraft = Minecraft.getInstance();
+        Font fontRenderer = minecraft.font;
+
+        for(int index = 0; index < requirements.size();index++){
+            fontRenderer.draw(poseStack,requirements.get(index), startX, startY + 15 * index, 0xFF808080);
+        }
     }
 }
