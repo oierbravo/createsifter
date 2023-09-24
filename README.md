@@ -222,7 +222,11 @@ event.recipes.createsifterSifting([Item.of('minecraft:glowstone_dust').withChanc
 
 #### Adding custom meshes (startup script)
 ```
+//Mesh
 event.create('example_mesh','createsifter:mesh').displayName('Example Mesh').parentModel("createsifter:block/meshes/mesh").texture("mesh","kubejs:item/example_mesh").texture("frame","kubejs:block/example_mesh_frame");
+
+//Mesh
+event.create('example_advanced_mesh','createsifter:advanced_mesh').displayName('Example Mesh').parentModel("createsifter:block/meshes/mesh").texture("mesh","kubejs:item/example_mesh").texture("frame","kubejs:block/example_mesh_frame");
 ```
 
 ## CraftTweaker Integration (1.19.2)

@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "sifter",
+  "acceptMirrored": true,
+  "key": {
+    "B": {
+      "tag": "forge:ingots/brass"
+    },
+    "P": {
+      "tag": "forge:plates/brass"
+    },
+    "R": {
+      "tag": "forge:dusts/redstone"
+    },
+    "S": {
+      "item": "createsifter:sifter"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "BSB",
+    "BRB"
+  ],
+  "result": {
+    "item": "createsifter:brass_sifter"
+  }
+}
