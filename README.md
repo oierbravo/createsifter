@@ -29,7 +29,7 @@ Heavily inspired on ex nihilo sieve.
 - Nerfed all included recipes.
 - Changed sifting animation.
 
-### Brass Sifter
+## Brass Sifter
 - `High` redstone disables processing
 - Filters for allow or deny outputs.
 - 8x processing per cycle, configurable.
