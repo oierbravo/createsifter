@@ -14,7 +14,6 @@ import com.oierbravo.createsifter.content.contraptions.components.sifter.Sifting
 import com.oierbravo.createsifter.foundation.data.recipe.SiftingRecipeBuilder;
 import com.simibubi.create.AllRecipeTypes;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeSerializer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeType;

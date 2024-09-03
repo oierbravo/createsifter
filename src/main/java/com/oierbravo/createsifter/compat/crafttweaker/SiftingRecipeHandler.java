@@ -1,14 +1,16 @@
 package com.oierbravo.createsifter.compat.crafttweaker;
 
 import com.blamejared.crafttweaker.api.ingredient.IIngredient;
+import com.blamejared.crafttweaker.api.item.IItemStack;
 import com.blamejared.crafttweaker.api.recipe.component.BuiltinRecipeComponents;
 import com.blamejared.crafttweaker.api.recipe.component.IDecomposedRecipe;
 import com.blamejared.crafttweaker.api.recipe.handler.IRecipeHandler;
 import com.blamejared.crafttweaker.api.recipe.manager.base.IRecipeManager;
 import com.blamejared.crafttweaker.api.util.IngredientUtil;
-import com.blamejared.createtweaker.CreateTweakerHelper;
+import com.blamejared.crafttweaker.api.util.random.Percentaged;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipe;
 import com.oierbravo.createsifter.foundation.data.recipe.SiftingRecipeBuilder;
+import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.crafting.Recipe;
@@ -48,7 +50,7 @@ public class SiftingRecipeHandler implements IRecipeHandler<SiftingRecipe> {
                                 .stream()
                                 .map(IIngredient::fromIngredient)
                                 .toList())
-                        .with(BuiltinRecipeComponents.Output.CHANCED_ITEMS, recipe.getRollableResults().stream().map(CreateTweakerHelper::mapProcessingResult).toList())
+                        .with(BuiltinRecipeComponents.Output.CHANCED_ITEMS, recipe.getRollableResults().stream().map(SiftingRecipeHandler::mapProcessingResult).toList())
                         .with(BuiltinRecipeComponents.Processing.TIME, recipe.getProcessingDuration())
                         .with(RecipeComponents.Input.BOOLEAN, recipe.isWaterlogged())
                         .with(RecipeComponents.Input.FLOAT, recipe.getMinimumSpeed())
@@ -59,7 +61,7 @@ public class SiftingRecipeHandler implements IRecipeHandler<SiftingRecipe> {
     public Optional<SiftingRecipe> recompose(IRecipeManager<? super SiftingRecipe> manager, ResourceLocation name, IDecomposedRecipe recipe) {
         SiftingRecipeBuilder builder = new SiftingRecipeBuilder(this.factory(), name);
         builder.withItemIngredients((NonNullList)recipe.getOrThrow(BuiltinRecipeComponents.Input.INGREDIENTS).stream().map(IIngredient::asVanillaIngredient).collect(Collectors.toCollection(NonNullList::create)));
-        builder.withItemOutputs((NonNullList)recipe.getOrThrow(BuiltinRecipeComponents.Output.CHANCED_ITEMS).stream().map(CreateTweakerHelper::mapPercentagedToProcessingOutput).collect(Collectors.toCollection(NonNullList::create)));
+        builder.withItemOutputs((NonNullList)recipe.getOrThrow(BuiltinRecipeComponents.Output.CHANCED_ITEMS).stream().map(SiftingRecipeHandler::mapPercentagedToProcessingOutput).collect(Collectors.toCollection(NonNullList::create)));
         builder.duration((Integer)recipe.getOrThrowSingle(BuiltinRecipeComponents.Processing.TIME));
         builder.waterlogged((boolean)recipe.getOrThrowSingle(RecipeComponents.Input.BOOLEAN));
         builder.minimumSpeed((float)recipe.getOrThrowSingle(RecipeComponents.Input.FLOAT));
@@ -73,6 +75,12 @@ public class SiftingRecipeHandler implements IRecipeHandler<SiftingRecipe> {
     public boolean isGoodRecipe(Recipe<?> recipe) {
         return recipe instanceof SiftingRecipe;
     }
+    public static ProcessingOutput mapPercentagedToProcessingOutput(Percentaged<IItemStack> stack) {
 
+        return new ProcessingOutput(stack.getData().getInternal(), (float) stack.getPercentage());
+    }
+    public static Percentaged<IItemStack> mapProcessingResult(ProcessingOutput result) {
 
+        return IItemStack.of(result.getStack()).percent(result.getChance() * 100);
+    }
 }
