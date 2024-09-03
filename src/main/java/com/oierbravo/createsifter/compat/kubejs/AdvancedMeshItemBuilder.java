@@ -1,7 +1,7 @@
 package com.oierbravo.createsifter.compat.kubejs;
 
 import com.oierbravo.createsifter.CreateSifter;
-import com.oierbravo.createsifter.content.contraptions.components.meshes.CustomMesh;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedCustomMesh;
 import com.oierbravo.createsifter.register.ModCreativeTabs;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import dev.latvian.mods.kubejs.item.ItemBuilder;
@@ -20,6 +20,6 @@ public class AdvancedMeshItemBuilder extends ItemBuilder {
 
     @Override
     public Item createObject() {
-        return new CustomMesh(createItemProperties()) ;
+        return new AdvancedCustomMesh(createItemProperties()) ;
     }
 }
