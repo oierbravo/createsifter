@@ -4,7 +4,6 @@ import com.oierbravo.createsifter.CreateSifter;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.recipe.Mods;
-import com.simibubi.create.foundation.utility.Lang;
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;

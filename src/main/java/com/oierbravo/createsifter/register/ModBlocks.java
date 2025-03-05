@@ -4,19 +4,25 @@ import com.oierbravo.createsifter.content.contraptions.components.brasss_sifter.
 import com.oierbravo.createsifter.content.contraptions.components.brasss_sifter.BrassSifterConfig;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlock;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterConfig;
-import com.simibubi.create.content.kinetics.BlockStressDefaults;
+import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MapColor;
+import com.simibubi.create.infrastructure.config.CStress;
+import com.tterrag.registrate.builders.BlockBuilder;
+import net.minecraft.resources.ResourceLocation;
 
 import static com.oierbravo.createsifter.CreateSifter.REGISTRATE;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
+
 
 public class ModBlocks {
 
@@ -27,12 +33,31 @@ public class ModBlocks {
     public static void register() {
 
     }
+    
+    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setImpact(double value) {
+
+
+
+        return builder -> {
+
+
+            ResourceLocation id = Create.asResource(builder.getName());
+
+
+
+            return builder;
+
+
+        };
+
+    }
+    
     public static final BlockEntry<SifterBlock> SIFTER = REGISTRATE.block("sifter", SifterBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.mapColor(MapColor.METAL))
             .transform(pickaxeOnly())
             .blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
-            .transform(BlockStressDefaults.setImpact(SifterConfig.SIFTER_STRESS_IMPACT.get()))
+            .transform(setImpact(2f))
             .item()
             .transform(customItemModel())
             .register();
@@ -43,7 +68,7 @@ public class ModBlocks {
             .properties(p -> p.isRedstoneConductor((level, pos, state) -> false))
             .transform(pickaxeOnly())
             .blockstate((c, p) -> BlockStateGen.simpleBlock(c, p, AssetLookup.forPowered(c, p)))
-            .transform(BlockStressDefaults.setImpact(BrassSifterConfig.BRASS_SIFTER_MINIMUM_SPEED.get()))
+            .transform(CStress.setImpact(BrassSifterConfig.BRASS_SIFTER_MINIMUM_SPEED.get()))
             .item()
             .transform(customItemModel())
             .register();

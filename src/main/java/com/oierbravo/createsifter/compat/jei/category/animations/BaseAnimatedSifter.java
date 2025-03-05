@@ -1,6 +1,5 @@
 package com.oierbravo.createsifter.compat.jei.category.animations;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.Tesselator;
@@ -12,8 +11,10 @@ import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.content.kinetics.base.KineticBlock;
 import com.simibubi.create.foundation.fluid.FluidRenderer;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.gui.UIRenderHelper;
 import com.tterrag.registrate.util.entry.BlockEntry;
+
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
+import net.createmod.catnip.gui.UIRenderHelper;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -73,7 +74,7 @@ public abstract class BaseAnimatedSifter<SIFTER extends KineticBlock> extends An
         float to = 18f / 16f;
         matrixStack.mulPose(Axis.XP.rotationDegrees(22.5f));
         matrixStack.mulPose(Axis.YP.rotationDegrees(22.5f));
-        FluidRenderer.renderFluidBox(new FluidStack(Fluids.WATER.getSource(),1000), from, from, from, to, to, to, buffer, matrixStack, LightTexture.FULL_BRIGHT, true);
+        FluidRenderer.renderFluidBox(Fluids.WATER.getSource(),1000L, from, from, from, to, to, to, buffer, matrixStack, LightTexture.FULL_BRIGHT, true, false);
         matrixStack.popPose();
         buffer.endBatch();
         Lighting.setupFor3DItems();

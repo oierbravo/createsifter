@@ -6,8 +6,8 @@ import com.oierbravo.createsifter.content.contraptions.components.sifter.Sifting
 import com.oierbravo.createsifter.foundation.data.recipe.SiftingRecipeBuilder;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-import com.simibubi.create.foundation.utility.Lang;
-import com.simibubi.create.foundation.utility.RegisteredObjects;
+
+import net.createmod.catnip.lang.Lang;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.Container;
@@ -122,14 +122,7 @@ public enum ModRecipeTypes implements IRecipeTypeInfo {
     public static final Set<ResourceLocation> RECIPE_DENY_SET =
             ImmutableSet.of(new ResourceLocation("occultism", "spirit_trade"), new ResourceLocation("occultism", "ritual"));
 
-    public static boolean shouldIgnoreInAutomation(Recipe<?> recipe) {
-        RecipeSerializer<?> serializer = recipe.getSerializer();
-        if (serializer != null && RECIPE_DENY_SET.contains(RegisteredObjects.getKeyOrThrow(serializer)))
-            return true;
-        return recipe.getId()
-                .getPath()
-                .endsWith("_manual_only");
-    }
+
 
     private static class Registers {
         private static final DeferredRegister<RecipeSerializer<?>> SERIALIZER_REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, CreateSifter.MODID);

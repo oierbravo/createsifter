@@ -6,7 +6,9 @@ import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipeSerializer;
 import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
-import com.simibubi.create.foundation.utility.RegisteredObjects;
+
+import net.createmod.catnip.platform.CatnipServices;
+import net.createmod.catnip.platform.services.RegisteredObjectsHelper;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -53,7 +55,7 @@ public abstract class ModProcessingRecipeGen extends CreateRecipeProvider {
             ItemLike itemLike = singleIngredient.get();
             transform
                     .apply(new SiftingRecipeBuilder(serializer.getFactory(),
-                            new ResourceLocation(namespace, RegisteredObjects.getKeyOrThrow(itemLike.asItem())
+                            new ResourceLocation(namespace, CatnipServices.REGISTRIES.getKeyOrThrow(itemLike.asItem())
                                     .getPath())).withItemIngredients(Ingredient.of(itemLike)))
                     .build(c);
         };
@@ -108,7 +110,7 @@ public abstract class ModProcessingRecipeGen extends CreateRecipeProvider {
 
     protected Supplier<ResourceLocation> idWithSuffix(Supplier<ItemLike> item, String suffix) {
         return () -> {
-            ResourceLocation registryName = RegisteredObjects.getKeyOrThrow(item.get()
+            ResourceLocation registryName = CatnipServices.REGISTRIES.getKeyOrThrow(item.get()
                     .asItem());
             return CreateSifter.asResource(registryName.getPath() + suffix);
         };

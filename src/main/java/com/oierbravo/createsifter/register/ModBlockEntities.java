@@ -11,14 +11,14 @@ import com.tterrag.registrate.util.entry.BlockEntityEntry;
 public class ModBlockEntities {
     public static final BlockEntityEntry<SifterBlockEntity> SIFTER = CreateSifter.registrate()
             .blockEntity("sifter", SifterBlockEntity::new)
-            .instance(() -> SifterInstance::new)
+            .visual(() -> SifterInstance::new)
             .validBlocks(ModBlocks.SIFTER)
             .renderer(() -> SifterRenderer::new)
             .register();
 
     public static final BlockEntityEntry<BrassSifterBlockEntity> BRASS_SIFTER = CreateSifter.registrate()
             .blockEntity("brass_sifter", BrassSifterBlockEntity::new)
-            .instance(() -> BrassSifterInstance::new)
+            .visual(() -> BrassSifterInstance::new)
             .validBlocks(ModBlocks.BRASS_SIFTER)
             .renderer(() -> BrassSifterRenderer::new)
             .register();

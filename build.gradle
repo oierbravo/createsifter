@@ -185,6 +185,21 @@ dependencies {
         modCompileOnly("cc.tweaked:cc-tweaked-${cc_tweaked_minecraft_version}-forge-api:${cc_tweaked_version}")
         modRuntimeOnly("cc.tweaked:cc-tweaked-${cc_tweaked_minecraft_version}-forge:${cc_tweaked_version}")
     }
+    
+    if (ct_enabled.toBoolean()) {
+        def minecraftVersion= "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+        def ctDep = "com.blamejared.crafttweaker:CraftTweaker-forge-${ct_minecraft_version}:${ct_version}"
+        //def ctCreateDep = "com.blamejared.crafttweaker:CraftTweaker-forge-${ct_minecraft_version}:${ct_version}"
+        compileOnly(ctDep)
+        modRuntimeOnly(ctDep)
+
+        implementation "com.blamejared.createtweaker:CreateTweaker-forge-${ct_minecraft_version}:${ct_create_version}"
+        annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:3.0.0.10'
+        annotationProcessor minecraftVersion
+        annotationProcessor ctDep
+       // annotationProcessor ctCreateDep
+    }
+    
 
 
     if (System.getProperty('idea.sync.active') != 'true') {

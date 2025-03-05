@@ -1,8 +1,7 @@
 package com.oierbravo.createsifter.register;
 
-import com.jozufozu.flywheel.core.PartialModel;
 import com.oierbravo.createsifter.CreateSifter;
-import com.simibubi.create.Create;
+import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 
 public class ModPartials {
     public static final PartialModel SIFTER_COG = block("sifter/inner");
@@ -15,10 +14,10 @@ public class ModPartials {
 
 
     private static PartialModel block(String path) {
-        return new PartialModel(CreateSifter.asResource("block/" + path));
+        return PartialModel.of(CreateSifter.asResource("block/" + path));
     }
     private static PartialModel item(String path) {
-        return new PartialModel(CreateSifter.asResource("item/" + path));
+        return PartialModel.of(CreateSifter.asResource("item/" + path));
     }
     public static void init() {
         // init static fields
