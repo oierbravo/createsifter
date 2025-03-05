@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 
+import dev.engine_room.flywheel.api.visualization.VisualizationManager;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -39,6 +40,8 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
         ItemStack meshItemStack = be.meshInv.getStackInSlot(0);
 
         Double xPos = 0.0;
+        
+        
         if(SifterConfig.SIFTER_RENDER_MOVING_MESH.get())
             xPos = Math.sin(be.getProgress())/40;
 
@@ -64,16 +67,19 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
         }
         super.renderSafe(be, partialTicks, ms, buffer, light, overlay);
     }
+    
     @Override
     protected SuperByteBuffer getRotatedModel(SifterBlockEntity be, BlockState state) {
         return CachedBuffers.partial(ModPartials.SIFTER_COG, state);
     }
+    
     protected void renderStaticBlock(PoseStack ms, MultiBufferSource buffer, int light, int overlay, ItemStack itemStack, SifterBlockEntity entity) {
         Minecraft.getInstance()
                 .getItemRenderer()
                 .renderStatic(itemStack, ItemDisplayContext.NONE, light, overlay, ms,
                         buffer, entity.getLevel(), 0);
     }
+    
     protected void renderBlockFromItemStack(ItemStack itemStack,PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
         Item item = itemStack.getItem();
         BlockState blockState = Blocks.AIR.defaultBlockState();

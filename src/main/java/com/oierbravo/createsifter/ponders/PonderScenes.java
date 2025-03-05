@@ -6,6 +6,8 @@ import net.createmod.catnip.math.Pointing;
 import net.createmod.ponder.api.PonderPalette;
 import net.createmod.ponder.api.element.ElementLink;
 import net.createmod.ponder.api.element.EntityElement;
+import net.createmod.ponder.api.scene.SceneBuilder;
+import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.api.scene.Selection;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.ponder.*;
@@ -22,7 +24,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 
 public class PonderScenes {
-    public static void sifter(CreateSceneBuilder scene, PonderSceneBuildingUtil util) {
+    public static void sifter(SceneBuilder builder, SceneBuildingUtil util) {
+    	CreateSceneBuilder scene = new CreateSceneBuilder(builder);
+    	
         scene.title("sifter", "Processing Items in the Sifter");
         scene.configureBasePlate(0, 0, 5);
 

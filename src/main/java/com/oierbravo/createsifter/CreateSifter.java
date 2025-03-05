@@ -3,6 +3,10 @@ package com.oierbravo.createsifter;
 import com.oierbravo.createsifter.foundation.data.recipe.ModProcessingRecipeGen;
 import com.oierbravo.createsifter.register.*;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+
+import net.createmod.ponder.foundation.PonderIndex;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -81,7 +85,10 @@ public class CreateSifter {
 
     }
     private void doClientStuff(final FMLClientSetupEvent event) {
-       event.enqueueWork(ModPonders::register);
+    	 PonderIndex.addPlugin(new ModPonderPlugin());
+    	 // Is this needed
+    	 //RenderType cutout = RenderType.cutoutMipped();
+        // ItemBlockRenderTypes.setRenderLayer(ModBlocks.BRASS_SIFTER.get(), cutout);
     }
 
     public static ResourceLocation asResource(String path) {

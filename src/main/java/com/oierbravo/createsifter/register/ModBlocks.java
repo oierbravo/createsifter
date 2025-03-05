@@ -22,7 +22,7 @@ import net.minecraft.resources.ResourceLocation;
 import static com.oierbravo.createsifter.CreateSifter.REGISTRATE;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
-
+import com.simibubi.create.api.stress.BlockStressValues;
 
 public class ModBlocks {
 
@@ -34,30 +34,15 @@ public class ModBlocks {
 
     }
     
-    public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setImpact(double value) {
 
 
-
-        return builder -> {
-
-
-            ResourceLocation id = Create.asResource(builder.getName());
-
-
-
-            return builder;
-
-
-        };
-
-    }
     
     public static final BlockEntry<SifterBlock> SIFTER = REGISTRATE.block("sifter", SifterBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.mapColor(MapColor.METAL))
             .transform(pickaxeOnly())
             .blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
-            .transform(setImpact(2f))
+            //.transform(CStress.setImpact(BrassSifterConfig.BRASS_SIFTER_MINIMUM_SPEED.get()))
             .item()
             .transform(customItemModel())
             .register();
@@ -68,7 +53,7 @@ public class ModBlocks {
             .properties(p -> p.isRedstoneConductor((level, pos, state) -> false))
             .transform(pickaxeOnly())
             .blockstate((c, p) -> BlockStateGen.simpleBlock(c, p, AssetLookup.forPowered(c, p)))
-            .transform(CStress.setImpact(BrassSifterConfig.BRASS_SIFTER_MINIMUM_SPEED.get()))
+            //.transform(CStress.setImpact(BrassSifterConfig.BRASS_SIFTER_MINIMUM_SPEED.get()))
             .item()
             .transform(customItemModel())
             .register();
