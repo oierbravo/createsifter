@@ -1,6 +1,6 @@
 {
   "block.createsifter.sifter": "체",
-  "create.createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
+  "createsifter.createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
   "create.recipe.sifting": "체질",
   "createsifter.ponder.sifter.header": "블록 체질하기",
   "createsifter.ponder.sifter.text_1": "체는 아이템을 체에 걸러서 가공합니다.",

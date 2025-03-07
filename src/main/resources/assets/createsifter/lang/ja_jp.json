@@ -1,6 +1,6 @@
 {
   "block.createsifter.sifter": "ふるい分け機",
-  "create.createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
+  "createsifter.createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
   "create.recipe.sifting": "ふるいのレシピ",
   "createsifter.ponder.sifter.header": "ブロックふるい分け機",
   "createsifter.ponder.sifter.text_1": "ふるい分け機でアイテムをふるい分ける.",

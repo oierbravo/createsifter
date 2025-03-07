@@ -3,7 +3,7 @@
   "block.createsifter.crushed_end_stone": "Crushed end stone",
   "block.createsifter.dust": "Dust block",
   "block.createsifter.sifter": "Sifter",
-  "create.createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
+  "createsifter.createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
   "create.recipe.sifting": "Sifting recipe",
   "createsifter.ponder.sifter.header": "Block sifting",
   "createsifter.ponder.sifter.text_1": "Sifter process items by sifting them",
