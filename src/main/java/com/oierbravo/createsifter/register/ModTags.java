@@ -4,8 +4,8 @@ import com.oierbravo.createsifter.CreateSifter;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.Create;
 import com.simibubi.create.foundation.data.recipe.Mods;
-import com.simibubi.create.foundation.utility.Lang;
 import com.tterrag.registrate.providers.ProviderType;
+import net.createmod.catnip.lang.Lang;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
@@ -17,8 +17,8 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import java.util.Collections;
 
+import static com.oierbravo.createsifter.CreateSifter.REGISTRATE;
 import static com.oierbravo.createsifter.register.ModTags.NameSpace.MOD;
-import static com.simibubi.create.Create.REGISTRATE;
 
 public class ModTags {
     static { REGISTRATE.setCreativeTab(ModCreativeTabs.MAIN_TAB); }

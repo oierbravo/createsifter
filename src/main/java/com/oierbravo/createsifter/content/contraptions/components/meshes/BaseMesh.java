@@ -5,7 +5,8 @@ import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.foundation.item.CustomUseEffectsItem;
 import com.simibubi.create.foundation.item.render.SimpleCustomRenderer;
 import com.simibubi.create.foundation.mixin.accessor.LivingEntityAccessor;
-import com.simibubi.create.foundation.utility.VecHelper;
+import net.createmod.catnip.data.TriState;
+import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -17,6 +18,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
@@ -39,7 +41,7 @@ import net.minecraftforge.fluids.IFluidBlock;
 import java.util.List;
 import java.util.function.Consumer;
 
-public abstract class BaseMesh extends Item implements CustomUseEffectsItem, IMesh{
+public abstract class BaseMesh extends Item implements CustomUseEffectsItem, IMesh {
     protected MeshTypes mesh;
     public BaseMesh(Properties pProperties) {
         super(pProperties);
@@ -180,11 +182,14 @@ public abstract class BaseMesh extends Item implements CustomUseEffectsItem, IMe
     public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
         return toolAction == ToolActions.AXE_SCRAPE || toolAction == ToolActions.AXE_WAX_OFF;
     }
-
     @Override
-    public Boolean shouldTriggerUseEffects(ItemStack stack, LivingEntity entity) {
+    public boolean isEnabled(FeatureFlagSet enabledFeatures) {
+        return super.isEnabled(enabledFeatures);
+    }
+    @Override
+    public TriState shouldTriggerUseEffects(ItemStack stack, LivingEntity entity) {
         // Trigger every tick so that we have more fine grain control over the animation
-        return true;
+        return TriState.TRUE;
     }
     @Override
     public boolean triggerUseEffects(ItemStack stack, LivingEntity entity, int count, RandomSource random) {

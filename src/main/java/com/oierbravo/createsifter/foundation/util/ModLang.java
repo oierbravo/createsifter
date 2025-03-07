@@ -1,9 +1,10 @@
 package com.oierbravo.createsifter.foundation.util;
 
 import com.oierbravo.createsifter.CreateSifter;
-import com.simibubi.create.foundation.utility.LangBuilder;
+import net.createmod.catnip.lang.Lang;
+import net.createmod.catnip.lang.LangBuilder;
 
-public class ModLang extends com.simibubi.create.foundation.utility.Lang {
+public class ModLang extends Lang {
     public ModLang() {
         super();
     }

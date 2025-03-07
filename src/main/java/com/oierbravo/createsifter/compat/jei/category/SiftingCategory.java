@@ -9,7 +9,6 @@ import com.oierbravo.createsifter.foundation.util.ModLang;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
-import com.simibubi.create.foundation.utility.Lang;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;
 import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
@@ -56,7 +55,7 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
             (builder.addSlot(RecipeIngredientRole.OUTPUT, single ? 139 : 100 + xOffset, 2 + yOffset)
                     .setBackground(getRenderedSlot(output), -1, -1)
                     .addItemStack(output.getStack()))
-                    .addTooltipCallback(addStochasticTooltip(output));
+                    .addRichTooltipCallback(addStochasticTooltip(output));
         }
     }
 
@@ -81,7 +80,7 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
         if(recipe.isWaterlogged())
             requirements.add(ModLang.translate("recipe.sifting.waterlogged").component());
         if(recipe.hasSpeedRequeriment())
-            requirements.add(Lang.translate("createsifter.recipe.sifting.minimumspeed",recipe.getSpeedRequeriment()).component());
+            requirements.add(ModLang.translate("recipe.sifting.minimumspeed",recipe.getSpeedRequeriment()).component());
         if(recipe.requiresAdvancedMesh())
             requirements.add(ModLang.translate("recipe.sifting.brass_required").component());
 

@@ -1,8 +1,14 @@
 package com.oierbravo.createsifter;
 
 import com.oierbravo.createsifter.foundation.data.recipe.ModProcessingRecipeGen;
+import com.oierbravo.createsifter.ponders.ModPonderPlugin;
 import com.oierbravo.createsifter.register.*;
 import com.simibubi.create.foundation.data.CreateRegistrate;
+import com.simibubi.create.foundation.item.ItemDescription;
+import com.simibubi.create.foundation.item.KineticStats;
+import com.simibubi.create.foundation.item.TooltipModifier;
+import net.createmod.catnip.lang.FontHelper;
+import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -26,7 +32,12 @@ public class CreateSifter {
     public static IEventBus modEventBus;
 
     public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
-
+    static {
+        REGISTRATE.setTooltipModifierFactory(item ->
+                new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
+                        .andThen(TooltipModifier.mapNull(KineticStats.create(item)))
+        );
+    }
     public CreateSifter() {
         modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         REGISTRATE.registerEventListeners(modEventBus);
@@ -81,7 +92,7 @@ public class CreateSifter {
 
     }
     private void doClientStuff(final FMLClientSetupEvent event) {
-       event.enqueueWork(ModPonders::register);
+        PonderIndex.addPlugin(new ModPonderPlugin());
     }
 
     public static ResourceLocation asResource(String path) {
