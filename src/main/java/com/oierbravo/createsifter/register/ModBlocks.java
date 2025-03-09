@@ -1,7 +1,10 @@
 package com.oierbravo.createsifter.register;
 
 import com.oierbravo.createsifter.content.contraptions.components.brasss_sifter.BrassSifterBlock;
+import com.oierbravo.createsifter.content.contraptions.components.brasss_sifter.BrassSifterConfig;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlock;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterConfig;
+import com.simibubi.create.api.stress.BlockStressValues;
 import com.simibubi.create.foundation.data.AssetLookup;
 import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
@@ -18,18 +21,25 @@ import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 public class ModBlocks {
 
 
-    static { REGISTRATE.setCreativeTab(ModCreativeTabs.MAIN_TAB); }
+    static {
+        REGISTRATE.setCreativeTab(ModCreativeTabs.MAIN_TAB);
+    }
 
 
     public static void register() {
-
+        BlockStressValues.IMPACTS.registerProvider((block) -> {
+            if (block == SIFTER.get()) return SifterConfig.SIFTER_STRESS_IMPACT::get;
+            else if (block == BRASS_SIFTER.get()) return BrassSifterConfig.BRASS_SIFTER_STRESS_IMPACT::get;
+            else return null;
+        });
     }
+
     public static final BlockEntry<SifterBlock> SIFTER = REGISTRATE.block("sifter", SifterBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.mapColor(MapColor.METAL))
             .transform(pickaxeOnly())
             .blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
-            //.transform(BlockStressDefaults.setImpact(SifterConfig.SIFTER_STRESS_IMPACT.get()))
+//            .transform(BlockStressDefaults.setImpact(SifterConfig.SIFTER_STRESS_IMPACT.get()))
             .item()
             .transform(customItemModel())
             .register();
@@ -47,7 +57,7 @@ public class ModBlocks {
 
 
     public static final BlockEntry<Block> DUST = REGISTRATE.block("dust", Block::new)
-            .initialProperties(() ->Blocks.SAND)
+            .initialProperties(() -> Blocks.SAND)
             .lang("Dust block")
             .properties(p -> p.mapColor(MapColor.SAND))
             .tag(BlockTags.MINEABLE_WITH_SHOVEL)
@@ -56,9 +66,11 @@ public class ModBlocks {
 
     public static final BlockEntry<Block> CRUSHED_END_STONE = REGISTRATE.block("crushed_end_stone", Block::new)
             .lang("Crushed end stone")
-            .initialProperties(() ->Blocks.SAND)
+            .initialProperties(() -> Blocks.SAND)
             .properties(p -> p.mapColor(MapColor.SAND))
             .tag(BlockTags.MINEABLE_WITH_SHOVEL)
             .simpleItem()
             .register();
+
+
 }
