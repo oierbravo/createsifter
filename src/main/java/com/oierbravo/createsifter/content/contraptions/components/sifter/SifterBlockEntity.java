@@ -2,9 +2,12 @@ package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedBaseMesh;
+import com.oierbravo.createsifter.foundation.util.ModLang;
+import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.foundation.sound.SoundScapes;
 import net.createmod.catnip.math.VecHelper;
+import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -32,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 import java.util.Optional;
 
-public class SifterBlockEntity extends KineticBlockEntity {
+public class SifterBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
     public ItemStackHandler inputInv;
     public ItemStackHandler outputInv;
     public LazyOptional<IItemHandler> capability;
@@ -91,7 +94,19 @@ public class SifterBlockEntity extends KineticBlockEntity {
         float pitch = Mth.clamp((Math.abs(getSpeed()) / 256f) + .45f, .85f, 1f);
         SoundScapes.play(SoundScapes.AmbienceGroup.MILLING, worldPosition, pitch);
     }
-
+    @Override
+    public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
+        boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking);
+        if(!this.meshInv.getStackInSlot(0).isEmpty()) {
+            ModLang.translate("tooltip.mesh", this.meshInv.getStackInSlot(0).getDisplayName().getString()).style(ChatFormatting.YELLOW).forGoggles(tooltip);
+            added = true;
+        }
+        if(hasRecipeSpeedRequeriment()) {
+            ModLang.translate("tooltip.minimumspeed", minimumSpeed).style(ChatFormatting.WHITE).forGoggles(tooltip);
+            added = true;
+        }
+        return added;
+    }
     @Override
     public void tick() {
         super.tick();
