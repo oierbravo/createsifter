@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_andesite_casing": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#create:casing"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "createsifter:crafting/sifter"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_andesite_casing"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "createsifter:crafting/sifter"
+    ]
+  }
+}

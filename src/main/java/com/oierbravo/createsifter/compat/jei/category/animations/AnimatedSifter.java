@@ -6,7 +6,7 @@ import com.oierbravo.createsifter.register.ModPartials;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 
-public class AnimatedSifter  extends BaseAnimatedSifter<SifterBlock> {
+public class AnimatedSifter  extends AbstractAnimatedSifter<SifterBlock> {
     @Override
     PartialModel getMeshModel() {
         return ModPartials.SIFTER_MESH;

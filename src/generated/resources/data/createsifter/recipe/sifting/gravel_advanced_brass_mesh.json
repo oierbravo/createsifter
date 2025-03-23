@@ -1,0 +1,45 @@
+{
+  "type": "createsifter:sifting",
+  "input": {
+    "item": "minecraft:gravel"
+  },
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:advanced_brass_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "chance": 0.1,
+      "id": "create:crushed_raw_copper"
+    },
+    {
+      "chance": 0.1,
+      "id": "create:crushed_raw_zinc"
+    },
+    {
+      "chance": 0.05,
+      "id": "create:crushed_raw_gold"
+    },
+    {
+      "chance": 0.15,
+      "id": "create:crushed_raw_iron"
+    },
+    {
+      "chance": 0.1,
+      "id": "minecraft:lapis_lazuli"
+    },
+    {
+      "chance": 0.05,
+      "id": "minecraft:diamond"
+    },
+    {
+      "chance": 0.02,
+      "id": "minecraft:emerald"
+    },
+    {
+      "chance": 0.1,
+      "id": "create:experience_nugget"
+    }
+  ]
+}

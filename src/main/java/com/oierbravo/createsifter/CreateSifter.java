@@ -1,8 +1,12 @@
 package com.oierbravo.createsifter;
 
-import com.oierbravo.createsifter.foundation.data.recipe.ModProcessingRecipeGen;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlockEntity;
+import com.oierbravo.createsifter.foundation.data.ModDataGen;
+import com.oierbravo.createsifter.infrastucture.config.ModConfigs;
 import com.oierbravo.createsifter.ponders.ModPonderPlugin;
 import com.oierbravo.createsifter.register.*;
+import com.oierbravo.mechanicals.register.MechanicalCreativeModeTabs;
+import com.oierbravo.mechanicals.utility.RegistrateLangBuilder;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
@@ -12,91 +16,92 @@ import net.createmod.ponder.foundation.PonderIndex;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.EventPriority;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(CreateSifter.MODID)
+import static com.oierbravo.createsifter.ModConstants.MODID;
+
+
+@Mod(MODID)
 public class CreateSifter {
-    public static final String MODID = "createsifter";
     public static final String DISPLAY_NAME = "Create Sifter";
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger(MODID);
     public static IEventBus modEventBus;
 
-    public static final CreateRegistrate REGISTRATE = CreateRegistrate.create(MODID);
+    public static final CreateRegistrate REGISTRATE =
+            CreateRegistrate.create(MODID).defaultCreativeTab(ModCreativeTabs.MAIN_TAB.getKey());
+
     static {
         REGISTRATE.setTooltipModifierFactory(item ->
                 new ItemDescription.Modifier(item, FontHelper.Palette.STANDARD_CREATE)
                         .andThen(TooltipModifier.mapNull(KineticStats.create(item)))
         );
     }
-    public CreateSifter() {
-        modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        REGISTRATE.registerEventListeners(modEventBus);
+    public CreateSifter(IEventBus modEventBus, ModContainer modContainer) {
 
-        ModConfigs.register();
+        REGISTRATE.registerEventListeners(modEventBus);
+        ModLoadingContext modLoadingContext = ModLoadingContext.get();
+
+        ModCreativeTabs.register(modEventBus);
+
+        ModConfigs.register(modLoadingContext,modContainer);
 
         ModBlocks.register();
         ModItems.register();
         ModBlockEntities.register();
-        ModCreativeTabs.register(modEventBus);
-        ModRecipeTypes.register(modEventBus);
+
+        modEventBus.addListener(ModDataGen::gatherData);
+
+        ModRecipes.register(modEventBus);
+
+        //modEventBus.addListener(ModDataGen::gatherData);
+        modEventBus.addListener(this::registerCapabilities);
         modEventBus.addListener(this::doClientStuff);
 
         generateLangEntries();
-
-        modEventBus.addListener(EventPriority.LOWEST, CreateSifter::gatherData);
-        DistExecutor.unsafeRunWhenOn(Dist.CLIENT,
-                () -> ModPartials::init);
     }
     private void generateLangEntries(){
-
-        registrate().addRawLang("createsifter.recipe.sifting", "Sifting recipe");
-        registrate().addRawLang("create.recipe.sifting", "Sifting recipe");
-        registrate().addRawLang("createsifter.recipe.sifting.minimumspeed", "%1$s RPM");
-        registrate().addRawLang("createsifter.recipe.sifting.waterlogged", "Waterlogged");
-        registrate().addRawLang("createsifter.recipe.sifting.brass_required", "Brass sifter required");
-        registrate().addRawLang("itemGroup.createsifter:main", "Create sifting");
-        //Ponder
-        registrate().addRawLang("createsifter.ponder.sifter.header", "Block sifting");
-        registrate().addRawLang("createsifter.ponder.sifter.text_1", "Sifter process items by sifting them");
-        registrate().addRawLang("createsifter.ponder.sifter.text_2", "They can be powered from the side using cogwheels");
-        registrate().addRawLang("createsifter.ponder.sifter.text_3", "Throw or Insert items at the top");
-        registrate().addRawLang("createsifter.ponder.sifter.text_4", "After some time, the result can be obtained via Right-click");
-        registrate().addRawLang("createsifter.ponder.sifter.text_5", "The outputs can also be extracted by automation");
-
-        registrate().addRawLang("createsifter.recipe.sifting.brass_required", "Brass sifter required");
+        new RegistrateLangBuilder(MODID, registrate())
+            .addRaw("config.jade.plugin_createsifter.sifter_data", "Create Sifter")
+            .addRaw("itemGroup.createsifter:main", "Create sifting")
+            .add("recipe.sifting", "Sifting recipe")
+            .add("recipe.sifting.minimumspeed", "%1$s RPM")
+            .add("recipe.sifting.waterlogged", "Waterlogged")
+            .add("recipe.sifting.brass_required", "Brass sifter required")
+            .add("tooltip.mesh", "Mesh: %s")
+            //Ponder
+            .add("ponder.sifter.header", "Block sifting")
+            .add("ponder.sifter.text_1", "Sifter process items by sifting them")
+            .add("ponder.sifter.text_2", "They can be powered from the side using cogwheels")
+            .add("ponder.sifter.text_3", "Throw or Insert items at the top")
+            .add("ponder.sifter.text_4", "After some time, the result can be obtained via Right-click")
+            .add("ponder.sifter.text_5", "The outputs can also be extracted by automation");
 
     }
     public static CreateRegistrate registrate() {
         return REGISTRATE;
     }
 
-    public static void gatherData(GatherDataEvent event) {
-        DataGenerator gen = event.getGenerator();
-        PackOutput output = gen.getPackOutput();
-        if (event.includeClient()) {
-
-        }
-        if (event.includeServer()) {
-            ModProcessingRecipeGen.registerAll(gen,output);
-        }
-
+    @net.neoforged.bus.api.SubscribeEvent
+    public void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
+        SifterBlockEntity.registerCapabilities(event);
     }
+
     private void doClientStuff(final FMLClientSetupEvent event) {
+        ModPartials.init();
         PonderIndex.addPlugin(new ModPonderPlugin());
     }
 
-    public static ResourceLocation asResource(String path) {
-        return new ResourceLocation(MODID, path);
+
+    public static Logger getLogger(){
+        return LOGGER;
     }
 
 }

@@ -1,15 +1,13 @@
 apply plugin: 'java'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
-
-println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 java.withSourcesJar()
 java.withJavadocJar()
 
 jar {
     manifest {
         attributes([
-                'Specification-Title'     : display_name,
+                'Specification-Title'     : mod_name,
                 'Specification-Vendor'    : mod_author,
                 'Specification-Version'   : project.jar.archiveVersion,
                 'Implementation-Title'    : project.name,
@@ -25,7 +23,7 @@ jar {
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = 'UTF-8'
-    it.options.release = 17
+    it.options.release = 21
 }
 
 // Disables Gradle's custom module metadata from being published to maven. The
@@ -38,8 +36,4 @@ tasks.withType(GenerateModuleMetadata) {
 javadoc {
     // Suppress annoying warnings when generating JavaDoc files.
     options.addStringOption('Xdoclint:none', '-quiet')
-}
-
-compileJava {
-    options.compilerArgs = ['-Xdiags:verbose']
 }

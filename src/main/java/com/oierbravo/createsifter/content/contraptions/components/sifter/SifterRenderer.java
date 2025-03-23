@@ -2,8 +2,8 @@ package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.oierbravo.createsifter.infrastucture.config.ModConfigs;
 import com.oierbravo.createsifter.register.ModPartials;
-import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
 import net.createmod.catnip.render.CachedBuffers;
@@ -16,12 +16,11 @@ import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.client.model.data.ModelData;
-
-import static net.minecraft.world.level.block.state.properties.BlockStateProperties.HORIZONTAL_FACING;
+import net.neoforged.neoforge.client.model.data.ModelData;
 
 public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity> {
     public SifterRenderer(BlockEntityRendererProvider.Context context) {
@@ -36,12 +35,13 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
     protected void renderSafe(SifterBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer,
                               int light, int overlay) {
 
-        VertexConsumer vb = buffer.getBuffer(RenderType.cutout());
-        ItemStack meshItemStack = be.meshInv.getStackInSlot(0);
+        ItemStack meshItemStack = be.getMeshItemStack();
 
-        Double xPos = 0.0;
-        if(SifterConfig.SIFTER_RENDER_MOVING_MESH.get())
-            xPos = Math.sin(be.getProgress())/40;
+        double xPos = 0.0;
+        float percentf = be.dynamicCycleBehaviour.getProgressPercentFloat();
+        int percent = be.dynamicCycleBehaviour.getProgressPercent();
+        if(ModConfigs.client().sifter.renderMovingMesh.get())
+            xPos = Math.sin(be.dynamicCycleBehaviour.getProgressPercent())/40;
 
         if(!meshItemStack.isEmpty()){
             ms.pushPose();
@@ -50,11 +50,13 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
             ms.popPose();
         }
         //In progress Block renderer
-        if(!meshItemStack.isEmpty() && SifterConfig.SIFTER_RENDER_SIFTED_BLOCK.get()) {
+        if(!meshItemStack.isEmpty() && ModConfigs.client().sifter.renderSiftedBlock.get()) {
             ItemStack inProccessItemStack = be.getInputItemStack();
 
             if (!inProccessItemStack.equals(ItemStack.EMPTY)) {
-                float progress = be.getProcessingRemainingPercent();
+                float progress = 1 - be.dynamicCycleBehaviour.getProgressPercentFloat();
+                /*if(progress > 1)
+                    progress = 1;*/
                 ms.pushPose();
                 TransformStack.of(ms)
                         .scale((float) .9, progress, (float) .9)
@@ -76,12 +78,8 @@ public class SifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity
                         buffer, entity.getLevel(), 0);
     }
     protected void renderBlockFromItemStack(ItemStack itemStack,PoseStack ms, MultiBufferSource buffer, int light, int overlay) {
-        Item item = itemStack.getItem();
-        BlockState blockState = Blocks.AIR.defaultBlockState();
-        if(item instanceof BlockItem){
-            blockState = ((BlockItem) item).getBlock().defaultBlockState();
-        }
-
+        Block block = Block.byItem(itemStack.getItem());
+        BlockState blockState = block.defaultBlockState();
         Minecraft.getInstance()
                 .getBlockRenderer()
                 .renderSingleBlock(blockState, ms,buffer,light,overlay, ModelData.EMPTY,RenderType.solid());

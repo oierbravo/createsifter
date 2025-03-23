@@ -10,7 +10,6 @@ import net.createmod.ponder.api.element.EntityElement;
 import net.createmod.ponder.api.scene.SceneBuilder;
 import net.createmod.ponder.api.scene.SceneBuildingUtil;
 import net.createmod.ponder.api.scene.Selection;
-import net.createmod.ponder.foundation.element.InputWindowElement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.Entity;
@@ -73,7 +72,7 @@ public class SifterScenes {
         scene.idle(18);
         scene.world().modifyEntity(entity1, Entity::discard);
         scene.world().modifyBlockEntity(sifter, SifterBlockEntity.class,
-                ms -> ms.inputInv.setStackInSlot(0, itemStack));
+                ms -> ms.getInputInventory().setStackInSlot(0, itemStack));
         scene.idle(10);
         scene.overlay().showControls(util.vector().blockSurface(sifter, Direction.NORTH), Pointing.RIGHT, 30).withItem(itemStack);
         scene.idle(7);
@@ -86,7 +85,7 @@ public class SifterScenes {
         scene.idle(60);
 
         scene.world().modifyBlockEntity(sifter, SifterBlockEntity.class,
-                ms -> ms.inputInv.setStackInSlot(0, ItemStack.EMPTY));
+                ms -> ms.getInputInventory().setStackInSlot(0, ItemStack.EMPTY));
 
         scene.overlay().showText(50)
                 .text("After some time, the result can be obtained via Right-click")

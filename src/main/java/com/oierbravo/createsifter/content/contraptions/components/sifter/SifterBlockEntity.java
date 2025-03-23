@@ -1,15 +1,24 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
-import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedBaseMesh;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.IMesh;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
 import com.oierbravo.createsifter.foundation.util.ModLang;
+import com.oierbravo.createsifter.infrastucture.config.ModConfigs;
+import com.oierbravo.createsifter.register.ModBlockEntities;
+import com.oierbravo.createsifter.register.ModRecipes;
+import com.oierbravo.mechanicals.foundation.blockEntity.behaviour.DynamicCycleBehavior;
+import com.oierbravo.mechanicals.foundation.blockEntity.behaviour.RecipeRequirementsBehaviour;
+import com.oierbravo.mechanicals.register.MechanicalRecipeRequirementTypes;
 import com.simibubi.create.api.equipment.goggles.IHaveGoggleInformation;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
+import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
 import com.simibubi.create.foundation.sound.SoundScapes;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -21,50 +30,66 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.ItemHandlerHelper;
-import net.minecraftforge.items.ItemStackHandler;
-import net.minecraftforge.items.wrapper.CombinedInvWrapper;
-import net.minecraftforge.items.wrapper.RecipeWrapper;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.capabilities.Capabilities;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemHandlerHelper;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.neoforged.neoforge.items.wrapper.CombinedInvWrapper;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class SifterBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation {
-    public ItemStackHandler inputInv;
-    public ItemStackHandler outputInv;
-    public LazyOptional<IItemHandler> capability;
-    public int timer;
-    private SiftingRecipe lastRecipe;
+import static com.oierbravo.createsifter.register.ModRecipes.findRecipesWithMatchingIngredients;
 
-    public ItemStackHandler meshInv;
+public class SifterBlockEntity extends KineticBlockEntity implements IHaveGoggleInformation, DynamicCycleBehavior.DynamicCycleBehaviorSpecifics, RecipeRequirementsBehaviour.RecipeRequirementsSpecifics<SiftingRecipe> {
 
-    protected CombinedInvWrapper inputAndMeshCombined ;
-
-    public static float DEFAULT_MINIMUM_SPEED = SifterConfig.SIFTER_MINIMUM_SPEED.get().floatValue();
-    protected int totalTime;
+    public final float DEFAULT_MINIMUM_SPEED;
 
     protected float minimumSpeed = getDefaultMinimumSpeed();
 
     protected int itemsProcessedPerCycle = 1;
+
+    private final ItemStackHandler inputInventory;
+    private final ItemStackHandler outputInventory;
+    public ItemStackHandler meshInventory;
+    protected IItemHandler inputAndMeshCombined;
+
+    public DynamicCycleBehavior dynamicCycleBehaviour;
+
+    public RecipeRequirementsBehaviour<SiftingRecipe> recipeRequirementsBehaviour;
+
+
+    @Override
+    public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
+        dynamicCycleBehaviour = new DynamicCycleBehavior(this);
+        behaviours.add(dynamicCycleBehaviour);
+
+        recipeRequirementsBehaviour = new RecipeRequirementsBehaviour<>(this);
+        behaviours.add(recipeRequirementsBehaviour);
+    }
+
+
+
     public SifterBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState state) {
         super(type, pos, state);
+        DEFAULT_MINIMUM_SPEED = ModConfigs.server().sifter.minimumSpeed.getF();
+        inputInventory = createInputInventory();
+        outputInventory = createOutputInventory();
+        meshInventory = createMeshInventory();
+        inputAndMeshCombined = new SifterInventoryHandler(inputInventory,outputInventory);
+    }
 
-        inputInv = createInputInv();
-        outputInv = createOutputInv();
-        capability = LazyOptional.of(SifterInventoryHandler::new);
-        meshInv = new ItemStackHandler(1){
+    private @NotNull ItemStackHandler createMeshInventory() {
+        return new ItemStackHandler(1) {
             @Override
             public boolean isItemValid(int slot, @NotNull ItemStack stack) {
-                if(SiftingRecipe.isMeshItemStack(stack)){
-                    return true;
-                }
-                return false;
+                return IMesh.isMeshItemStack(stack);
             }
 
             @Override
@@ -72,128 +97,111 @@ public class SifterBlockEntity extends KineticBlockEntity implements IHaveGoggle
                 sendData();
             }
         };
-        inputAndMeshCombined = new CombinedInvWrapper(inputInv,meshInv);
     }
-    protected ItemStackHandler createInputInv(){
-        return new ItemStackHandler(1);
-    }
-    protected ItemStackHandler createOutputInv(){
-        return new ItemStackHandler(SifterConfig.SIFTER_OUTPUT_CAPACITY.get());
-    }
-    @Override
-    @OnlyIn(Dist.CLIENT)
-    public void tickAudio() {
-        super.tickAudio();
 
-        if (getSpeed() == 0)
-            return;
-        if (inputInv.getStackInSlot(0)
-                .isEmpty())
-            return;
-
-        float pitch = Mth.clamp((Math.abs(getSpeed()) / 256f) + .45f, .85f, 1f);
-        SoundScapes.play(SoundScapes.AmbienceGroup.MILLING, worldPosition, pitch);
+    protected ItemStackHandler createInputInventory(){
+        return new ItemStackHandler(1){
+            public boolean isItemValid(int slot, @NotNull ItemStack stack) {
+                return hasMesh();
+            }
+            @Override
+            protected void onContentsChanged(int slot) {
+                sendData();
+            }
+        };
     }
+    protected ItemStackHandler createOutputInventory(){ return new ItemStackHandler(ModConfigs.server().sifter.outputCapacity.get());}
+
+    public ItemStackHandler getInputInventory(){
+        return inputInventory;
+    }
+    public ItemStackHandler getOutputInventory(){
+        return outputInventory;
+    }
+    public ItemStackHandler getMeshInventory(){
+        return meshInventory;
+    }
+    public @Nullable IItemHandler getItemHandler() {
+        return inputAndMeshCombined;
+    }
+    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.SIFTER.get(),
+                (be, context) -> be.getItemHandler()
+        );
+    }
+
     @Override
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking);
-        if(!this.meshInv.getStackInSlot(0).isEmpty()) {
-            ModLang.translate("tooltip.mesh", this.meshInv.getStackInSlot(0).getDisplayName().getString()).style(ChatFormatting.YELLOW).forGoggles(tooltip);
+        if(!this.meshInventory.getStackInSlot(0).isEmpty()) {
+            ModLang.translate("tooltip.mesh", this.meshInventory.getStackInSlot(0).getDisplayName().getString()).style(ChatFormatting.YELLOW).forGoggles(tooltip);
             added = true;
         }
-        if(hasRecipeSpeedRequeriment()) {
-            ModLang.translate("tooltip.minimumspeed", minimumSpeed).style(ChatFormatting.WHITE).forGoggles(tooltip);
+
+        boolean addedRequirements = recipeRequirementsBehaviour.addToGoggleTooltip(tooltip, isPlayerSneaking, added);
+        if(addedRequirements)
             added = true;
-        }
+
         return added;
-    }
-    @Override
-    public void tick() {
-        super.tick();
-
-        if (getSpeed() == 0)
-            return;
-        if(!isSpeedRequirementFulfilled()){
-            return;
-        }
-
-        for (int i = 0; i < outputInv.getSlots(); i++)
-            if (outputInv.getStackInSlot(i)
-                    .getCount() == outputInv.getSlotLimit(i))
-                return;
-
-        if (timer > 0) {
-            timer -= getProcessingSpeed();
-
-            if (level.isClientSide) {
-                spawnParticles();
-                return;
-            }
-            if (timer <= 0)
-                process();
-            return;
-        }
-
-        if (inputInv.getStackInSlot(0)
-                .isEmpty())
-            return;
-
-        RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed(),hasAdvancedMesh())) {
-            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level, this.isWaterlogged(),getAbsSpeed());
-            if (!recipe.isPresent()) {
-                timer = 100;
-                totalTime = 100;
-                minimumSpeed = getDefaultMinimumSpeed();
-                sendData();
-            } else {
-                lastRecipe = recipe.get();
-                timer = lastRecipe.getProcessingDuration();
-                totalTime =  lastRecipe.getProcessingDuration();
-                minimumSpeed = lastRecipe.getSpeedRequeriment();
-                sendData();
-            }
-            return;
-        }
-
-        timer = lastRecipe.getProcessingDuration();
-        totalTime =  lastRecipe.getProcessingDuration();
-        minimumSpeed = lastRecipe.getSpeedRequeriment();
-        sendData();
     }
 
     @Override
     public void invalidate() {
         super.invalidate();
-        capability.invalidate();
+        invalidateCapabilities();
     }
 
-    private void process() {
 
-        RecipeWrapper inventoryIn = new RecipeWrapper(inputAndMeshCombined);
-
-        if (lastRecipe == null || !lastRecipe.matches(inventoryIn, level, this.isWaterlogged(),getAbsSpeed(),hasAdvancedMesh())) {
-            Optional<SiftingRecipe> recipe = ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged(), getAbsSpeed());
-            if (!recipe.isPresent())
-                return;
-            lastRecipe = recipe.get();
-        }
-        for(int i = 0;i < getItemsProcessedPerCycle();i++){
-            processCycle();
+    @Override
+    public boolean tryProcess(boolean simulate) {
+        Optional<SiftingRecipe> recipe = getRecipe();
+        if(recipe.isEmpty()){
+            recipeRequirementsBehaviour.cleanRequirements();
+            return false;
         }
 
-        sendData();
-        setChanged();
-    }
-    private void processCycle() {
-        ItemStack stackInSlot = inputInv.getStackInSlot(0);
-        if(!stackInSlot.isEmpty()){
+        if(!isSpeedRequirementFulfilled()){
+            return false;
+        }
+
+        SiftingRecipe siftingRecipe = recipe.get();
+
+        if(!recipeRequirementsBehaviour.checkRequirements(siftingRecipe))
+            return false;
+
+        if(simulate)
+            return true;
+
+        ItemStack stackInSlot = inputInventory.getStackInSlot(0);
+        if(!stackInSlot.isEmpty()) {
             stackInSlot.shrink(1);
-            inputInv.setStackInSlot(0, stackInSlot);
-            lastRecipe.rollResults()
-                    .forEach(stack -> tryToInsertOutputItem(outputInv, stack, false));
+            inputInventory.setStackInSlot(0, stackInSlot);
+
+            siftingRecipe.rollResults()
+                    .forEach(stack -> tryToInsertOutputItem(outputInventory, stack, false));
         }
+        return true;
     }
+
+    @Override
+    public void playCompletionSound() {
+
+    }
+
+
+    private Optional<SiftingRecipe> getRecipe(){
+        //List<SiftingRecipe> recipes = findRecipesWithMatchingIngredients(this);
+        //Optional<SiftingRecipe> recipe =  SiftingRecipeMerger.getRecipesMerged(this);
+        if(this.level == null)
+            return Optional.empty();
+        //Optional<SiftingRecipe> recipe = SiftingRecipeManager.getRecipe(this.getMeshItemStack(),this.getInputItemStack(),isWaterlogged());
+        //Optional<SiftingRecipe> recipe = ModRecipes.findRecipesWithMatchingIngredients(this).stream().findAny();
+        Optional<SiftingRecipe> recipe = ModRecipes.findMergedRecipesWithMatchingIngredients(this);
+        return recipe;
+    }
+
     protected void tryToInsertOutputItem(ItemStackHandler outputInv,ItemStack stack, boolean simulate){
         ItemHandlerHelper.insertItemStacked(outputInv, stack, simulate);
     }
@@ -202,10 +210,10 @@ public class SifterBlockEntity extends KineticBlockEntity implements IHaveGoggle
     }
 
     public void spawnParticles() {
-        if (inputInv.getStackInSlot(0).isEmpty() || meshInv.getStackInSlot(0).isEmpty())
+        if (inputInventory.getStackInSlot(0).isEmpty() || meshInventory.getStackInSlot(0).isEmpty())
             return;
 
-        ItemParticleOption data = new ItemParticleOption(ParticleTypes.ITEM, inputInv.getStackInSlot(0));
+        ItemParticleOption data = new ItemParticleOption(ParticleTypes.ITEM, inputInventory.getStackInSlot(0));
         float angle = level.random.nextFloat() * 360;
         Vec3 offset = new Vec3(0, 0, 0.5f);
         offset = VecHelper.rotate(offset, angle, Direction.Axis.Y);
@@ -217,99 +225,67 @@ public class SifterBlockEntity extends KineticBlockEntity implements IHaveGoggle
     }
 
     @Override
-    public void write(CompoundTag compound, boolean clientPacket) {
-        compound.putInt("Timer", timer);
-        compound.put("InputInventory", inputInv.serializeNBT());
-        compound.put("OutputInventory", outputInv.serializeNBT());
-        compound.put("MeshInventory", meshInv.serializeNBT());
-        compound.putInt("TotalTime", totalTime);
-        compound.putFloat("MinimumSpeed", minimumSpeed);
-        super.write(compound, clientPacket);
+    public void write(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        compound.put("InputInventory", inputInventory.serializeNBT(registries));
+        compound.put("OutputInventory", outputInventory.serializeNBT(registries));
+        compound.put("MeshInventory", meshInventory.serializeNBT(registries));
+        super.write(compound, registries, clientPacket);
+
     }
 
     @Override
-    protected void read(CompoundTag compound, boolean clientPacket) {
-        timer = compound.getInt("Timer");
-        inputInv.deserializeNBT(compound.getCompound("InputInventory"));
-        outputInv.deserializeNBT(compound.getCompound("OutputInventory"));
-        meshInv.deserializeNBT(compound.getCompound("MeshInventory"));
-        totalTime = compound.getInt("TotalTime");
-        minimumSpeed = compound.getFloat("MinimumSpeed");
-        super.read(compound, clientPacket);
-    }
+    protected void read(CompoundTag compound, HolderLookup.Provider registries, boolean clientPacket) {
+        inputInventory.deserializeNBT(registries, compound.getCompound("InputInventory"));
+        outputInventory.deserializeNBT(registries, compound.getCompound("OutputInventory"));
+        meshInventory.deserializeNBT(registries, compound.getCompound("MeshInventory"));
+        super.read(compound, registries, clientPacket);
 
+    }
     @Override
     public boolean isSpeedRequirementFulfilled() {
-        return getAbsSpeed() >= minimumSpeed;
+        Optional<SiftingRecipe> recipe = getRecipe();
+        if(recipe.isEmpty())
+            return getAbsSpeed() >= minimumSpeed;
+        if(recipe.get().getRequirement(MechanicalRecipeRequirementTypes.MIN_SPEED.get()).isPresent())
+            return recipe.get().getRequirement(MechanicalRecipeRequirementTypes.MIN_SPEED.get()).get().test(level, this);
+        if(recipe.get().getRequirement(MechanicalRecipeRequirementTypes.MAX_SPEED.get()).isPresent())
+            return recipe.get().getRequirement(MechanicalRecipeRequirementTypes.MAX_SPEED.get()).get().test(level, this);
+        return super.isSpeedRequirementFulfilled();
     }
 
-    private boolean hasRecipeSpeedRequeriment() {
-        if(minimumSpeed != getDefaultMinimumSpeed()){
-            return true;
-        }
-        return false;
-    }
-
-    public int getProcessingSpeed() {
-        return Mth.clamp((int) Math.abs(getSpeed() / 16f), 1, 512);
-    }
     protected float getDefaultMinimumSpeed() {
         return DEFAULT_MINIMUM_SPEED;
     }
-    public float getProcessingRemainingPercent() {
-        float timer = this.timer;
-        float total = this.totalTime;
-        float remaining = total - timer;
-        float result =  remaining/total;
-        return 1 - result;
-    }
-
-    @Override
-    public <T> LazyOptional<T> getCapability(Capability<T> cap, Direction side) {
-        if (isItemHandlerCap(cap))
-            return capability.cast();
-        return super.getCapability(cap, side);
-    }
-    private boolean canProcess(ItemStack stack) {
-
-        ItemStackHandler tester = new ItemStackHandler(2);
-        tester.setStackInSlot(0, stack);
-        tester.setStackInSlot(1, this.meshInv.getStackInSlot(0));
-        RecipeWrapper inventoryIn = new RecipeWrapper(tester);
-
-        if (lastRecipe != null && lastRecipe.matches(inventoryIn, level,this.isWaterlogged(),getAbsSpeed(),hasAdvancedMesh()))
-            return true;
-        return ModRecipeTypes.SIFTING.find(inventoryIn, level,this.isWaterlogged(),getAbsSpeed())
-                .isPresent();
-    }
-
 
     public void insertMesh(ItemStack meshStack, Player player) {
-        if(meshInv.getStackInSlot(0).isEmpty()){
+        if(meshInventory.getStackInSlot(0).isEmpty()){
             ItemStack meshToInsert = meshStack.copy();
             meshToInsert.setCount(1);
-            meshStack.shrink(1);
-            meshInv.setStackInSlot(0, meshToInsert);
+            if(!player.isCreative())
+                meshStack.shrink(1);
+            meshInventory.setStackInSlot(0, meshToInsert);
             setChanged();
         }
     }
-    public boolean hasMesh(){
-        return !meshInv.getStackInSlot(0).isEmpty();
-    }
 
+    public boolean hasMesh(){
+        return !getMeshItemStack().isEmpty();
+    }
+    public ItemStack getMeshItemStack(){
+        return meshInventory.getStackInSlot(0);
+    }
     public boolean hasAdvancedMesh(){
-        return !meshInv.getStackInSlot(0).isEmpty() && meshInv.getStackInSlot(0).getItem() instanceof AdvancedBaseMesh;
+        return !meshInventory.getStackInSlot(0).isEmpty() && meshInventory.getStackInSlot(0).getItem() instanceof AdvancedBaseMesh;
     }
 
 
     public void removeMesh(Player player) {
-        player.getInventory().placeItemBackInInventory(meshInv.getStackInSlot(0));
-        meshInv.setStackInSlot(0, ItemStack.EMPTY);
-        timer = 100;
-        totalTime = 100;
+        player.getInventory().placeItemBackInInventory(meshInventory.getStackInSlot(0));
+        meshInventory.setStackInSlot(0, ItemStack.EMPTY);
         minimumSpeed = getDefaultMinimumSpeed();
         sendData();
     }
+
     public boolean isWaterlogged() {
         return this.getBlockState().getValue(BlockStateProperties.WATERLOGGED);
     }
@@ -319,29 +295,74 @@ public class SifterBlockEntity extends KineticBlockEntity implements IHaveGoggle
     }
 
     public ItemStack getInputItemStack(){
-        return this.inputInv.getStackInSlot(0);
+        return this.inputInventory.getStackInSlot(0);
     }
 
-    public float getProgress() {
-        return timer;
+    @Override
+    @OnlyIn(Dist.CLIENT)
+    public void tickAudio() {
+        super.tickAudio();
+
+        if (getSpeed() == 0)
+            return;
+        if (dynamicCycleBehaviour.isRunning())
+            return;
+
+        float pitch = Mth.clamp((Math.abs(getSpeed()) / 256f) + .45f, .85f, 1f);
+        SoundScapes.play(SoundScapes.AmbienceGroup.MILLING, worldPosition, pitch);
+    }
+
+    @Override
+    public boolean matchesIngredients(SiftingRecipe siftingRecipeRecipeHolder) {
+        boolean incorrectInput = Arrays.stream(siftingRecipeRecipeHolder.getInput().getItems()).filter(itemStack -> ItemStack.isSameItem(itemStack,inputInventory.getStackInSlot(0))).toList().isEmpty();
+        if(incorrectInput)
+            return false;
+        return ItemStack.isSameItem(meshInventory.getStackInSlot(0),siftingRecipeRecipeHolder.getMesh());
+    }
+    /*public boolean matchesIngredients(RecipeHolder<SiftingRecipe> siftingRecipeRecipeHolder) {
+        return matchesIngredients(siftingRecipeRecipeHolder.value());
+    }*/
+
+
+    @Override
+    public void onOperationCompleted() {
+
+    }
+
+    @Override
+    public float getKineticSpeed() {
+        return getSpeed();
+    }
+
+    @Override
+    public int getProcessingTime() {
+        if(getRecipe().isEmpty())
+            return 0;
+        return getRecipe().get().getProcessingTime();
+    }
+
+
+    @Override
+    public boolean hasEnoughOutputSpace() {
+        return true;
     }
 
     private class SifterInventoryHandler extends CombinedInvWrapper {
 
-        public SifterInventoryHandler() {
-            super(inputInv, outputInv);
+        public SifterInventoryHandler(ItemStackHandler inputInventory, ItemStackHandler outputInventory) {
+            super(inputInventory, outputInventory);
         }
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            if (outputInv == getHandlerFromIndex(getIndexForSlot(slot)))
+            if (outputInventory == getHandlerFromIndex(getIndexForSlot(slot)))
                 return false;
-            return canProcess(stack) && super.isItemValid(slot, stack);
+            return super.isItemValid(slot, stack);
         }
 
         @Override
-        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if (outputInv == getHandlerFromIndex(getIndexForSlot(slot)))
+        public @NotNull ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            if (outputInventory == getHandlerFromIndex(getIndexForSlot(slot)))
                 return stack;
             if (!isItemValid(slot, stack))
                 return stack;
@@ -349,8 +370,8 @@ public class SifterBlockEntity extends KineticBlockEntity implements IHaveGoggle
         }
 
         @Override
-        public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (inputInv == getHandlerFromIndex(getIndexForSlot(slot)))
+        public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
+            if (inputInventory == getHandlerFromIndex(getIndexForSlot(slot)))
                 return ItemStack.EMPTY;
             return super.extractItem(slot, amount, simulate);
         }

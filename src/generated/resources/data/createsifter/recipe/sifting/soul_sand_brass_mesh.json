@@ -1,0 +1,21 @@
+{
+  "type": "createsifter:sifting",
+  "input": {
+    "item": "minecraft:soul_sand"
+  },
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:brass_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "chance": 0.1,
+      "id": "minecraft:quartz"
+    },
+    {
+      "chance": 0.1,
+      "id": "create:experience_nugget"
+    }
+  ]
+}

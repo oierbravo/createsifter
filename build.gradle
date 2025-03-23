@@ -1,11 +1,18 @@
 plugins {
     id "idea"
-    id "net.neoforged.moddev.legacyforge" version "2.0.74"
+    id "net.neoforged.moddev" version "2.0.74"
     id "dev.ithundxr.silk" version "0.11.15"
     id "me.modmuss50.mod-publish-plugin" version "0.8.3"
 }
+
 apply from: "./gradle/java.gradle"
 apply from: "gradle/property_loader.gradle"
+
+//apply plugin: 'net.minecraftforge.gradle'
+//apply plugin: 'org.parchmentmc.librarian.forgegradle'
+//apply plugin: 'com.matthewprenger.cursegradle'
+//apply plugin: 'org.spongepowered.mixin'
+//apply plugin: 'idea'
 
 group = "com.${mod_author}.${mod_id}"
 version = "${minecraft_version}-${mod_version}"
@@ -17,9 +24,8 @@ idea {
         downloadSources = true
     }
 }
-
-legacyForge {
-    version = "$minecraft_version-$forge_version"
+neoForge {
+    version = project.neo_version
 
     // TODO - Try turning this on later
     validateAccessTransformers = false
@@ -48,7 +54,7 @@ legacyForge {
 
             systemProperty 'mixin.debug.export', 'true'
             systemProperty 'mixin.debug.verbose', 'true'
-            programArgument '-mixin.config=create.mixins.json'
+            //programArgument '-mixin.config=create.mixins.json'
             //programArgument '-mixin.config=ponder.mixins.json'
             //systemProperty("mixin.env.remapRefMap", "true")
             //systemProperty("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
@@ -97,7 +103,7 @@ sourceSets.main {
 repositories {
     maven { url = "https://maven.createmod.net" } // Create, Ponder, Flywheel
     maven { url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/" } // ForgeConfigAPIPort
-    maven { url = "https://maven.tterrag.com" } // Registrate
+    maven { url = "https://mvn.devos.one/snapshots" } // Registrate
     maven { url = "https://maven.blamejared.com" } // JEI, Vazkii's Mods
 
     maven {
@@ -124,17 +130,16 @@ repositories {
         }
     }
     maven {
-        url "https://jitpack.io"
-        content {
-            includeGroup "com.github.llamalad7.mixinextras"
-        }
-    }
-
-    maven {
-        url "https://maven.saps.dev/minecraft"
+        url "https://maven.latvian.dev/releases"
         content {
             includeGroup "dev.latvian.mods"
-            includeGroup "dev.ftb.mods"
+            includeGroup "dev.latvian.apps"
+        }
+    }
+    maven {
+        url 'https://jitpack.io'
+        content {
+            includeGroup "com.github.rtyley"
         }
     }
     maven {
@@ -152,51 +157,28 @@ repositories {
 dependencies {
     implementation 'org.jetbrains:annotations:22.0.0'
 
-    modImplementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
-    modImplementation("net.createmod.ponder:Ponder-Forge-${minecraft_version}:${ponder_version}")
-    modCompileOnly("dev.engine-room.flywheel:flywheel-forge-api-${flywheel_minecraft_version}:${flywheel_version}")
-    modRuntimeOnly("dev.engine-room.flywheel:flywheel-forge-${flywheel_minecraft_version}:${flywheel_version}")
-    modImplementation("com.tterrag.registrate:Registrate:${registrate_version}")
-    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1"))
+    jarJar(implementation("com.oierbravo.mechanicals:Mechanicals:${mechanicals}"))
 
-    modImplementation("dev.latvian.mods:rhino-forge:${rhino_version}")
-    modImplementation("dev.architectury:architectury-forge:${architectury_version}")
-    modImplementation("dev.latvian.mods:kubejs-forge:${kubejs_version}")
+    implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
+    implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
+    compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-${minecraft_version}:${flywheel_version}")
+    runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-${minecraft_version}:${flywheel_version}")
+    implementation("com.tterrag.registrate:Registrate:${registrate_version}")
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
 
+    implementation("mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}")
 
+    compileOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${curios_minecraft_version}:api")
+    runtimeOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${curios_minecraft_version}")
 
-    modImplementation("mezz.jei:jei-${jei_minecraft_version}-forge:${jei_version}")
+    compileOnly("dev.architectury:architectury-neoforge:$architectury_version")
+    api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
+    interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs_version") // optional
 
-    modCompileOnly("top.theillusivec4.curios:curios-forge:${curios_version}+${curios_minecraft_version}:api")
-    modRuntimeOnly("top.theillusivec4.curios:curios-forge:${curios_version}+${curios_minecraft_version}")
+    implementation("curse.maven:jade-324717:${jade_id}")
+    implementation("curse.maven:ad-astra-635042:6262032")
+    implementation("curse.maven:ad-astra-635042:6262032")
 
-
-    modImplementation("curse.maven:jade-324717:${jade_id}")
-    modImplementation("curse.maven:journeymap-32274:5457831")
-
-    if (cc_tweaked_enable.toBoolean()) {
-        compileOnly(fg.deobf('com.blamejared.crafttweaker:CraftTweaker-forge-1.20.1:[VERSION]'))
-        modCompileOnly("cc.tweaked:cc-tweaked-${cc_tweaked_minecraft_version}-core-api:${cc_tweaked_version}")
-        modCompileOnly("cc.tweaked:cc-tweaked-${cc_tweaked_minecraft_version}-forge-api:${cc_tweaked_version}")
-        modRuntimeOnly("cc.tweaked:cc-tweaked-${cc_tweaked_minecraft_version}-forge:${cc_tweaked_version}")
-    }
-    /*if (ct_enabled.toBoolean()) {
-        def minecraftVersion= "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
-        def ctDep = "com.blamejared.crafttweaker:CraftTweaker-forge-${minecraft_version}:${ct_version}"
-        def ctCreateDep = "com.blamejared.crafttweaker:CraftTweaker-forge-${minecraft_version}:${ct_version}"
-        modImplementation(ctDep)
-        modImplementation(ctCreateDep)
-
-        modImplementation("com.blamejared.createtweaker:CreateTweaker-${minecraft_version}:${ct_create_version}")
-        annotationProcessor 'com.blamejared.crafttweaker:Crafttweaker_Annotation_Processors:3.0.0.10'
-        annotationProcessor minecraftVersion
-        annotationProcessor ctDep
-        annotationProcessor ctCreateDep
-    }*/
-
-    if (System.getProperty('idea.sync.active') != 'true') {
-        annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
-    }
 }
 
 processResources {
@@ -205,28 +187,28 @@ processResources {
     // Replaces FML's magic file.jarVersion string with the correct version at build time.
     buildProps.put('file', [jarVersion: project.version])
 
-    filesMatching(['META-INF/mods.toml', 'pack.mcmeta']) {
+    filesMatching(['META-INF/neoforge.mods.toml', 'pack.mcmeta']) {
         expand buildProps
     }
 }
+
 compileJava {
     options.compilerArgs = ['-Xdiags:verbose']
 }
 
 jar {
-    from('LICENSE.txt') {
+    from('LICENSE') {
         rename { "${it}_${archivesBaseName}" }
     }
 
 }
 
 publishMods {
-    file = reobfJar.archiveFile
+    file = jar.archiveFile
     changelog = rootProject.file("changes/${minecraft_version}-${mod_version}.md").text
     type = STABLE
     version = "$minecraft_version-$mod_version"
-    displayName = "$display_name $mod_version for mc$minecraft_version"
-    modLoaders.add("forge")
+    displayName = "$mod_name $mod_version for mc$minecraft_version"
     modLoaders.add("neoforge")
 
     var cfToken = System.getenv("CF_TOKEN")

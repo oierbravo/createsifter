@@ -9,7 +9,10 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 public class AdvancedMeshItemBuilder extends ItemBuilder {
-    private static final CreateRegistrate REGISTRATE = CreateSifter.registrate()
+    public AdvancedMeshItemBuilder(ResourceLocation id) {
+        super(id);
+    }
+    /*private static final CreateRegistrate REGISTRATE = CreateSifter.registrate()
             .setCreativeTab(ModCreativeTabs.MAIN_TAB);
 
     private ResourceLocation resourceLocation;
@@ -21,5 +24,5 @@ public class AdvancedMeshItemBuilder extends ItemBuilder {
     @Override
     public Item createObject() {
         return new AdvancedCustomMesh(createItemProperties()) ;
-    }
+    }*/
 }

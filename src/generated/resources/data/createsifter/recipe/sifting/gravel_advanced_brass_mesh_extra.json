@@ -1,0 +1,20 @@
+{
+  "type": "createsifter:sifting",
+  "input": {
+    "item": "minecraft:gravel"
+  },
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:brass_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "id": "create:wrench"
+    },
+    {
+      "chance": 0.5,
+      "id": "create:blaze_cake"
+    }
+  ]
+}

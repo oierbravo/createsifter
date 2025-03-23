@@ -12,8 +12,8 @@ public class AdvancedBrassMesh extends AdvancedBaseMesh {
         this.mesh = MeshTypes.ADVANCED_BRASS;
     }
 
-    @Override
+    /*@Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot, ItemStack stack) {
         return super.getAttributeModifiers(slot, stack);
-    }
+    }*/
 }

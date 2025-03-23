@@ -1,0 +1,21 @@
+{
+  "type": "createsifter:sifting",
+  "input": {
+    "item": "minecraft:sand"
+  },
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:string_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "chance": 0.05,
+      "id": "minecraft:redstone"
+    },
+    {
+      "chance": 0.4,
+      "id": "minecraft:bone_meal"
+    }
+  ]
+}

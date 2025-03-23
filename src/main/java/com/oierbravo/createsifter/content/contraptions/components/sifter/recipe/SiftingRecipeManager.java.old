@@ -1,0 +1,102 @@
+package com.oierbravo.createsifter.content.contraptions.components.sifter.recipe;
+
+import com.oierbravo.createsifter.ModConstants;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.IMesh;
+import com.oierbravo.createsifter.register.ModRecipes;
+import net.createmod.catnip.data.Pair;
+import net.minecraft.client.Minecraft;
+import net.minecraft.core.NonNullList;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeManager;
+import net.minecraft.world.level.ItemLike;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.event.config.ModConfigEvent;
+
+import java.util.*;
+
+public class SiftingRecipeManager {
+    //Map<SiftingRecipeCacheKey, SiftingRecipe> recipeInputMap;
+    private static Map<SiftingRecipeCacheKey, List<SiftingRecipe>> recipeSorted = new HashMap<>();
+
+
+
+    public static void loadRecipes(){
+        //Map<SiftingRecipeCacheKey, List<SiftingRecipe>> recipeSorted = new HashMap<>();
+        if(getRecipeManager() == null)
+            return;
+        recipeSorted.clear();
+        List<RecipeHolder<SiftingRecipe>> recipes = getRecipeManager().getAllRecipesFor(ModRecipes.SIFTING_TYPE.get());
+        getRecipeManager().getAllRecipesFor(ModRecipes.SIFTING_TYPE.get()).forEach(
+                siftingRecipeRecipeHolder -> {
+                    SiftingRecipeCacheKey key = new SiftingRecipeCacheKey((IMesh) siftingRecipeRecipeHolder.value().getMesh().getItem(), siftingRecipeRecipeHolder.value().getInput());
+                    if(!recipeSorted.containsKey(key)){
+                        recipeSorted.put(key,List.of());
+                    }
+                    List<SiftingRecipe> currentElement = recipeSorted.get(key);
+                    currentElement.add(siftingRecipeRecipeHolder.value());
+                    recipeSorted.put(key,currentElement);
+                    }
+                );
+        //forEach para procesar la lista
+        /*recipeSorted.forEach((siftingRecipeCacheKey, siftingRecipes) -> {
+            recipeInputMap.put(siftingRecipeCacheKey, mergeRecipes(siftingRecipeCacheKey,siftingRecipes));
+        });*/
+    }
+    private static SiftingRecipe mergeRecipes(SiftingRecipeCacheKey key, List<SiftingRecipe> list){
+        SiftingRecipeBuilder builder = new SiftingRecipeBuilder()
+                .create(ResourceLocation.fromNamespaceAndPath(ModConstants.MODID, "merged_" + key.getFirst() + "_" + key.getSecond()));
+        builder.requiredMesh((ItemLike) key.getFirst());
+        builder.require(key.getSecond());
+        list.forEach(siftingRecipe -> builder.output(siftingRecipe.getResults()));
+        builder.processingTime(500);
+        return builder.build();
+    }
+    public static Optional<SiftingRecipe> getRecipe(ItemStack mesh, ItemStack input, boolean waterlogged){
+        /*if(recipeSorted.isEmpty())
+            loadRecipes();
+        SiftingRecipeCacheKey  key = new SiftingRecipeCacheKey((IMesh) mesh.getItem(), Ingredient.of(input));
+        if(recipeSorted.containsKey(key)){
+            List<SiftingRecipe> filteredRecipes =  recipeSorted.get(key).stream().filter(siftingRecipe -> siftingRecipe.isWaterlogged() == waterlogged).toList();
+            return Optional.of(mergeRecipes(key, filteredRecipes));
+        }*/
+        return getRecipeManager().getAllRecipesFor(SiftingRecipe.Type.)
+        return Optional.empty();
+    }
+    /*private SiftingRecipeBuilder getRecipeBuilder(){
+
+    }*/
+    protected static RecipeManager getRecipeManager(){
+        if(Minecraft.getInstance().getConnection() == null){
+            return null;
+        }
+        return Minecraft.getInstance().getConnection()
+                .getRecipeManager();
+    }
+    @SubscribeEvent
+    public static void onLoad(ModConfigEvent.Loading event) {
+        loadRecipes();
+       /* for (ConfigBase config : CONFIGS.values())
+            if (config.specification == event.getConfig()
+                    .getSpec())
+                config.onLoad();*/
+    }
+
+    @SubscribeEvent
+    public static void onReload(ModConfigEvent.Reloading event) {
+        loadRecipes();
+        /*for (ConfigBase config : CONFIGS.values())
+            if (config.specification == event.getConfig()
+                    .getSpec())
+                config.onReload();*/
+    }
+    private static class SiftingRecipeCacheKey extends Pair<IMesh,Ingredient> {
+
+        protected SiftingRecipeCacheKey(IMesh first, Ingredient second) {
+            super(first, second);
+        }
+
+    }
+}
