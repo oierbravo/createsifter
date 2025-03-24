@@ -1,0 +1,27 @@
+{
+  "type": "createsifter:sifting",
+  "input": [],
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:string_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "chance": 0.01,
+      "id": "ars_nouveau:blue_archiwood_sappling"
+    },
+    {
+      "chance": 0.01,
+      "id": "ars_nouveau:red_archiwood_sappling"
+    },
+    {
+      "chance": 0.01,
+      "id": "ars_nouveau:green_archiwood_sappling"
+    },
+    {
+      "chance": 0.01,
+      "id": "ars_nouveau:purple_archiwood_sappling"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 package com.oierbravo.createsifter.register;
 
 import com.oierbravo.createsifter.ModConstants;
-import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlockEntity;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.AbstractSifterBlockEntity;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeBuilder;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeSerializer;
@@ -59,14 +59,14 @@ public class ModRecipes {
             return siftingRecipe.isWaterlogged() == key.waterlogged;
         };
     }
-    public static <EXB extends SifterBlockEntity> List<SiftingRecipe> findRecipesWithMatchingIngredients(EXB sifter){
+    public static <EXB extends AbstractSifterBlockEntity> List<SiftingRecipe> findRecipesWithMatchingIngredients(EXB sifter){
         return findRecipesWithMatchingIngredients(sifter.getLevel(), sifter.getMeshItemStack(), sifter.getInputItemStack(), sifter.isWaterlogged());
-        //if (recipes.isEmpty())
-
     }
-    public static <EXB extends SifterBlockEntity> Optional<SiftingRecipe> findMergedRecipesWithMatchingIngredients(EXB sifter){
-        SiftingRecipeCacheKey key = new SiftingRecipeCacheKey(sifter);
-        return Optional.ofNullable(mergeRecipes(key, findRecipesWithMatchingIngredients(sifter.getLevel(),key)));
+    public static <EXB extends AbstractSifterBlockEntity> Optional<SiftingRecipe> findMergedRecipesWithMatchingIngredients(EXB sifter){
+        return findMergedRecipesWithMatchingIngredients(sifter.getLevel(), new SiftingRecipeCacheKey(sifter));
+    }
+    public static Optional<SiftingRecipe> findMergedRecipesWithMatchingIngredients(Level level, SiftingRecipeCacheKey key){
+        return Optional.ofNullable(mergeRecipes(key, findRecipesWithMatchingIngredients(level,key)));
     }
     public static List<SiftingRecipe> findRecipesWithMatchingIngredients(Level level,SiftingRecipeCacheKey key) {
         List<RecipeHolder<? extends Recipe<?>>> recipes =  RecipeFinder.get(key,level,matchesKey(key));
@@ -78,9 +78,10 @@ public class ModRecipes {
         return findRecipesWithMatchingIngredients(level, key);
     }
     public record SiftingRecipeCacheKey(ItemStack mesh, ItemStack input, boolean waterlogged){
-        public SiftingRecipeCacheKey(SifterBlockEntity sifter){
+        public SiftingRecipeCacheKey(AbstractSifterBlockEntity sifter){
             this(sifter.getMeshItemStack(), sifter.getInputItemStack(), sifter.isWaterlogged());
         }
+
 
 
         @Override
@@ -106,7 +107,6 @@ public class ModRecipes {
                         .waterlogged(key.waterlogged())
                         .requiredMesh(key.mesh())
                         .require(key.input())
-                        .processingTime(500)
         );
         return builder.build();
     }

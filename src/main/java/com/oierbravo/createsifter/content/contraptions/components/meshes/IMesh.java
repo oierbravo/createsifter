@@ -3,9 +3,11 @@ package com.oierbravo.createsifter.content.contraptions.components.meshes;
 import net.minecraft.world.item.ItemStack;
 
 public interface IMesh {
-    static boolean isMeshItemStack(ItemStack itemStack){
-        if(itemStack.getItem() instanceof IMesh)
-            return true;
+
+    default boolean isAdvanced(){
         return false;
     }
+    /*default boolean test(ItemStack itemStack){
+        return itemStack.getItem() instanceof IMesh;
+    }*/
 }

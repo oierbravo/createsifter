@@ -1,0 +1,35 @@
+{
+  "type": "createsifter:sifting",
+  "input": [],
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:string_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "chance": 0.2,
+      "id": "minecraft:wheat_seeds"
+    },
+    {
+      "chance": 0.1,
+      "id": "minecraft:beetroot_seeds"
+    },
+    {
+      "chance": 0.05,
+      "id": "minecraft:melon_seeds"
+    },
+    {
+      "chance": 0.1,
+      "id": "minecraft:short_grass"
+    },
+    {
+      "chance": 0.02,
+      "id": "minecraft:potato"
+    },
+    {
+      "chance": 0.02,
+      "id": "minecraft:carrot"
+    }
+  ]
+}

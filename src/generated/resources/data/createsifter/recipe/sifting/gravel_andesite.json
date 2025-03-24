@@ -32,10 +32,6 @@
     {
       "chance": 0.1,
       "id": "minecraft:flint"
-    },
-    {
-      "chance": 0.1,
-      "id": "ars_nouveau:test"
     }
   ]
 }

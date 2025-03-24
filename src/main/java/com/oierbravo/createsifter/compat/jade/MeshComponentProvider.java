@@ -1,6 +1,6 @@
 package com.oierbravo.createsifter.compat.jade;
 
-import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlockEntity;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.andesite.SifterBlockEntity;
 import com.oierbravo.createsifter.foundation.util.ModLang;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;

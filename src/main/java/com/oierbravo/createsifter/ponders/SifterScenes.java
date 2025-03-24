@@ -1,6 +1,6 @@
 package com.oierbravo.createsifter.ponders;
 
-import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlockEntity;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.andesite.SifterBlockEntity;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.foundation.ponder.CreateSceneBuilder;
 import net.createmod.catnip.math.Pointing;

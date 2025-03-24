@@ -1,0 +1,16 @@
+{
+  "values": [
+    "createsifter:raw_gold_piece",
+    "createsifter:raw_iron_piece",
+    "createsifter:raw_zinc_piece",
+    "createsifter:raw_osmium_piece",
+    "createsifter:raw_platinum_piece",
+    "createsifter:raw_silver_piece",
+    "createsifter:raw_tin_piece",
+    "createsifter:raw_lead_piece",
+    "createsifter:raw_quicksilver_piece",
+    "createsifter:raw_aluminum_piece",
+    "createsifter:raw_uranium_piece",
+    "createsifter:raw_nickel_piece"
+  ]
+}

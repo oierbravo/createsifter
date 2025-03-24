@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "createsifter:brass_sifter"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "createsifter:blocks/brass_sifter"
+}

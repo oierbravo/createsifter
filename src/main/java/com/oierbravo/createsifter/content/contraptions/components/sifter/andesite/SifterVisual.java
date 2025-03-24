@@ -1,6 +1,5 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter.andesite;
 
-import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlockEntity;
 import com.oierbravo.createsifter.register.ModPartials;
 import com.simibubi.create.content.kinetics.base.SingleAxisRotatingVisual;
 import dev.engine_room.flywheel.api.visualization.VisualizationContext;

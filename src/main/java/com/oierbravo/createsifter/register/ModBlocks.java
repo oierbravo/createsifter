@@ -1,7 +1,8 @@
 package com.oierbravo.createsifter.register;
 
 import com.oierbravo.createsifter.ModConstants;
-import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlock;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.andesite.SifterBlock;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.brass.BrassSifterBlock;
 import com.oierbravo.createsifter.infrastucture.config.ModStress;
 import com.simibubi.create.AllBlocks;
 import com.simibubi.create.AllTags;
@@ -18,7 +19,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.material.MapColor;
-import net.neoforged.neoforge.common.Tags;
 
 import static com.oierbravo.createsifter.CreateSifter.REGISTRATE;
 import static com.simibubi.create.foundation.data.ModelGen.customItemModel;
@@ -30,7 +30,6 @@ public class ModBlocks {
             .properties(p -> p.mapColor(MapColor.METAL))
             .transform(pickaxeOnly())
             .blockstate((c, p) -> p.simpleBlock(c.getEntry(), AssetLookup.partialBaseModel(c, p)))
-//            .transform(BlockStressDefaults.setImpact(SifterConfig.SIFTER_STRESS_IMPACT.get()))
             .transform(ModStress.setImpact(4.0))
             .item()
             .transform(customItemModel())
@@ -46,7 +45,8 @@ public class ModBlocks {
                     .unlockedBy("has_andesite_casing", RegistrateRecipeProvider.has(AllTags.AllItemTags.CASING.tag))
                     .save(p, ModConstants.asResource("crafting/" + c.getName())))
             .register();
-    /*public static final BlockEntry<BrassSifterBlock> BRASS_SIFTER = REGISTRATE.block("brass_sifter", BrassSifterBlock::new)
+
+    public static final BlockEntry<BrassSifterBlock> BRASS_SIFTER = REGISTRATE.block("brass_sifter", BrassSifterBlock::new)
             .initialProperties(SharedProperties::stone)
             .properties(p -> p.mapColor(MapColor.METAL))
             .properties(p -> p.noOcclusion())
@@ -54,10 +54,9 @@ public class ModBlocks {
             .transform(pickaxeOnly())
             .transform(ModStress.setImpact(16.0))
             .blockstate((c, p) -> BlockStateGen.simpleBlock(c, p, AssetLookup.forPowered(c, p)))
-            //.transform(BlockStressDefaults.setImpact(BrassSifterConfig.BRASS_SIFTER_MINIMUM_SPEED.get()))
             .item()
             .transform(customItemModel())
-            .register();*/
+            .register();
 
 
     public static final BlockEntry<Block> DUST = REGISTRATE.block("dust", Block::new)
@@ -68,13 +67,19 @@ public class ModBlocks {
             .simpleItem()
             .register();
 
-    public static final BlockEntry<Block> CRUSHED_END_STONE = REGISTRATE.block("crushed_end_stone", Block::new)
-            .lang("Crushed end stone")
-            .initialProperties(() -> Blocks.SAND)
-            .properties(p -> p.mapColor(MapColor.SAND))
-            .tag(BlockTags.MINEABLE_WITH_SHOVEL)
-            .simpleItem()
-            .register();
+    public static final BlockEntry<Block> CRUSHED_NETHERRACK = crushedBlock("netherrack");
+    public static final BlockEntry<Block> CRUSHED_END_STONE = crushedBlock("end stone");
+    public static final BlockEntry<Block> CRUSHED_BASALT = crushedBlock("basalt");
 
+
+    public static BlockEntry<Block> crushedBlock(String displayName){
+        return REGISTRATE.block("crushed_" + displayName.toLowerCase().replace(" ", "_"), Block::new)
+                .lang("Crushed " + displayName)
+                .initialProperties(() -> Blocks.SAND)
+                .properties(p -> p.mapColor(MapColor.SAND))
+                .tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                .simpleItem()
+                .register();
+    }
     public static void register() {}
 }

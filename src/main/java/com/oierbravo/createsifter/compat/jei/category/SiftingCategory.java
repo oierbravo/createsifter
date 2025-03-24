@@ -1,13 +1,14 @@
 package com.oierbravo.createsifter.compat.jei.category;
 
 import com.oierbravo.createsifter.ModConstants;
+import com.oierbravo.createsifter.compat.jei.category.animations.AbstractAnimatedSifter;
+import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedBrassSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedSifter;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
 
 import com.oierbravo.createsifter.foundation.util.ModLang;
 import com.oierbravo.createsifter.register.ModBlocks;
 import com.oierbravo.createsifter.register.ModRecipes;
-import com.oierbravo.mechanicals.foundation.gui.MechanicalGUITextures;
 import com.oierbravo.mechanicals.utility.LibLang;
 import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.ItemIcon;
@@ -23,9 +24,7 @@ import net.createmod.catnip.data.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -46,19 +45,17 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
             new ItemIcon(() -> new ItemStack(ModBlocks.SIFTER.asItem())),
             ModRecipes::getAllHolders,
             List.of(
-                    ModBlocks.SIFTER::asStack
-                    //ModBlocks.MECHANICAL_BRASS_EXTRUDER::asStack
+                    ModBlocks.SIFTER::asStack,
+                    ModBlocks.BRASS_SIFTER::asStack
             )
     );
 
     public SiftingCategory(CreateRecipeCategory.Info<SiftingRecipe> info) {
         super(info);
-
     }
 
 
     public void setRecipe(IRecipeLayoutBuilder builder, SiftingRecipe recipe, IFocusGroup focuses) {
-
         builder.addSlot(RecipeIngredientRole.INPUT, 3, 3).setBackground(getRenderedSlot(), -1, -1).addIngredients(recipe.getInput());
 
         if(!recipe.getMesh().isEmpty())
@@ -86,29 +83,13 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
 
 
     public void draw(SiftingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
-
-
-        List<ProcessingOutput> results = recipe.getRollableResults();
-        boolean single = results.size() == 1;
-        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 20, 2); // Input arrow
-
-        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 50, 32); //Output arrow
-
+       List<ProcessingOutput> results = recipe.getRollableResults();
+       boolean single = results.size() == 1;
+       AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 20, 2); // Input arrow
+       AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 50, 32); //Output arrow
 
        drawSifter(graphics, recipe.requiresAdvancedMesh(), recipe.isWaterlogged());
        drawRequirements(recipe, graphics, 67, 4);
-
-
-        /* NonNullList<MutableComponent> requirements = NonNullList.create();
-        if(recipe.isWaterlogged())
-            requirements.add(ModLang.translate("recipe.sifting.waterlogged").component());
-        if(recipe.hasSpeedRequeriment())
-            requirements.add(ModLang.translate("recipe.sifting.minimumspeed",recipe.getSpeedRequeriment()).component());
-        if(recipe.requiresAdvancedMesh())
-            requirements.add(ModLang.translate("recipe.sifting.brass_required").component());
-
-        drawRequirements(graphics,requirements);
-*/
     }
     protected void drawRequirements(SiftingRecipe recipe, GuiGraphics guiGraphics, int x, int y){
         Minecraft minecraft = Minecraft.getInstance();
@@ -151,25 +132,8 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     protected void drawSifter(GuiGraphics guiGraphics, boolean pAdvanced, boolean waterlogged){
         int x = 25;
         int y = 27;
-        /*if(pAdvanced){
-            AnimatedBrassSifter brassSifter = new AnimatedBrassSifter();
-            brassSifter.waterlogged(waterlogged);
-            brassSifter.draw(guiGraphics, x, y);
-            return;
-        }*/
-        AnimatedSifter sifter = new AnimatedSifter();
+        AbstractAnimatedSifter<?> sifter = (pAdvanced) ? new AnimatedBrassSifter() : new AnimatedSifter();
         sifter.waterlogged(waterlogged);
         sifter.draw(guiGraphics, x, y);
-    }
-    protected void drawRequirements(GuiGraphics guiGraphics, NonNullList<MutableComponent> requirements){
-        int startX = 41;
-        int startY = 56;
-
-        Minecraft minecraft = Minecraft.getInstance();
-        Font fontRenderer = minecraft.font;
-
-        for(int index = 0; index < requirements.size();index++){
-            guiGraphics.drawString(fontRenderer, requirements.get(index), startX, startY + 15 * index, 0xFF808080,false);
-        }
     }
 }

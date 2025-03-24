@@ -1,11 +1,10 @@
 package com.oierbravo.createsifter;
 
-import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlockEntity;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.andesite.SifterBlockEntity;
 import com.oierbravo.createsifter.foundation.data.ModDataGen;
-import com.oierbravo.createsifter.infrastucture.config.ModConfigs;
+import com.oierbravo.createsifter.infrastucture.config.MConfigs;
 import com.oierbravo.createsifter.ponders.ModPonderPlugin;
 import com.oierbravo.createsifter.register.*;
-import com.oierbravo.mechanicals.register.MechanicalCreativeModeTabs;
 import com.oierbravo.mechanicals.utility.RegistrateLangBuilder;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
@@ -13,15 +12,11 @@ import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
 import net.createmod.catnip.lang.FontHelper;
 import net.createmod.ponder.foundation.PonderIndex;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -51,11 +46,12 @@ public class CreateSifter {
 
         ModCreativeTabs.register(modEventBus);
 
-        ModConfigs.register(modLoadingContext,modContainer);
+        MConfigs.register(modLoadingContext,modContainer);
 
         ModBlocks.register();
         ModItems.register();
         ModBlockEntities.register();
+        ModItemComponents.register(modEventBus);
 
         modEventBus.addListener(ModDataGen::gatherData);
 
@@ -70,7 +66,7 @@ public class CreateSifter {
     private void generateLangEntries(){
         new RegistrateLangBuilder(MODID, registrate())
             .addRaw("config.jade.plugin_createsifter.sifter_data", "Create Sifter")
-            .addRaw("itemGroup.createsifter:main", "Create sifting")
+            .add("itemGroup.createsifter:main", "Create sifting")
             .add("recipe.sifting", "Sifting recipe")
             .add("recipe.sifting.minimumspeed", "%1$s RPM")
             .add("recipe.sifting.waterlogged", "Waterlogged")

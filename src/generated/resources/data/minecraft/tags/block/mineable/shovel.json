@@ -1,6 +1,8 @@
 {
   "values": [
     "createsifter:dust",
-    "createsifter:crushed_end_stone"
+    "createsifter:crushed_netherrack",
+    "createsifter:crushed_end_stone",
+    "createsifter:crushed_basalt"
   ]
 }

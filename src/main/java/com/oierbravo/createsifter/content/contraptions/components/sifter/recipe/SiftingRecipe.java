@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter.recipe;
 
-import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedBaseMesh;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.AbstractAdvancedMesh;
+import com.oierbravo.createsifter.register.ModRecipes;
 import com.oierbravo.mechanicals.foundation.recipe.AbstractMechanicalRecipe;
 import com.oierbravo.mechanicals.foundation.recipe.AbstractMechanicalRecipeParams;
 import com.oierbravo.mechanicals.foundation.recipe.IRecipeRequirement;
@@ -11,10 +12,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, SiftingRecipe.SiftingRecipeParams> {
@@ -112,13 +116,27 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
     }
 
     public boolean requiresAdvancedMesh() {
-        return getMesh().getItem() instanceof AdvancedBaseMesh;
+        return getMesh().getItem() instanceof AbstractAdvancedMesh;
     }
     public SiftingRecipe addOutput(NonNullList<ProcessingOutput> output){
         this.results.addAll(output);
         return this;
     }
+    public static boolean canHandSift(Level world, ModRecipes.SiftingRecipeCacheKey key) {
+        return !ModRecipes.findRecipesWithMatchingIngredients(world, key).isEmpty();
+    }
+    /*public static boolean canHandSift(Level world, ItemStack stack, ItemStack mesh, boolean waterlogged) {
+        return getMatchingInHandRecipes(world, stack, mesh, waterlogged,0);
+    }*/
+    public static List<ItemStack> applyHandSifting(Level world, Vec3 position, ModRecipes.SiftingRecipeCacheKey key) {
 
+        Optional<SiftingRecipe> recipe = ModRecipes.findMergedRecipesWithMatchingIngredients(world, key);
+
+        if(recipe.isPresent()){
+            return recipe.get().rollResults();
+        }
+        return Collections.singletonList(key.input());
+    }
 
     public static class Type implements RecipeType<SiftingRecipe> {
         private Type() { }
@@ -139,7 +157,7 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
             input = Ingredient.EMPTY;
             results = NonNullList.create();
             mesh = ItemStack.EMPTY;
-            processingTime = 0;
+            processingTime = 500;
             waterlogged = false;
 
         }

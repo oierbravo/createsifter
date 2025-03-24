@@ -2,8 +2,12 @@ package com.oierbravo.createsifter.content.contraptions.components.sifter.recipe
 
 import com.oierbravo.mechanicals.foundation.recipe.AbstractMechanicalRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
+import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
+import com.simibubi.create.foundation.data.SimpleDatagenIngredient;
 import com.simibubi.create.foundation.data.recipe.Mods;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
@@ -16,7 +20,7 @@ public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<Siftin
     public SiftingRecipeBuilder(){
         super();
     }
-    @Override
+
     public SiftingRecipeBuilder create(ResourceLocation id) {
         params = new SiftingRecipe.SiftingRecipeParams(id);
         return this;
@@ -38,6 +42,13 @@ public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<Siftin
     }
     public SiftingRecipeBuilder require(ItemStack item){
         return require(Ingredient.of(item));
+    }
+    public SiftingRecipeBuilder require(Mods mod, String id) {
+        return require(new SimpleDatagenIngredient(mod, id).toVanilla());
+    }
+    public SiftingRecipeBuilder require(ResourceLocation resourceLocation) {
+        Item item = BuiltInRegistries.ITEM.get(resourceLocation);
+        return require(item);
     }
 
     public SiftingRecipeBuilder output(ItemLike item) {

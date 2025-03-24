@@ -1,8 +1,7 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.oierbravo.createsifter.infrastucture.config.ModConfigs;
-import com.oierbravo.createsifter.register.ModPartials;
+import com.oierbravo.createsifter.infrastucture.config.MConfigs;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntityRenderer;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import dev.engine_room.flywheel.lib.transform.TransformStack;
@@ -19,20 +18,20 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.client.model.data.ModelData;
 
-public abstract class AbstractSifterRenderer extends KineticBlockEntityRenderer<SifterBlockEntity> {
+public abstract class AbstractSifterRenderer<SBE extends AbstractSifterBlockEntity>  extends KineticBlockEntityRenderer<SBE> {
     public AbstractSifterRenderer(BlockEntityRendererProvider.Context context) {
         super(context);
     }
 
     abstract protected PartialModel getCogModel();
-    abstract protected void renderSafeInternal(SifterBlockEntity be, float partialTicks, PoseStack ms, MultiBufferSource buffer,
+    abstract protected void renderSafeInternal(SBE be, float partialTicks, PoseStack ms, MultiBufferSource buffer,
                                           int light, int overlay);
     @Override
-    public boolean shouldRenderOffScreen(SifterBlockEntity be) {
+    public boolean shouldRenderOffScreen(SBE be) {
         return true;
     }
     @Override
-    protected void renderSafe(SifterBlockEntity be, float partialTicks, PoseStack poseStack, MultiBufferSource buffer,
+    protected void renderSafe(SBE be, float partialTicks, PoseStack poseStack, MultiBufferSource buffer,
                               int light, int overlay) {
 
         renderSafeInternal(be, partialTicks, poseStack, buffer,light, overlay);
@@ -40,7 +39,7 @@ public abstract class AbstractSifterRenderer extends KineticBlockEntityRenderer<
         ItemStack meshItemStack = be.getMeshItemStack();
 
         double xPos = 0.0;
-        if(ModConfigs.client().sifter.renderMovingMesh.get())
+        if(MConfigs.client().sifter.renderMovingMesh.get())
             xPos = Math.sin(be.dynamicCycleBehaviour.getProgressPercent())/40;
 
         if(!meshItemStack.isEmpty()){
@@ -50,7 +49,7 @@ public abstract class AbstractSifterRenderer extends KineticBlockEntityRenderer<
             poseStack.popPose();
         }
         //In progress Block renderer
-        if(!meshItemStack.isEmpty() && ModConfigs.client().sifter.renderSiftedBlock.get()) {
+        if(!meshItemStack.isEmpty() && MConfigs.client().sifter.renderSiftedBlock.get()) {
             ItemStack inProccessItemStack = be.getInputItemStack();
 
             if (!inProccessItemStack.equals(ItemStack.EMPTY)) {
@@ -66,10 +65,10 @@ public abstract class AbstractSifterRenderer extends KineticBlockEntityRenderer<
         super.renderSafe(be, partialTicks, poseStack, buffer, light, overlay);
     }
     @Override
-    protected SuperByteBuffer getRotatedModel(SifterBlockEntity be, BlockState state) {
+    protected SuperByteBuffer getRotatedModel(SBE be, BlockState state) {
         return CachedBuffers.partial(getCogModel(), state);
     }
-    protected void renderStaticBlock(PoseStack ms, MultiBufferSource buffer, int light, int overlay, ItemStack itemStack, SifterBlockEntity entity) {
+    protected void renderStaticBlock(PoseStack ms, MultiBufferSource buffer, int light, int overlay, ItemStack itemStack, SBE entity) {
         Minecraft.getInstance()
                 .getItemRenderer()
                 .renderStatic(itemStack, ItemDisplayContext.NONE, light, overlay, ms,

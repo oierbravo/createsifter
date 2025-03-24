@@ -1,6 +1,6 @@
 package com.oierbravo.createsifter.compat.jei.category.animations;
 
-import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlock;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.andesite.SifterBlock;
 import com.oierbravo.createsifter.register.ModBlocks;
 import com.oierbravo.createsifter.register.ModPartials;
 import com.tterrag.registrate.util.entry.BlockEntry;

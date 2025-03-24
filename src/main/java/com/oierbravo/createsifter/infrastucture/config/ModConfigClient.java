@@ -1,6 +1,6 @@
 package com.oierbravo.createsifter.infrastucture.config;
 
-import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterConfigsClient;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.andesite.SifterConfigsClient;
 import net.createmod.catnip.config.ConfigBase;
 
 public class ModConfigClient extends ConfigBase {

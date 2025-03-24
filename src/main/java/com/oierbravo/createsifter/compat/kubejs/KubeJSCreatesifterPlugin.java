@@ -1,17 +1,25 @@
 package com.oierbravo.createsifter.compat.kubejs;
 
+import com.oierbravo.createsifter.ModConstants;
 import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
+import dev.latvian.mods.kubejs.registry.BuilderTypeRegistry;
+import net.minecraft.core.registries.Registries;
 
 public class KubeJSCreatesifterPlugin implements KubeJSPlugin {
 
-    /*private static final Map<ModRecipeTypes, RecipeSchema> recipeSchemas = Map.of(
+
+    @Override
+    public void registerBuilderTypes(BuilderTypeRegistry registry) {
+        registry.of(Registries.ITEM, reg -> {
+                    reg.add(ModConstants.asResource("mesh"), MeshItemBuilder.class, MeshItemBuilder::new);
+                    reg.add(ModConstants.asResource("advanced_mesh"), AdvancedMeshItemBuilder.class, MeshItemBuilder::new);
+        });
+    }
+
+    /*
+    private static final Map<ModRecipeTypes, RecipeSchema> recipeSchemas = Map.of(
             ModRecipeTypes.SIFTING, SiftingRecipeSchema.SIFTING
     );
-    @Override
-    public void init() {
-        RegistryInfo.ITEM.addType("createsifter:mesh", MeshItemBuilder.class, MeshItemBuilder::new);
-        RegistryInfo.ITEM.addType("createsifter:advanced_mesh", AdvancedMeshItemBuilder.class, AdvancedMeshItemBuilder::new);
-    }
 
     @Override
     public void registerRecipeSchemas(RegisterRecipeSchemasEvent event) {

@@ -1,7 +1,17 @@
 package com.oierbravo.createsifter.content.contraptions.components.meshes;
 
+import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
+import com.oierbravo.createsifter.infrastucture.config.MConfigs;
+import com.oierbravo.createsifter.register.ModItemComponents;
+import com.oierbravo.createsifter.register.ModRecipes;
+import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.AllSoundEvents;
+import com.simibubi.create.content.equipment.sandPaper.SandPaperItemComponent;
+import com.simibubi.create.content.equipment.sandPaper.SandPaperItemRenderer;
+import com.simibubi.create.content.equipment.sandPaper.SandPaperPolishingRecipe;
 import com.simibubi.create.foundation.item.CustomUseEffectsItem;
+import com.simibubi.create.foundation.item.render.SimpleCustomRenderer;
+import com.simibubi.create.foundation.mixin.accessor.LivingEntityAccessor;
 import net.createmod.catnip.data.TriState;
 import net.createmod.catnip.math.VecHelper;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -20,50 +30,61 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.common.ItemAbilities;
+import net.neoforged.neoforge.common.ItemAbility;
+import net.neoforged.neoforge.common.util.FakePlayer;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 public abstract class AbstractMesh extends Item implements CustomUseEffectsItem, IMesh {
-    protected MeshTypes mesh;
     public AbstractMesh(Properties pProperties) {
         super(pProperties);
-
     }
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player playerIn, InteractionHand handIn) {
         ItemStack itemstack = playerIn.getItemInHand(handIn);
         InteractionResultHolder<ItemStack> FAIL = new InteractionResultHolder<>(InteractionResult.FAIL, itemstack);
 
-       /* if (itemstack.getOrCreateTag()
-                .contains("Sifting")) {
+        if (itemstack.has(ModItemComponents.MESH_SIFTING)) {
             playerIn.startUsingItem(handIn);
             return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
-        }*/
+        }
+
+        Block blockUnderPlayer = playerIn.getBlockStateOn().getBlock();
+        boolean waterlogged = blockUnderPlayer instanceof LiquidBlock;
 
         InteractionHand otherHand =
                 handIn == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         ItemStack itemInOtherHand = playerIn.getItemInHand(otherHand);
 
-        /*Block blockUnderPlayer = playerIn.getFeetBlockState().getBlock();
-        boolean waterlogged = blockUnderPlayer instanceof LiquidBlock || blockUnderPlayer instanceof IFluidBlock;
-*/
-        /*if (SiftingRecipe.canHandSift(worldIn, itemInOtherHand,itemstack,waterlogged)) {
+        ModRecipes.SiftingRecipeCacheKey siftingRecipeCacheKey;// = new ModRecipes.SiftingRecipeCacheKey()
+        if(MeshUtils.isMeshItem(itemInOtherHand)) {
+            siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(itemInOtherHand, itemstack, waterlogged);
+        } else {
+            siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(itemstack, itemInOtherHand, waterlogged);
+        }
+
+        if (SiftingRecipe.canHandSift(worldIn, siftingRecipeCacheKey)) {
             ItemStack item = itemInOtherHand.copy();
             ItemStack toSift = item.split(1);
             playerIn.startUsingItem(handIn);
-            itemstack.getOrCreateTag()
-                    .put("Sifting", toSift.serializeNBT());
+            itemstack.set(ModItemComponents.MESH_SIFTING, new MeshItemComponent(toSift));
             playerIn.setItemInHand(otherHand, item);
             return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
-        }*/
+        }
 
-        HitResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.NONE);
-        if (!(raytraceresult instanceof BlockHitResult))
-            return FAIL;
-        BlockHitResult ray = (BlockHitResult) raytraceresult;
-        Vec3 hitVec = ray.getLocation();
+        BlockHitResult raytraceresult = getPlayerPOVHitResult(worldIn, playerIn, ClipContext.Fluid.NONE);
+        Vec3 hitVec = raytraceresult.getLocation();
 
         AABB bb = new AABB(hitVec, hitVec).inflate(1f);
         ItemEntity pickUp = null;
@@ -74,9 +95,8 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
                     .distanceTo(playerIn.position()) > 3)
                 continue;
             ItemStack stack = itemEntity.getItem();
-
-            /*if (!SiftingRecipe.canHandSift(worldIn, stack, itemstack,waterlogged))
-                continue;*/
+            if (!SiftingRecipe.canHandSift(worldIn, siftingRecipeCacheKey))
+                continue;
             pickUp = itemEntity;
             break;
         }
@@ -90,30 +110,31 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
 
         playerIn.startUsingItem(handIn);
 
-        /*if (!worldIn.isClientSide) {
-            itemstack.getOrCreateTag()
-                    .put("Sifting", toSift.serializeNBT());
+        if (!worldIn.isClientSide) {
+            itemstack.set(ModItemComponents.MESH_SIFTING, new MeshItemComponent(toSift));
             if (item.isEmpty())
                 pickUp.discard();
             else
                 pickUp.setItem(item);
-        }*/
+        }
 
         return new InteractionResultHolder<>(InteractionResult.SUCCESS, itemstack);
     }
 
     @Override
     public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
-        /*if (!(entityLiving instanceof Player))
+        if (!(entityLiving instanceof Player player))
             return stack;
-        Player player = (Player) entityLiving;
-        CompoundTag tag = stack.getOrCreateTag();
-        Block blockUnderPlayer = player.getFeetBlockState().getBlock();
-        boolean waterlogged = blockUnderPlayer instanceof LiquidBlock || blockUnderPlayer instanceof IFluidBlock;
-        if (tag.contains("Sifting")) {
-            ItemStack toSift = ItemStack.of(tag.getCompound("Sifting"));
+        if (stack.has(ModItemComponents.MESH_SIFTING)) {
+            Block blockUnderPlayer = player.getBlockStateOn().getBlock();
+            boolean waterlogged = blockUnderPlayer instanceof LiquidBlock;
+
+            ItemStack toSift = stack.get(ModItemComponents.MESH_SIFTING).item();
+            ModRecipes.SiftingRecipeCacheKey siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(stack, toSift, waterlogged);
+
+            //noinspection DataFlowIssue - toPolish won't be null as we do call .has before calling .get
             List<ItemStack> sifted =
-                    SiftingRecipe.applyHandSift(worldIn, entityLiving.position(), toSift, stack,waterlogged);
+                    SiftingRecipe.applyHandSifting(worldIn, entityLiving.position(), siftingRecipeCacheKey);
 
             if (worldIn.isClientSide) {
                 spawnParticles(entityLiving.getEyePosition(1)
@@ -134,9 +155,10 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
                 });
 
             }
-            tag.remove("Sifting");
-            stack.hurtAndBreak(1, entityLiving, p -> p.broadcastBreakEvent(p.getUsedItemHand()));
-        }*/
+            stack.remove(ModItemComponents.MESH_SIFTING);
+            if(MConfigs.server().mesh.useMeshDurabilityWithHand.get())
+                stack.hurtAndBreak(1, entityLiving, LivingEntity.getSlotForHand(entityLiving.getUsedItemHand()));
+        }
 
         return stack;
     }
@@ -151,21 +173,20 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
 
     @Override
     public void releaseUsing(ItemStack stack, Level worldIn, LivingEntity entityLiving, int timeLeft) {
-        /*if (!(entityLiving instanceof Player))
+        if (!(entityLiving instanceof Player player))
             return;
-        Player player = (Player) entityLiving;
-        CompoundTag tag = stack.getOrCreateTag();
-        if (tag.contains("Sifting")) {
-            ItemStack toSift = ItemStack.of(tag.getCompound("Sifting"));
+        if (stack.has(ModItemComponents.MESH_SIFTING)) {
+            ItemStack toPolish = stack.get(ModItemComponents.MESH_SIFTING).item();
+            //noinspection DataFlowIssue - toPolish won't be null as we do call .has before calling .get
             player.getInventory()
-                    .placeItemBackInInventory(toSift);
-            tag.remove("Sifting");
-        }*/
+                    .placeItemBackInInventory(toPolish);
+            stack.remove(ModItemComponents.MESH_SIFTING);
+        }
     }
-    /*@Override
-    public boolean canPerformAction(ItemStack stack, ToolAction toolAction) {
-        return toolAction == ToolActions.AXE_SCRAPE || toolAction == ToolActions.AXE_WAX_OFF;
-    }*/
+    @Override
+    public boolean canPerformAction(ItemStack stack, ItemAbility itemAbility) {
+        return itemAbility == ItemAbilities.AXE_SCRAPE || itemAbility == ItemAbilities.AXE_WAX_OFF;
+    }
     @Override
     public boolean isEnabled(FeatureFlagSet enabledFeatures) {
         return super.isEnabled(enabledFeatures);
@@ -179,9 +200,8 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
 
     @Override
     public boolean triggerUseEffects(ItemStack stack, LivingEntity entity, int count, RandomSource random) {
-        /*CompoundTag tag = stack.getOrCreateTag();
-        if (tag.contains("Sifting")) {
-            ItemStack polishing = ItemStack.of(tag.getCompound("Sifting"));
+        if (stack.has(ModItemComponents.MESH_SIFTING)) {
+            ItemStack polishing = stack.get(ModItemComponents.MESH_SIFTING).item();
             ((LivingEntityAccessor) entity).create$callSpawnItemParticles(polishing, 1);
         }
 
@@ -189,7 +209,7 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
         if ((entity.getTicksUsingItem() - 6) % 7 == 0)
             entity.playSound(entity.getEatingSound(stack), 0.9F + 0.2F * random.nextFloat(),
                     random.nextFloat() * 0.2F + 0.9F);
-*/
+
         return true;
     }
 
@@ -204,25 +224,20 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
         return UseAnim.EAT;
     }
 
-    /*@Override
-    public int getUseDuration(ItemStack stack) {
+    @Override
+    public int getUseDuration(ItemStack stack, LivingEntity entity) {
         return 32;
     }
-*/
+
+
     @Override
     public int getEnchantmentValue() {
         return 1;
     }
 
-
-
-    /*@Override
+    @Override
     @OnlyIn(Dist.CLIENT)
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(SimpleCustomRenderer.create(this, new MeshItemRenderer()));
-    }*/
-
-/*    public AbstractMesh fromJson(JsonObject json){
-
-    }*/
+    }
 }

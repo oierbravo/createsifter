@@ -1,9 +1,8 @@
 package com.oierbravo.createsifter.compat.jade;
 
-import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModConstants;
-import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlock;
-import com.oierbravo.createsifter.content.contraptions.components.sifter.SifterBlockEntity;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.andesite.SifterBlock;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.andesite.SifterBlockEntity;
 import net.minecraft.resources.ResourceLocation;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;

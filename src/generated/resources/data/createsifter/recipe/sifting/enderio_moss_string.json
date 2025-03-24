@@ -1,0 +1,15 @@
+{
+  "type": "createsifter:sifting",
+  "input": [],
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:string_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "chance": 0.01,
+      "id": "enderio:grains_of_infinity"
+    }
+  ]
+}

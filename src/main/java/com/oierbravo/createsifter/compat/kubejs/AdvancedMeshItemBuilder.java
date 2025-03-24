@@ -1,7 +1,7 @@
 package com.oierbravo.createsifter.compat.kubejs;
 
 import com.oierbravo.createsifter.CreateSifter;
-import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedCustomMesh;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedMesh;
 import com.oierbravo.createsifter.register.ModCreativeTabs;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import dev.latvian.mods.kubejs.item.ItemBuilder;
@@ -9,11 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
 public class AdvancedMeshItemBuilder extends ItemBuilder {
-    public AdvancedMeshItemBuilder(ResourceLocation id) {
-        super(id);
-    }
-    /*private static final CreateRegistrate REGISTRATE = CreateSifter.registrate()
-            .setCreativeTab(ModCreativeTabs.MAIN_TAB);
 
     private ResourceLocation resourceLocation;
     public AdvancedMeshItemBuilder(ResourceLocation resourceLocation) {
@@ -23,6 +18,6 @@ public class AdvancedMeshItemBuilder extends ItemBuilder {
 
     @Override
     public Item createObject() {
-        return new AdvancedCustomMesh(createItemProperties()) ;
-    }*/
+        return new AdvancedMesh(createItemProperties()) ;
+    }
 }
