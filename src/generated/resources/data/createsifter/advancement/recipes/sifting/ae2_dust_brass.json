@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "createsifter:sifting/enderio_moss_string"
+        "recipe": "createsifter:sifting/ae2_dust_brass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "createsifter:sifting/enderio_moss_string"
+      "createsifter:sifting/ae2_dust_brass"
     ]
   }
 }

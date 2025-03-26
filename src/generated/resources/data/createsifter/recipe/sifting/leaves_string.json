@@ -1,6 +1,8 @@
 {
   "type": "createsifter:sifting",
-  "input": [],
+  "input": {
+    "tag": "minecraft:leaves"
+  },
   "mesh": {
     "count": 1,
     "id": "createsifter:string_mesh"

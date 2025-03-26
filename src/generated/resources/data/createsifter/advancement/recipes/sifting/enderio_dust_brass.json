@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "createsifter:sifting/moss_andesite"
+        "recipe": "createsifter:sifting/enderio_dust_brass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "createsifter:sifting/moss_andesite"
+      "createsifter:sifting/enderio_dust_brass"
     ]
   }
 }

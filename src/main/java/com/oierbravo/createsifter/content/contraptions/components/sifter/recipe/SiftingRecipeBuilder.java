@@ -7,6 +7,7 @@ import com.simibubi.create.foundation.data.SimpleDatagenIngredient;
 import com.simibubi.create.foundation.data.recipe.Mods;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -49,6 +50,9 @@ public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<Siftin
     public SiftingRecipeBuilder require(ResourceLocation resourceLocation) {
         Item item = BuiltInRegistries.ITEM.get(resourceLocation);
         return require(item);
+    }
+    public SiftingRecipeBuilder require(TagKey<Item> tag) {
+        return require(Ingredient.of(tag));
     }
 
     public SiftingRecipeBuilder output(ItemLike item) {
@@ -116,8 +120,15 @@ public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<Siftin
         params.waterlogged = waterlogged;
         return this;
     }
+    public SiftingRecipeBuilder handOnly(boolean handOnly){
+        params.handOnly = handOnly;
+        return this;
+    }
     public SiftingRecipeBuilder isWaterlogged(){
         return waterlogged(true);
+    }
+    public SiftingRecipeBuilder isHandOnly(){
+        return handOnly(true);
     }
     @Override
     public SiftingRecipe build() {

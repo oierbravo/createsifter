@@ -27,6 +27,7 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
     private ItemStack mesh;
     private int processingTime;
     private boolean waterlogged;
+    private boolean handOnly;
 
     public SiftingRecipe(SiftingRecipeParams params) {
         super(params);
@@ -35,7 +36,9 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
         mesh = params.mesh;
         processingTime = params.processingTime;
         waterlogged = params.waterlogged;
-        this.recipeRequirements.addAll(params.recipeRequirements);
+        handOnly = params.handOnly;
+        //recipeRequirements.addAll(params.recipeRequirements);
+        //conditions.addAll(params.conditions);
     }
     public ResourceLocation getId(){
         return id;
@@ -91,6 +94,7 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
     public Ingredient getInput(){
         return input;
     }
+
     public NonNullList<ProcessingOutput> getResults(){
         return results;
     }
@@ -103,6 +107,7 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
     public boolean isWaterlogged(){
         return waterlogged;
     }
+    public boolean isHandOnly(){return handOnly;}
 
 
     @Override
@@ -151,6 +156,7 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
         protected ItemStack mesh;
         protected int processingTime;
         protected boolean waterlogged;
+        protected boolean handOnly;
 
         protected SiftingRecipeParams(ResourceLocation id) {
             super(id);
@@ -159,7 +165,7 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
             mesh = ItemStack.EMPTY;
             processingTime = 500;
             waterlogged = false;
-
+            handOnly = false;
         }
 
     }

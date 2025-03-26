@@ -1,7 +1,7 @@
 {
   "type": "createsifter:sifting",
   "input": {
-    "item": "minecraft:moss_block"
+    "tag": "minecraft:leaves"
   },
   "mesh": {
     "count": 1,

@@ -172,16 +172,20 @@ dependencies {
     runtimeOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${curios_minecraft_version}")
 
     compileOnly("dev.architectury:architectury-neoforge:$architectury_version")
-    api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
+    /*api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
     interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs_version") // optional
+    implementation("curse.maven:probejs-585406:5820894")*/
+
 
     implementation("curse.maven:jade-324717:${jade_id}")
-    implementation("curse.maven:enderio-64578:6307311")
-    runtimeOnly("curse.maven:guideme-1173950:6331224")
-    runtimeOnly("curse.maven:actually-additions-228404:6329770")
-    runtimeOnly("curse.maven:ars-nouveau-401955:6333245")
-    runtimeOnly("curse.maven:geckolib-388172:6304958")
-    runtimeOnly("curse.maven:applied-energistics-2-223794:6225422")
+
+
+    //implementation("curse.maven:enderio-64578:6307311")
+    //runtimeOnly("curse.maven:guideme-1173950:6331224")
+    //runtimeOnly("curse.maven:actually-additions-228404:6329770")
+    //runtimeOnly("curse.maven:ars-nouveau-401955:6333245")
+    //runtimeOnly("curse.maven:geckolib-388172:6304958")
+    //runtimeOnly("curse.maven:applied-energistics-2-223794:6225422")
     //runtimeOnly("curse.maven:ex-deorum-901420:6162365")
 
 }

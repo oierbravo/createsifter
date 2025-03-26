@@ -1,6 +1,8 @@
 {
   "type": "createsifter:sifting",
-  "input": [],
+  "input": {
+    "item": "minecraft:dirt"
+  },
   "mesh": {
     "count": 1,
     "id": "createsifter:string_mesh"

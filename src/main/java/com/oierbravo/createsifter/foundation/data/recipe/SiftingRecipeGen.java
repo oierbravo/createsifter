@@ -2,6 +2,7 @@ package com.oierbravo.createsifter.foundation.data.recipe;
 
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeBuilder;
+import com.oierbravo.createsifter.register.ModBlocks;
 import com.oierbravo.createsifter.register.ModItems;
 import com.oierbravo.mechanicals.foundation.data.AbstractMechanicalRecipeGenerator;
 import com.simibubi.create.AllItems;
@@ -11,6 +12,8 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
@@ -34,7 +37,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
     @Override
     protected void buildRecipes(RecipeOutput recipeOutput) {
 
-        createAndesite("gravel", Blocks.GRAVEL)
+        createAndesite("gravel").require(Blocks.GRAVEL)
                 .output(.05f, AllItems.COPPER_NUGGET::get,1)
                 .output(.01f, AllItems.ZINC_NUGGET::get,1)
                 .output(.01f, Items.IRON_NUGGET,1)
@@ -44,7 +47,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .save(recipeOutput);
 
 
-        createBrass("gravel", Blocks.GRAVEL)
+        createBrass("gravel").require(Blocks.GRAVEL)
                 .output(.1f, AllItems.CRUSHED_COPPER::get,1)
                 .output(.1f, AllItems.CRUSHED_ZINC::get,1)
                 .output(.05f, AllItems.CRUSHED_GOLD::get,1)
@@ -55,7 +58,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .output(.10f, AllItems.EXP_NUGGET.get(), 1)
                 .save(recipeOutput);
 
-        createAdvancedBrass("gravel", Blocks.GRAVEL)
+        createAdvancedBrass("gravel").require(Blocks.GRAVEL)
                 .output(.10f, AllItems.CRUSHED_COPPER::get,1)
                 .output(.10f, AllItems.CRUSHED_ZINC::get,1)
                 .output(.05f, AllItems.CRUSHED_GOLD::get,1)
@@ -73,13 +76,13 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .output(.4f, Items.BONE_MEAL,1)
                 .save(recipeOutput);*/
 
-        createAndesite("sand", Blocks.SAND)
+        createAndesite("sand").require(Blocks.SAND)
                 .output(.1f, Items.REDSTONE,1)
                 .output(.4f, Items.BONE_MEAL,1)
                 .output(.10f, AllItems.EXP_NUGGET.get(), 1)
                 .save(recipeOutput);
 
-        createBrass("sand",Blocks.SAND)
+        createBrass("sand").require(Blocks.SAND)
                 .output(.25f, Items.REDSTONE,2)
                 .output(.10f, Items.GLOWSTONE_DUST,1)
                 .output(.4f, Items.BONE_MEAL,1)
@@ -87,12 +90,12 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .output(.20f, AllItems.EXP_NUGGET.get(), 1)
                 .save(recipeOutput);
 
-        createBrass("soul_sand", Blocks.SOUL_SAND)
+        createBrass("soul_sand").require(Blocks.SOUL_SAND)
                 .output(.10f, Items.QUARTZ,1)
                 .output(.10f, AllItems.EXP_NUGGET.get(), 1)
                 .save(recipeOutput);
 
-        createAdvancedBrass("soul_sand", Blocks.SOUL_SAND)
+        createAdvancedBrass("soul_sand").require(Blocks.SOUL_SAND)
                 .output(.45f, Items.QUARTZ,1)
                 .output(.15f, Items.QUARTZ,1)
                 .output(.05f, Items.GHAST_TEAR,1)
@@ -100,7 +103,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .save(recipeOutput);
 
 
-        createString("moss", Blocks.MOSS_BLOCK)
+        createString("leaves").require(ItemTags.LEAVES)
                 .output(.1f, Items.OAK_SAPLING)
                 .output(.1f, Items.SPRUCE_SAPLING)
                 .output(.1f, Items.BIRCH_SAPLING)
@@ -110,7 +113,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .output(.1f, Items.CHERRY_SAPLING)
                 .save(recipeOutput);
 
-        createAndesite("moss", Blocks.MOSS_BLOCK)
+        createAndesite("leaves").require(ItemTags.LEAVES)
                 .output(.10f, Items.OAK_SAPLING)
                 .output(.10f, Items.SPRUCE_SAPLING)
                 .output(.10f, Items.BIRCH_SAPLING)
@@ -120,7 +123,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .output(.10f, Items.CHERRY_SAPLING)
                 .save(recipeOutput);
 
-        createString("dirt", Blocks.DIRT)
+        createString("dirt").require(Blocks.DIRT)
                 .output(.20f, Items.WHEAT_SEEDS)
                 .output(.10f, Items.BEETROOT_SEEDS)
                 .output(.05f, Items.MELON_SEEDS)
@@ -129,7 +132,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .output(.02f, Items.CARROT)
                 .save(recipeOutput);
 
-        createAndesite("dirt", Blocks.DIRT, true)
+        createAndesite("dirt",true).require(Blocks.DIRT)
                 .output(.20f, Items.KELP)
                 .output(.30f, Items.SEAGRASS)
                 .output(.05f, Items.TUBE_CORAL)
@@ -140,38 +143,63 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .save(recipeOutput);
 
         //Compat recipes
-        createString("enderio_moss", Blocks.MOSS_BLOCK)
+        createAndesite("enderio_dust").require(ModBlocks.DUST)
                 .output(.01f, ResourceLocation.fromNamespaceAndPath("enderio","grains_of_infinity"),1)
                 .withCondition(new ModLoadedCondition("enderio"))
                 .saveCompat(recipeOutput);
-
-        createString("arch_moss", Blocks.MOSS_BLOCK)
-                .output(.01f, Mods.ARS_N,"blue_archwood_sappling",1)
-                .output(.01f, Mods.ARS_N,"red_archwood_sappling",1)
-                .output(.01f, Mods.ARS_N,"green_archwood_sappling",1)
-                .output(.01f, Mods.ARS_N,"purple_archwood_sappling",1)
-                .withCondition(new ModLoadedCondition("ars_nouveau"))
+        createBrass("enderio_dust").require(ModBlocks.DUST)
+                .output(.05f, ResourceLocation.fromNamespaceAndPath("enderio","grains_of_infinity"),1)
+                .withCondition(new ModLoadedCondition("enderio"))
                 .saveCompat(recipeOutput);
 
-        createAndesite("arch_moss", Blocks.MOSS_BLOCK)
-                .output(.1f, Mods.ARS_N,"blue_archiwood_sappling",1)
-                .output(.1f, Mods.ARS_N,"red_archiwood_sappling",1)
-                .output(.1f, Mods.ARS_N,"green_archiwood_sappling",1)
-                .output(.1f, Mods.ARS_N,"purple_archiwood_sappling",1)
-                .withCondition(new ModLoadedCondition("ars_nouveau"))
+        createAndesite("ae2_dust").require(ModBlocks.DUST)
+                .output(.01f, Mods.AE2,"sky_dust",1)
+                .withCondition(new ModLoadedCondition("enderio"))
+                .saveCompat(recipeOutput);
+        createBrass("ae2_dust").require(ModBlocks.DUST)
+                .output(.05f, Mods.AE2,"sky_dust",1)
+                .withCondition(new ModLoadedCondition("enderio"))
+                .saveCompat(recipeOutput);
+
+        createAndesite("ae2_sand").require(ModBlocks.DUST)
+                .output(.05f, Mods.AE2,"certus_quartz_crystal",1)
+                .withCondition(new ModLoadedCondition(Mods.AE2.getId()))
+                .saveCompat(recipeOutput);
+        createBrass("ae2_sand").require(ModBlocks.DUST)
+                .output(.1f, Mods.AE2,"certus_quartz_crystal",1)
+                .withCondition(new ModLoadedCondition(Mods.AE2.getId()))
+                .saveCompat(recipeOutput);
+        createAdvancedBrass("ae2_sand").require(ModBlocks.DUST)
+                .output(.1f, Mods.AE2,"certus_quartz_crystal",1)
+                .output(.005f, Mods.AE2,"charged_certus_quartz_crystal",1)
+                .withCondition(new ModLoadedCondition(Mods.AE2.getId()))
+                .saveCompat(recipeOutput);
+
+        createString("arch_leaves").require(ItemTags.LEAVES)
+                .output(.01f, Mods.ARS_N,"blue_archwood_sapling",1)
+                .output(.01f, Mods.ARS_N,"red_archwood_sapling",1)
+                .output(.01f, Mods.ARS_N,"green_archwood_sapling",1)
+                .output(.01f, Mods.ARS_N,"purple_archwood_sapling",1)
+                .withCondition(new ModLoadedCondition(Mods.ARS_N.getId()))
+                .saveCompat(recipeOutput);
+
+        createAndesite("arch_leaves").require(ItemTags.LEAVES)
+                .output(.1f, Mods.ARS_N,"blue_archwood_sapling",1)
+                .output(.1f, Mods.ARS_N,"red_archwood_sapling",1)
+                .output(.1f, Mods.ARS_N,"green_archwood_sapling",1)
+                .output(.1f, Mods.ARS_N,"purple_archwood_sapling",1)
+                .withCondition(new ModLoadedCondition(Mods.ARS_N.getId()))
                 .saveCompat(recipeOutput);
 
     }
-    public SiftingRecipeBuilder createString(String name, ItemLike input){
-        return createString(name, input, false, false);
+    public SiftingRecipeBuilder createString(String name){
+        return createString(name, false, false);
     }
-    public SiftingRecipeBuilder createString(String name, ItemLike input, boolean waterlogged){
-        return createString(name, input, waterlogged, false);
+    public SiftingRecipeBuilder createString(String name, boolean waterlogged){
+        return createString(name, waterlogged, false);
     }
-    public SiftingRecipeBuilder createString(String name, ResourceLocation resourceLocation, boolean waterlogged, boolean handOnly){
-        return createString(name, BuiltInRegistries.ITEM.get(resourceLocation).asItem(), waterlogged, handOnly);
-    }
-    public SiftingRecipeBuilder createString(String name, ItemLike input, boolean waterlogged, boolean handOnly){
+
+    public SiftingRecipeBuilder createString(String name, boolean waterlogged, boolean handOnly){
         SiftingRecipeBuilder builder = create(generateRecipeName(name, "string", waterlogged, handOnly))
                 .requiredMesh(ModItems.STRING_MESH);
         if(waterlogged)
@@ -180,16 +208,15 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
 
     }
 
-    public SiftingRecipeBuilder createAndesite(String name, ItemLike input){
-        return createAndesite(name, input, false, false);
+    public SiftingRecipeBuilder createAndesite(String name){
+        return createAndesite(name, false, false);
     }
-    public SiftingRecipeBuilder createAndesite(String name, ItemLike input, boolean waterlogged){
-        return createAndesite(name, input, waterlogged, false);
+    public SiftingRecipeBuilder createAndesite(String name, boolean waterlogged){
+        return createAndesite(name, waterlogged, false);
     }
-    public SiftingRecipeBuilder createAndesite(String name, ItemLike input, boolean waterlogged, boolean handOnly){
+    public SiftingRecipeBuilder createAndesite(String name, boolean waterlogged, boolean handOnly){
         SiftingRecipeBuilder builder = create(generateRecipeName(name, "andesite", waterlogged, handOnly))
-                .requiredMesh(ModItems.ANDESITE_MESH)
-                .require(input);
+                .requiredMesh(ModItems.ANDESITE_MESH);
         if(waterlogged)
             return builder.isWaterlogged();
         /*if(handOnly)
@@ -198,16 +225,15 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
 
     }
 
-    public SiftingRecipeBuilder createBrass(String name, ItemLike input){
-        return createBrass(name, input, false, false);
+    public SiftingRecipeBuilder createBrass(String name){
+        return createBrass(name, false, false);
     }
-    public SiftingRecipeBuilder createBrass(String name, ItemLike input, boolean waterlogged){
-        return createBrass(name, input, waterlogged, false);
+    public SiftingRecipeBuilder createBrass(String name, boolean waterlogged){
+        return createBrass(name, waterlogged, false);
     }
-    public SiftingRecipeBuilder createBrass(String name, ItemLike input, boolean waterlogged, boolean handOnly){
+    public SiftingRecipeBuilder createBrass(String name, boolean waterlogged, boolean handOnly){
         SiftingRecipeBuilder builder = create(generateRecipeName(name, "brass", waterlogged, handOnly))
-                .requiredMesh(ModItems.BRASS_MESH)
-                .require(input);
+                .requiredMesh(ModItems.BRASS_MESH);
         if(waterlogged)
             builder.isWaterlogged();
         /*if(handOnly)
@@ -216,41 +242,38 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
 
     }
 
-    public SiftingRecipeBuilder createSturdy(String name, ItemLike input){
-        return createAdvancedBrass(name, input, false);
+    public SiftingRecipeBuilder createSturdy(String name){
+        return createAdvancedBrass(name, false);
     }
-    public SiftingRecipeBuilder createSturdy(String name, ItemLike input, boolean waterlogged){
-        return createBrass(name, input, waterlogged, false);
+    public SiftingRecipeBuilder createSturdy(String name, boolean waterlogged){
+        return createBrass(name, waterlogged, false);
     }
-    public SiftingRecipeBuilder createSturdy(String name, ItemLike input, boolean waterlogged, boolean handOnly){
+    public SiftingRecipeBuilder createSturdy(String name, boolean waterlogged, boolean handOnly){
         SiftingRecipeBuilder builder = create(generateRecipeName(name, "sturdy", waterlogged, false))
-                .requiredMesh(ModItems.STURDY_MESH)
-                .require(input);
+                .requiredMesh(ModItems.STURDY_MESH);
         if(waterlogged)
             builder.isWaterlogged();
         /*if(handOnly)
             return builder.isWaterlogged();*/
         return builder;
     }
-    public SiftingRecipeBuilder createAdvancedBrass(String name, ItemLike input){
-        return createAdvancedBrass(name, input, false);
+    public SiftingRecipeBuilder createAdvancedBrass(String name){
+        return createAdvancedBrass(name, false);
     }
-    public SiftingRecipeBuilder createAdvancedBrass(String name, ItemLike input, boolean waterlogged){
+    public SiftingRecipeBuilder createAdvancedBrass(String name, boolean waterlogged){
         SiftingRecipeBuilder builder = create(generateRecipeName(name, "advance_brass", waterlogged, false))
-                .requiredMesh(ModItems.ADVANCED_BRASS_MESH)
-                .require(input);
+                .requiredMesh(ModItems.ADVANCED_BRASS_MESH);
         if(waterlogged)
             builder.isWaterlogged();
         return builder;
     }
 
-    public SiftingRecipeBuilder createAdvancedSturdy(String name, ItemLike input){
-        return createAdvancedBrass(name, input, false);
+    public SiftingRecipeBuilder createAdvancedSturdy(String name){
+        return createAdvancedBrass(name, false);
     }
-    public SiftingRecipeBuilder createAdvancedSturdy(String name, ItemLike input, boolean waterlogged){
+    public SiftingRecipeBuilder createAdvancedSturdy(String name, boolean waterlogged){
         SiftingRecipeBuilder builder = create(generateRecipeName(name, "advance_sturdy", waterlogged, false))
-                .requiredMesh(ModItems.ADVANCED_STURDY_MESH)
-                .require(input);
+                .requiredMesh(ModItems.ADVANCED_STURDY_MESH);
         if(waterlogged)
             builder.isWaterlogged();
         return builder;
