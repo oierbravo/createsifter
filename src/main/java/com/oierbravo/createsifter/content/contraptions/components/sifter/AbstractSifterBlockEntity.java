@@ -250,14 +250,17 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
     }
 
     public void insertMesh(ItemStack meshStack, Player player) {
-        if(meshInventory.getStackInSlot(0).isEmpty()){
-            ItemStack meshToInsert = meshStack.copy();
-            meshToInsert.setCount(1);
-            if(!player.isCreative())
-                meshStack.shrink(1);
-            meshInventory.setStackInSlot(0, meshToInsert);
-            setChanged();
+        ItemStack meshToInsert = meshStack.copy();
+        meshToInsert.setCount(1);
+        if(getMeshItemStack().is(meshStack.getItem()))
+            return;
+
+        meshStack.shrink(1);
+        if(!meshInventory.getStackInSlot(0).isEmpty()) {
+            removeMesh(player);
         }
+        meshInventory.setStackInSlot(0, meshToInsert);
+        setChanged();
     }
 
     public boolean hasMesh(){
