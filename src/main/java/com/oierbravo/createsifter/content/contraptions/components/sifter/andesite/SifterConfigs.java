@@ -12,8 +12,6 @@ public class SifterConfigs extends ConfigBase {
     private static class Comments {
         static String minimumSpeed = "Minimum required speed.";
         static String outputCapacity = "Output item capacity.";
-        static String useMeshDurabilityWithSifter = "Use mesh durability when sifting with sifter.";
-        static String useMeshDurabilityWithHand = "Use mesh durability when sifting by hand.";
     }
 
     @Override

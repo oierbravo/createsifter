@@ -2,6 +2,7 @@ package com.oierbravo.createsifter.infrastucture.config;
 
 import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModConstants;
+import com.simibubi.create.Create;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
@@ -68,6 +69,7 @@ public class ModStress extends ConfigBase {
 
 	public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setImpact(double value) {
 		return builder -> {
+			assertFromThisMod(builder);
 			ResourceLocation id = ModConstants.asResource(builder.getName());
 			DEFAULT_IMPACTS.put(id, value);
 			return builder;
@@ -76,12 +78,17 @@ public class ModStress extends ConfigBase {
 
 	public static <B extends Block, P> NonNullUnaryOperator<BlockBuilder<B, P>> setCapacity(double value) {
 		return builder -> {
+			assertFromThisMod(builder);
 			ResourceLocation id = ModConstants.asResource(builder.getName());
 			DEFAULT_CAPACITIES.put(id, value);
 			return builder;
 		};
 	}
-
+	private static void assertFromThisMod(BlockBuilder<?, ?> builder) {
+		if (!builder.getOwner().getModid().equals(ModConstants.MODID)) {
+			throw new IllegalStateException("Non-Create blocks cannot be added to " + ModConstants.DISPLAY_NAME + "'s config.");
+		}
+	}
 
 	private static class Comments {
 		static String su = "[in Stress Units]";

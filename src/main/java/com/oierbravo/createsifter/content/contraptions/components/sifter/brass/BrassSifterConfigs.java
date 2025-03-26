@@ -18,7 +18,7 @@ public class BrassSifterConfigs extends ConfigBase {
 
     @Override
     public @NotNull String getName() {
-        return "Sifter";
+        return "Brass Sifter";
     }
 
 }

@@ -25,7 +25,6 @@ import static com.oierbravo.createsifter.ModConstants.MODID;
 
 @Mod(MODID)
 public class CreateSifter {
-    public static final String DISPLAY_NAME = "Create Sifter";
     // Directly reference a log4j logger.
     private static final Logger LOGGER = LogManager.getLogger(MODID);
     public static IEventBus modEventBus;
@@ -46,12 +45,12 @@ public class CreateSifter {
 
         ModCreativeTabs.register(modEventBus);
 
-        MConfigs.register(modLoadingContext,modContainer);
 
         ModBlocks.register();
         ModItems.register();
         ModBlockEntities.register();
         ModItemComponents.register(modEventBus);
+        MConfigs.register(modLoadingContext,modContainer);
 
         modEventBus.addListener(ModDataGen::gatherData);
 
