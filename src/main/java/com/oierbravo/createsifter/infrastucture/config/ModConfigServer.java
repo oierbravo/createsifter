@@ -10,7 +10,7 @@ public class ModConfigServer extends ConfigBase {
     public final BrassSifterConfigs brassSifter = nested(0, BrassSifterConfigs::new, "Brass Sifter");
     public final MeshConfigs mesh = nested(0, MeshConfigs::new, "Meshes");
 
-    public final ModStress stressValues = nested(1, ModStress::new, "Stress values");
+    public final ModStress stressValues = nested(0, ModStress::new, "Stress values");
 
     @Override
     public String getName() {
