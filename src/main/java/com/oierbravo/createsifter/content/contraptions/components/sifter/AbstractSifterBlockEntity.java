@@ -132,7 +132,7 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
     public boolean addToGoggleTooltip(List<Component> tooltip, boolean isPlayerSneaking) {
         boolean added = super.addToGoggleTooltip(tooltip, isPlayerSneaking);
         if(!this.meshInventory.getStackInSlot(0).isEmpty()) {
-            ModLang.translate("tooltip.mesh", this.meshInventory.getStackInSlot(0).getDisplayName().getString()).style(ChatFormatting.YELLOW).forGoggles(tooltip);
+            ModLang.translate("tooltip.mesh", this.meshInventory.getStackInSlot(0).getDisplayName().getString()).style(ChatFormatting.GREEN).forGoggles(tooltip);
             added = true;
         }
 
