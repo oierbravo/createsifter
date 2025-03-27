@@ -5,6 +5,7 @@ import com.oierbravo.createsifter.foundation.data.ModDataGen;
 import com.oierbravo.createsifter.infrastucture.config.MConfigs;
 import com.oierbravo.createsifter.ponders.ModPonderPlugin;
 import com.oierbravo.createsifter.register.*;
+import com.oierbravo.mechanicals.register.MechanicalCreativeModeTabs;
 import com.oierbravo.mechanicals.utility.RegistrateLangBuilder;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
