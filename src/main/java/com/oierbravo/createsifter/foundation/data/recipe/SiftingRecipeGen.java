@@ -292,7 +292,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
     }
 
     public SiftingRecipeBuilder createSturdy(String name){
-        return createAdvancedBrass(name, false);
+        return createSturdy(name, false);
     }
     public SiftingRecipeBuilder createSturdy(String name, boolean waterlogged){
         SiftingRecipeBuilder builder = create(generateRecipeName(name, "sturdy", waterlogged))
@@ -305,7 +305,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
         return createAdvancedBrass(name, false);
     }
     public SiftingRecipeBuilder createAdvancedBrass(String name, boolean waterlogged){
-        SiftingRecipeBuilder builder = create(generateRecipeName(name, "advance_brass", waterlogged))
+        SiftingRecipeBuilder builder = create(generateRecipeName(name, "advanced_brass", waterlogged))
                 .requiredMesh(ModItems.ADVANCED_BRASS_MESH);
         if(waterlogged)
             builder.isWaterlogged();

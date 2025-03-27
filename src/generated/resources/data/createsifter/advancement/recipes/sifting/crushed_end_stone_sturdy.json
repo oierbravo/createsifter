@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "createsifter:sifting/ae2_sand_advance_brass"
+        "recipe": "createsifter:sifting/crushed_end_stone_sturdy"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "createsifter:sifting/ae2_sand_advance_brass"
+      "createsifter:sifting/crushed_end_stone_sturdy"
     ]
   }
 }

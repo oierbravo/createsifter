@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "createsifter:sifting/crushed_basalt_advance_brass"
+        "recipe": "createsifter:sifting/ae2_sand_advanced_brass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "createsifter:sifting/crushed_basalt_advance_brass"
+      "createsifter:sifting/ae2_sand_advanced_brass"
     ]
   }
 }

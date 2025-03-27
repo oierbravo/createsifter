@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "createsifter:sifting/gravel_advance_brass"
+        "recipe": "createsifter:sifting/gravel_advanced_brass"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -15,7 +15,7 @@
   ],
   "rewards": {
     "recipes": [
-      "createsifter:sifting/gravel_advance_brass"
+      "createsifter:sifting/gravel_advanced_brass"
     ]
   }
 }
