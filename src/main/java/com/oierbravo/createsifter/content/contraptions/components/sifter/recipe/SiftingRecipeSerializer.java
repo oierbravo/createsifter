@@ -34,7 +34,6 @@ public class SiftingRecipeSerializer implements RecipeSerializer<SiftingRecipe> 
         NonNullList<ProcessingOutput> result = CatnipStreamCodecBuilders.nonNullList(ProcessingOutput.STREAM_CODEC).decode(buffer);
         int processingTime = ByteBufCodecs.VAR_INT.decode(buffer);
         boolean waterlogged = ByteBufCodecs.BOOL.decode(buffer);
-        boolean handOnly = ByteBufCodecs.BOOL.decode(buffer);
         List<IRecipeRequirement> recipeRequirements = IRecipeRequirement.LIST_STREAM_CODEC.decode(buffer);
 
         return new SiftingRecipeBuilder(recipeId)
@@ -43,7 +42,6 @@ public class SiftingRecipeSerializer implements RecipeSerializer<SiftingRecipe> 
                 .output(result)
                 .processingTime(processingTime)
                 .waterlogged(waterlogged)
-                .handOnly(waterlogged)
                 .withRequirements(recipeRequirements)
                 .build();
     }
@@ -55,7 +53,6 @@ public class SiftingRecipeSerializer implements RecipeSerializer<SiftingRecipe> 
         CatnipStreamCodecBuilders.nonNullList(ProcessingOutput.STREAM_CODEC).encode(buffer, siftingRecipe.getResults());
         ByteBufCodecs.VAR_INT.encode(buffer, siftingRecipe.getProcessingTime());
         ByteBufCodecs.BOOL.encode(buffer, siftingRecipe.isWaterlogged());
-        ByteBufCodecs.BOOL.encode(buffer, siftingRecipe.isHandOnly());
         IRecipeRequirement.LIST_STREAM_CODEC.encode(buffer, siftingRecipe.getRecipeRequirements());
     }
 
@@ -67,10 +64,9 @@ public class SiftingRecipeSerializer implements RecipeSerializer<SiftingRecipe> 
                             ItemStack.CODEC.fieldOf("mesh").forGetter(SiftingRecipe::getMesh),
                             ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("processing_time", 0).forGetter(SiftingRecipe::getProcessingTime),
                             Codec.BOOL.optionalFieldOf("waterlogged", false).forGetter(SiftingRecipe::isWaterlogged),
-                            Codec.BOOL.optionalFieldOf("byHandOnly", false).forGetter(SiftingRecipe::isHandOnly),
                             IRecipeRequirement.LIST_CODEC.optionalFieldOf("requirements", List.of()).forGetter(SiftingRecipe::getRecipeRequirements),
                             ICondition.LIST_CODEC.optionalFieldOf(ConditionalOps.DEFAULT_CONDITIONS_KEY, List.of()).forGetter(SiftingRecipe::getConditions)
-                    ).apply(instance, (input, processingOutput, mesh, processingTime, waterlogged, handOnly,  requirements, iConditions) -> {
+                    ).apply(instance, (input, processingOutput, mesh, processingTime, waterlogged, requirements, iConditions) -> {
                         SiftingRecipeBuilder builder = new SiftingRecipeBuilder(ModConstants.asResource(SiftingRecipe.Type.ID));
 
                         builder
@@ -79,7 +75,6 @@ public class SiftingRecipeSerializer implements RecipeSerializer<SiftingRecipe> 
                                 .requiredMesh(mesh)
                                 .processingTime(processingTime)
                                 .waterlogged(waterlogged)
-                                .handOnly(handOnly)
                                 .withRequirements(requirements)
                                 .withConditions(iConditions)
                         ;

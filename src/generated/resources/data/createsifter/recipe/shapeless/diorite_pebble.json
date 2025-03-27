@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "createsifter:diorite_pebble"
+    },
+    {
+      "item": "createsifter:diorite_pebble"
+    },
+    {
+      "item": "createsifter:diorite_pebble"
+    },
+    {
+      "item": "createsifter:diorite_pebble"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:diorite"
+  }
+}

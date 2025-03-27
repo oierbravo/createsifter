@@ -36,7 +36,7 @@ public class ModRecipes {
             RECIPE_TYPES.register(
                     "extruding_type",
                     // We need the qualifying generic here due to generics being generics.
-                    () -> RecipeType.<SiftingRecipe>simple(ModConstants.asResource("extruding_type"))
+                    () -> RecipeType.simple(ModConstants.asResource("extruding_type"))
 
         );
 
@@ -141,7 +141,7 @@ public class ModRecipes {
             return waterlogged;
         }
     }
-    public static interface ISiftingRecipeCacheKey{
+    public interface ISiftingRecipeCacheKey{
         String toString();
         Ingredient getInput();
         ItemStack getMesh();
@@ -156,7 +156,10 @@ public class ModRecipes {
     public static SiftingRecipe mergeRecipes(ISiftingRecipeCacheKey key, List<SiftingRecipe> recipes, boolean byHand){
         if(recipes.isEmpty())
             return null;
-        recipes.stream().filter(siftingRecipe -> siftingRecipe.isHandOnly() == byHand || !siftingRecipe.requiresAdvancedMesh());
+        if(byHand){
+            recipes = recipes.stream().filter(siftingRecipe -> !siftingRecipe.requiresAdvancedMesh()).toList();
+
+        }
         SiftingRecipeBuilder builder = new SiftingRecipeBuilder(generateMergedResourceLocation(key));
         recipes.forEach(siftingRecipe ->
                 builder.output(siftingRecipe.getResults())

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "createsifter:calcite_pebble"
+    },
+    {
+      "item": "createsifter:calcite_pebble"
+    },
+    {
+      "item": "createsifter:calcite_pebble"
+    },
+    {
+      "item": "createsifter:calcite_pebble"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:calcite"
+  }
+}

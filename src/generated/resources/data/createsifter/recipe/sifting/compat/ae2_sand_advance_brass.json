@@ -1,0 +1,27 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ae2"
+    }
+  ],
+  "type": "createsifter:sifting",
+  "input": {
+    "item": "createsifter:dust"
+  },
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:advanced_brass_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "chance": 0.1,
+      "id": "ae2:certus_quartz_crystal"
+    },
+    {
+      "chance": 0.005,
+      "id": "ae2:charged_certus_quartz_crystal"
+    }
+  ]
+}

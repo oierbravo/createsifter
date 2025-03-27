@@ -10,28 +10,60 @@
   "processing_time": 500,
   "results": [
     {
-      "chance": 0.2,
-      "id": "minecraft:wheat_seeds"
+      "chance": 0.5,
+      "id": "createsifter:stone_pebble"
+    },
+    {
+      "chance": 0.45,
+      "id": "createsifter:andesite_pebble"
+    },
+    {
+      "chance": 0.25,
+      "id": "createsifter:granite_pebble"
+    },
+    {
+      "chance": 0.25,
+      "id": "createsifter:diorite_pebble"
     },
     {
       "chance": 0.1,
+      "id": "minecraft:wheat_seeds"
+    },
+    {
+      "chance": 0.05,
       "id": "minecraft:beetroot_seeds"
     },
     {
       "chance": 0.05,
-      "id": "minecraft:melon_seeds"
+      "id": "minecraft:sugar_cane"
+    },
+    {
+      "chance": 0.05,
+      "id": "minecraft:bamboo"
     },
     {
       "chance": 0.1,
       "id": "minecraft:short_grass"
     },
     {
-      "chance": 0.02,
+      "chance": 0.01,
+      "id": "minecraft:melon_seeds"
+    },
+    {
+      "chance": 0.01,
+      "id": "minecraft:pumpkin_seeds"
+    },
+    {
+      "chance": 0.01,
       "id": "minecraft:potato"
     },
     {
-      "chance": 0.02,
+      "chance": 0.01,
       "id": "minecraft:carrot"
+    },
+    {
+      "chance": 0.01,
+      "id": "minecraft:sweet_berries"
     }
   ]
 }

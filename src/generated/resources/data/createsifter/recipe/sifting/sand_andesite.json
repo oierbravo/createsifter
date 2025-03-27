@@ -11,11 +11,24 @@
   "results": [
     {
       "chance": 0.1,
+      "count": 2,
       "id": "minecraft:redstone"
     },
     {
-      "chance": 0.4,
-      "id": "minecraft:bone_meal"
+      "chance": 0.15,
+      "id": "minecraft:gold_nugget"
+    },
+    {
+      "chance": 0.15,
+      "id": "minecraft:cactus"
+    },
+    {
+      "chance": 0.1,
+      "id": "minecraft:gunpowder"
+    },
+    {
+      "chance": 0.15,
+      "id": "minecraft:bone"
     },
     {
       "chance": 0.1,

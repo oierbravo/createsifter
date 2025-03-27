@@ -1,0 +1,34 @@
+{
+  "type": "createsifter:sifting",
+  "input": {
+    "item": "createsifter:dust"
+  },
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:brass_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "chance": 0.35,
+      "count": 2,
+      "id": "minecraft:redstone"
+    },
+    {
+      "chance": 0.2,
+      "id": "minecraft:glowstone_dust"
+    },
+    {
+      "chance": 0.6,
+      "id": "minecraft:bone_meal"
+    },
+    {
+      "chance": 0.05,
+      "id": "minecraft:blaze_powder"
+    },
+    {
+      "chance": 0.2,
+      "id": "create:experience_nugget"
+    }
+  ]
+}

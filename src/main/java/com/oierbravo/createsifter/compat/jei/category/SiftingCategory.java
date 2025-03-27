@@ -30,6 +30,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluids;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -102,18 +103,22 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
         guiGraphics.drawString(fontRenderer, LibLang.translate("ui.recipe.requirements.title").component().withStyle(), x, y, 0xFFFFFFFF, true);
 
 
+        ArrayList<Pair<Component,Component>> requirementComponents = new ArrayList<>();
+        if(recipe.requiresAdvancedMesh()){
+            requirementComponents.add(Pair.of(ModLang.translate("recipe.sifting.brass_required").component(),Component.empty()));
+        }
 
-        if(recipe.getRecipeRequirements().isEmpty() && !recipe.requiresAdvancedMesh()){
+        if(recipe.isWaterlogged()){
+            requirementComponents.add(Pair.of(ModLang.translate("recipe.sifting.waterlogged").component(),Component.empty()));
+        }
+        requirementComponents.addAll(recipe.getRequirementsTooltips());
+
+
+        if(requirementComponents.isEmpty()){
             guiGraphics.drawString(fontRenderer, LibLang.translate("ui.recipe_requirement.none.tooltip").component().withStyle(),x + offsetX, y + offsetY + distance * index, 0xFF808080, false);
             return;
         }
 
-        if(recipe.requiresAdvancedMesh()){
-            guiGraphics.drawString(fontRenderer, ModLang.translate("ui.recipe_requirement.advanced.title").component(), x + offsetX, y + offsetY + distance * index, 0xFF808080, false);
-            index++;
-        }
-
-        List<Pair<Component,Component>> requirementComponents = recipe.getRequirementsTooltips();
         for( Pair<Component,Component> pair : requirementComponents){
             int oneLinerLenght = pair.getSecond().getString().length() + pair.getSecond().getString().length();
             if(oneLinerLenght < 19){

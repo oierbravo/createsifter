@@ -69,7 +69,7 @@ public class CreateSifter {
             .add("recipe.sifting", "Sifting recipe")
             .add("recipe.sifting.minimumspeed", "%1$s RPM")
             .add("recipe.sifting.waterlogged", "Waterlogged")
-            .add("recipe.sifting.brass_required", "Brass sifter required")
+            .add("recipe.sifting.brass_required", "Brass sifter")
             .add("tooltip.mesh", "Mesh: %s")
             //Ponder
             .add("ponder.sifter.header", "Block sifting")

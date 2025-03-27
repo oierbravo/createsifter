@@ -1,0 +1,29 @@
+{
+  "type": "createsifter:sifting",
+  "input": {
+    "item": "createsifter:crushed_end_stone"
+  },
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:advanced_sturdy_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "chance": 0.1,
+      "id": "minecraft:ender_pearl"
+    },
+    {
+      "chance": 0.1,
+      "id": "minecraft:chorus_flower"
+    },
+    {
+      "chance": 0.1,
+      "id": "minecraft:shulker_shell"
+    },
+    {
+      "chance": 0.3,
+      "id": "create:experience_nugget"
+    }
+  ]
+}

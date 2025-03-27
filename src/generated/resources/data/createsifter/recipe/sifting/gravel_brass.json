@@ -39,6 +39,10 @@
     },
     {
       "chance": 0.1,
+      "id": "minecraft:amethyst_shard"
+    },
+    {
+      "chance": 0.1,
       "id": "create:experience_nugget"
     }
   ]

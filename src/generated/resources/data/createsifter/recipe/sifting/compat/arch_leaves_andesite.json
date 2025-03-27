@@ -1,0 +1,35 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "ars_nouveau"
+    }
+  ],
+  "type": "createsifter:sifting",
+  "input": {
+    "tag": "minecraft:leaves"
+  },
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:andesite_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "chance": 0.1,
+      "id": "ars_nouveau:blue_archwood_sapling"
+    },
+    {
+      "chance": 0.1,
+      "id": "ars_nouveau:red_archwood_sapling"
+    },
+    {
+      "chance": 0.1,
+      "id": "ars_nouveau:green_archwood_sapling"
+    },
+    {
+      "chance": 0.1,
+      "id": "ars_nouveau:purple_archwood_sapling"
+    }
+  ]
+}

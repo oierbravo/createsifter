@@ -1,0 +1,13 @@
+{
+  "values": [
+    "createsifter:andesite_pebble",
+    "createsifter:basalt_pebble",
+    "createsifter:blackstone_pebble",
+    "createsifter:calcite_pebble",
+    "createsifter:deepslate_pebble",
+    "createsifter:diorite_pebble",
+    "createsifter:granite_pebble",
+    "createsifter:stone_pebble",
+    "createsifter:tuff_pebble"
+  ]
+}

@@ -10,21 +10,29 @@
   "processing_time": 500,
   "results": [
     {
-      "chance": 0.25,
+      "chance": 0.15,
       "count": 2,
       "id": "minecraft:redstone"
     },
     {
-      "chance": 0.1,
-      "id": "minecraft:glowstone_dust"
-    },
-    {
-      "chance": 0.4,
-      "id": "minecraft:bone_meal"
-    },
-    {
       "chance": 0.05,
       "id": "minecraft:blaze_powder"
+    },
+    {
+      "chance": 0.15,
+      "id": "create:crushed_raw_gold"
+    },
+    {
+      "chance": 0.25,
+      "id": "minecraft:cactus"
+    },
+    {
+      "chance": 0.15,
+      "id": "minecraft:gunpowder"
+    },
+    {
+      "chance": 0.25,
+      "id": "minecraft:bone"
     },
     {
       "chance": 0.2,

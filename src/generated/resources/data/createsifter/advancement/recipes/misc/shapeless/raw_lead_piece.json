@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_sifter": {
+      "conditions": {
+        "items": [
+          {
+            "items": "createsifter:sifter"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "createsifter:shapeless/raw_lead_piece"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_sifter"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "createsifter:shapeless/raw_lead_piece"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "type": "createsifter:sifting",
+  "input": {
+    "item": "createsifter:crushed_netherrack"
+  },
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:advanced_brass_mesh"
+  },
+  "processing_time": 500,
+  "results": [
+    {
+      "chance": 0.8,
+      "id": "createsifter:basalt_pebble"
+    },
+    {
+      "chance": 0.6,
+      "id": "createsifter:blackstone_pebble"
+    },
+    {
+      "chance": 0.3,
+      "id": "minecraft:gold_nugget"
+    },
+    {
+      "chance": 0.1,
+      "id": "minecraft:quartz"
+    },
+    {
+      "chance": 0.2,
+      "id": "minecraft:blaze_powder"
+    },
+    {
+      "chance": 0.5,
+      "id": "minecraft:netherite_scrap"
+    },
+    {
+      "chance": 0.4,
+      "id": "create:experience_nugget"
+    }
+  ]
+}

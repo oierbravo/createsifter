@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "createsifter:basalt_pebble"
+    },
+    {
+      "item": "createsifter:basalt_pebble"
+    },
+    {
+      "item": "createsifter:basalt_pebble"
+    },
+    {
+      "item": "createsifter:basalt_pebble"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:basalt"
+  }
+}

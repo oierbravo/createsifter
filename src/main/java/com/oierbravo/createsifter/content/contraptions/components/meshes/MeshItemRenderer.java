@@ -67,9 +67,9 @@ public class MeshItemRenderer extends CustomRenderedItemModelRenderer {
 			int itemInUseCount = player.getUseItemRemainingTicks();
 			if (itemInUseCount > 0) {
 				int modifier = leftHand ? -1 : 1;
-				ms.mulPose(Axis.ZP.rotationDegrees(modifier * 1));
-				ms.mulPose(Axis.XP.rotationDegrees(modifier * 1));
-				ms.mulPose(Axis.YP.rotationDegrees(modifier * 1));
+				ms.mulPose(Axis.ZP.rotationDegrees(modifier));
+				ms.mulPose(Axis.XP.rotationDegrees(modifier));
+				ms.mulPose(Axis.YP.rotationDegrees(modifier));
 			}
 		}
 

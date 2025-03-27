@@ -1,0 +1,14 @@
+{
+  "type": "create:milling",
+  "ingredients": [
+    {
+      "item": "minecraft:end_stone"
+    }
+  ],
+  "processing_time": 500,
+  "results": [
+    {
+      "id": "createsifter:crushed_end_stone"
+    }
+  ]
+}

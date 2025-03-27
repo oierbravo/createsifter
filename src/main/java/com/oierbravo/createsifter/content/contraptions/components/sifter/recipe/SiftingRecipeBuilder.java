@@ -120,15 +120,8 @@ public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<Siftin
         params.waterlogged = waterlogged;
         return this;
     }
-    public SiftingRecipeBuilder handOnly(boolean handOnly){
-        params.handOnly = handOnly;
-        return this;
-    }
     public SiftingRecipeBuilder isWaterlogged(){
         return waterlogged(true);
-    }
-    public SiftingRecipeBuilder isHandOnly(){
-        return handOnly(true);
     }
     @Override
     public SiftingRecipe build() {

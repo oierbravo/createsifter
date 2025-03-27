@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "createsifter:deepslate_pebble"
+    },
+    {
+      "item": "createsifter:deepslate_pebble"
+    },
+    {
+      "item": "createsifter:deepslate_pebble"
+    },
+    {
+      "item": "createsifter:deepslate_pebble"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:cobbled_deepslate"
+  }
+}

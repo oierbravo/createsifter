@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "createsifter:raw_iron_piece"
+    },
+    {
+      "item": "createsifter:raw_iron_piece"
+    },
+    {
+      "item": "createsifter:raw_iron_piece"
+    },
+    {
+      "item": "createsifter:raw_iron_piece"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "create:crushed_raw_iron"
+  }
+}

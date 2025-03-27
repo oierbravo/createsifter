@@ -56,6 +56,16 @@ public class ModBlocks {
             .blockstate((c, p) -> BlockStateGen.simpleBlock(c, p, AssetLookup.forPowered(c, p)))
             .item()
             .transform(customItemModel())
+            .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
+                    .define('B', AllTags.commonItemTag("ingots/brass"))
+                    .define('P', AllTags.commonItemTag("plates/brass"))
+                    .define('R', Items.REDSTONE_BLOCK)
+                    .define('S', ModBlocks.SIFTER)
+                    .pattern("PPP")
+                    .pattern("BSB")
+                    .pattern("BRB")
+                    .unlockedBy("has_brass_casing", RegistrateRecipeProvider.has(AllTags.AllItemTags.CASING.tag))
+                    .save(p, ModConstants.asResource("crafting/" + c.getName())))
             .register();
 
 

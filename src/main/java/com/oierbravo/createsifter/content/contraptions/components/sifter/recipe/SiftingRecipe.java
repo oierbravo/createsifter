@@ -22,12 +22,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, SiftingRecipe.SiftingRecipeParams> {
-    private Ingredient input;
-    private NonNullList<ProcessingOutput> results;
-    private ItemStack mesh;
-    private int processingTime;
-    private boolean waterlogged;
-    private boolean handOnly;
+    private final Ingredient input;
+    private final NonNullList<ProcessingOutput> results;
+    private final ItemStack mesh;
+    private final int processingTime;
+    private final boolean waterlogged;
 
     public SiftingRecipe(SiftingRecipeParams params) {
         super(params);
@@ -36,9 +35,6 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
         mesh = params.mesh;
         processingTime = params.processingTime;
         waterlogged = params.waterlogged;
-        handOnly = params.handOnly;
-        //recipeRequirements.addAll(params.recipeRequirements);
-        //conditions.addAll(params.conditions);
     }
     public ResourceLocation getId(){
         return id;
@@ -107,8 +103,9 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
     public boolean isWaterlogged(){
         return waterlogged;
     }
-    public boolean isHandOnly(){return handOnly;}
-
+    public boolean isNotWaterlogged(){
+        return !isWaterlogged();
+    }
 
     @Override
     public RecipeSerializer<?> getSerializer() {
@@ -130,9 +127,6 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
     public static boolean canHandSift(Level world, ModRecipes.SiftingRecipeCacheKey key) {
         return !ModRecipes.findRecipesWithMatchingIngredients(world, key).isEmpty();
     }
-    /*public static boolean canHandSift(Level world, ItemStack stack, ItemStack mesh, boolean waterlogged) {
-        return getMatchingInHandRecipes(world, stack, mesh, waterlogged,0);
-    }*/
     public static List<ItemStack> applyHandSifting(Level world, Vec3 position, ModRecipes.SiftingRecipeCacheKey key) {
 
         Optional<SiftingRecipe> recipe = ModRecipes.findMergedRecipesWithMatchingIngredients(world, key);
@@ -141,6 +135,10 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
             return recipe.get().rollResults();
         }
         return Collections.singletonList(key.input());
+    }
+
+    public boolean notRequiresAdvancedMesh() {
+        return !requiresAdvancedMesh();
     }
 
     public static class Type implements RecipeType<SiftingRecipe> {
@@ -156,7 +154,6 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
         protected ItemStack mesh;
         protected int processingTime;
         protected boolean waterlogged;
-        protected boolean handOnly;
 
         protected SiftingRecipeParams(ResourceLocation id) {
             super(id);
@@ -165,7 +162,6 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
             mesh = ItemStack.EMPTY;
             processingTime = 500;
             waterlogged = false;
-            handOnly = false;
         }
 
     }

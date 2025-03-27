@@ -10,9 +10,7 @@ public class BrassSifterFilterSlotPositioning extends ValueBoxTransform.Sided {
 
     @Override
     protected boolean isSideActive(BlockState state, Direction direction) {
-        if(direction == Direction.UP || direction == Direction.DOWN)
-            return false;
-        return true;
+        return direction != Direction.UP && direction != Direction.DOWN;
     }
     @Override
     protected Vec3 getSouthLocation() {
