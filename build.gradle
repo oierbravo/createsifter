@@ -8,12 +8,6 @@ plugins {
 apply from: "./gradle/java.gradle"
 apply from: "gradle/property_loader.gradle"
 
-//apply plugin: 'net.minecraftforge.gradle'
-//apply plugin: 'org.parchmentmc.librarian.forgegradle'
-//apply plugin: 'com.matthewprenger.cursegradle'
-//apply plugin: 'org.spongepowered.mixin'
-//apply plugin: 'idea'
-
 group = "com.${mod_author}.${mod_id}"
 version = "${minecraft_version}-${mod_version}"
 archivesBaseName = mod_id
@@ -49,19 +43,9 @@ neoForge {
             systemProperty 'forge.logging.markers', ''
             systemProperty 'forge.logging.console.level', 'info'
             jvmArguments = ["-XX:+IgnoreUnrecognizedVMOptions", "-XX:+AllowEnhancedClassRedefinition"]
-            //jvmArgs("-XX:-OmitStackTraceInFastThrow") // uncomment when you get exceptions with null messages etc
-            //jvmArgs '-XX:+UnlockCommercialFeatures' // uncomment for profiling
 
             systemProperty 'mixin.debug.export', 'true'
             systemProperty 'mixin.debug.verbose', 'true'
-            //programArgument '-mixin.config=create.mixins.json'
-            //programArgument '-mixin.config=ponder.mixins.json'
-            //systemProperty("mixin.env.remapRefMap", "true")
-            //systemProperty("mixin.env.refMapRemappingFile", "${projectDir}/build/createSrgToMcp/output.srg")
-
-
-
-
         }
 
         client {

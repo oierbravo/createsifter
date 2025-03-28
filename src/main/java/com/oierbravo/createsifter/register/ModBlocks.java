@@ -37,7 +37,7 @@ public class ModBlocks {
                     .define('W', ItemTags.PLANKS)
                     .define('A', AllBlocks.ANDESITE_CASING)
                     .define('C', AllBlocks.COGWHEEL)
-                    .define('P', AllTags.commonItemTag("stone"))
+                    .define('P', AllTags.commonItemTag("stones"))
                     .define('S', Items.STICK)
                     .pattern("WAW")
                     .pattern("SCS")
