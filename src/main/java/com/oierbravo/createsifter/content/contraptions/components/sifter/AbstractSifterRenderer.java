@@ -52,8 +52,12 @@ public abstract class AbstractSifterRenderer<SBE extends AbstractSifterBlockEnti
         if(!meshItemStack.isEmpty() && MConfigs.client().sifter.renderSiftedBlock.get()) {
             ItemStack inProccessItemStack = be.getInputItemStack();
 
-            if (!inProccessItemStack.equals(ItemStack.EMPTY)) {
-                float progress = be.dynamicCycleBehaviour.getProcessingRemainingPercentFloat();
+            if (!inProccessItemStack.equals(ItemStack.EMPTY) && be.dynamicCycleBehaviour.isRunning()) {
+                float progress = 1 -(float) be.dynamicCycleBehaviour.getPrevRunningTicks() / be.dynamicCycleBehaviour.getCycleTime();
+                if(progress < 0)
+                    progress = 0;
+                if(progress > 1)
+                    progress = 1;
                 poseStack.pushPose();
                 TransformStack.of(poseStack)
                         .scale((float) .9, progress, (float) .9)

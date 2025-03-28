@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 import com.oierbravo.createsifter.content.contraptions.components.meshes.AbstractAdvancedMesh;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.IMesh;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.MeshUtils;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
 import com.oierbravo.createsifter.foundation.util.ModLang;
@@ -63,6 +64,8 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
     public RecipeRequirementsBehaviour<SiftingRecipe> recipeRequirementsBehaviour;
 
 
+    protected abstract boolean isValidMesh(ItemStack meshStack);
+
     @Override
     public void addBehaviours(List<BlockEntityBehaviour> behaviours) {
         dynamicCycleBehaviour = new DynamicCycleBehavior(this);
@@ -119,13 +122,6 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
     }
     public @Nullable IItemHandler getItemHandler() {
         return inputAndMeshCombined;
-    }
-    public static void registerCapabilities(RegisterCapabilitiesEvent event) {
-        event.registerBlockEntity(
-                Capabilities.ItemHandler.BLOCK,
-                ModBlockEntities.SIFTER.get(),
-                (be, context) -> be.getItemHandler()
-        );
     }
 
     @Override
@@ -250,6 +246,9 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
     }
 
     public void insertMesh(ItemStack meshStack, Player player) {
+        if(!isValidMesh(meshStack))
+            return;
+
         ItemStack meshToInsert = meshStack.copy();
         meshToInsert.setCount(1);
         if(getMeshItemStack().is(meshStack.getItem()))

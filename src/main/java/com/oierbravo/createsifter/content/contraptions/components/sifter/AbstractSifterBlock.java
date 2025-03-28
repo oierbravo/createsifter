@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
 import com.oierbravo.createsifter.content.contraptions.components.meshes.AbstractMesh;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.IMesh;
 import com.oierbravo.createsifter.register.ModBlockEntities;
 import com.oierbravo.createsifter.register.ModShapes;
 import com.simibubi.create.content.kinetics.base.KineticBlock;
@@ -56,10 +57,11 @@ public abstract class AbstractSifterBlock<BE extends BlockEntity> extends Kineti
         if (level.isClientSide)
             return ItemInteractionResult.SUCCESS;
 
-        if(stack.getItem() instanceof AbstractMesh){
+        if(stack.getItem() instanceof IMesh){
             withBlockEntityDo(level, pos,  sifter -> {
                 ((AbstractSifterBlockEntity) sifter).insertMesh(stack, player);
             });
+            return ItemInteractionResult.SUCCESS;
         }
 
         if (!stack.isEmpty())

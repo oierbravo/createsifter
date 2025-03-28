@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter;
 
 import com.oierbravo.createsifter.content.contraptions.components.sifter.andesite.SifterBlockEntity;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.brass.BrassSifterBlockEntity;
 import com.oierbravo.createsifter.foundation.data.ModDataGen;
 import com.oierbravo.createsifter.infrastucture.config.MConfigs;
 import com.oierbravo.createsifter.ponders.ModPonderPlugin;
@@ -88,6 +89,7 @@ public class CreateSifter {
     @net.neoforged.bus.api.SubscribeEvent
     public void registerCapabilities(net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent event) {
         SifterBlockEntity.registerCapabilities(event);
+        BrassSifterBlockEntity.registerCapabilities(event);
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {

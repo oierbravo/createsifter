@@ -12,7 +12,4 @@ public interface IMesh {
     static ItemStack asStack(Item item) {
         return new ItemStack(item);
     }
-    /*default boolean test(ItemStack itemStack){
-        return itemStack.getItem() instanceof IMesh;
-    }*/
 }
