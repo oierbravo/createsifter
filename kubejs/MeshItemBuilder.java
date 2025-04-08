@@ -8,6 +8,7 @@ import net.minecraft.world.item.Item;
 public class MeshItemBuilder extends ItemBuilder {
 
     private ResourceLocation resourceLocation;
+
     public MeshItemBuilder(ResourceLocation resourceLocation) {
         super(resourceLocation);
         this.resourceLocation = resourceLocation;

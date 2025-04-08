@@ -331,7 +331,7 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
     @Override
     public int getProcessingTime() {
         if(getRecipe().isEmpty())
-            return 0;
+            return 1;
         return getRecipe().get().getProcessingTime();
     }
 

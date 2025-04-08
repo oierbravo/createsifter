@@ -13,7 +13,7 @@
     "count": 1,
     "id": "createsifter:andesite_mesh"
   },
-  "processing_time": 500,
+  "processingTime": 500,
   "results": [
     {
       "chance": 0.1,

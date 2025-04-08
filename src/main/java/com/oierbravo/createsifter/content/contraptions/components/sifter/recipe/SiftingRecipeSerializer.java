@@ -62,7 +62,7 @@ public class SiftingRecipeSerializer implements RecipeSerializer<SiftingRecipe> 
                             Ingredient.CODEC.fieldOf("input").forGetter(SiftingRecipe::getInput),
                             ProcessingOutput.CODEC.listOf().fieldOf("results").forGetter(SiftingRecipe::getResults),
                             ItemStack.CODEC.fieldOf("mesh").forGetter(SiftingRecipe::getMesh),
-                            ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("processing_time", 0).forGetter(SiftingRecipe::getProcessingTime),
+                            ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("processingTime", 0).forGetter(SiftingRecipe::getProcessingTime),
                             Codec.BOOL.optionalFieldOf("waterlogged", false).forGetter(SiftingRecipe::isWaterlogged),
                             IRecipeRequirement.LIST_CODEC.optionalFieldOf("requirements", List.of()).forGetter(SiftingRecipe::getRecipeRequirements),
                             ICondition.LIST_CODEC.optionalFieldOf(ConditionalOps.DEFAULT_CONDITIONS_KEY, List.of()).forGetter(SiftingRecipe::getConditions)

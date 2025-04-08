@@ -156,8 +156,8 @@ dependencies {
     runtimeOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${curios_minecraft_version}")
 
     compileOnly("dev.architectury:architectury-neoforge:$architectury_version")
-    //api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
-    //interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs_version") // optional
+    api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
+    interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs_version") // optional
     //implementation("curse.maven:probejs-585406:5820894")
 
 
