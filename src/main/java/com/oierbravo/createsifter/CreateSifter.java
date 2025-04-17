@@ -2,11 +2,10 @@ package com.oierbravo.createsifter;
 
 import com.oierbravo.createsifter.content.contraptions.components.sifter.andesite.SifterBlockEntity;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.brass.BrassSifterBlockEntity;
-import com.oierbravo.createsifter.foundation.data.ModDataGen;
 import com.oierbravo.createsifter.infrastucture.config.MConfigs;
+import com.oierbravo.createsifter.infrastucture.data.ModDataGen;
 import com.oierbravo.createsifter.ponders.ModPonderPlugin;
 import com.oierbravo.createsifter.register.*;
-import com.oierbravo.mechanicals.register.MechanicalCreativeModeTabs;
 import com.oierbravo.mechanicals.utility.RegistrateLangBuilder;
 import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.simibubi.create.foundation.item.ItemDescription;
@@ -58,28 +57,29 @@ public class CreateSifter {
 
         ModRecipes.register(modEventBus);
 
-        //modEventBus.addListener(ModDataGen::gatherData);
         modEventBus.addListener(this::registerCapabilities);
         modEventBus.addListener(this::doClientStuff);
 
         generateLangEntries();
     }
     private void generateLangEntries(){
-        new RegistrateLangBuilder(MODID, registrate())
-            .addRaw("config.jade.plugin_createsifter.sifter_data", "Create Sifter")
-            .add("itemGroup.createsifter:main", "Create sifting")
+        new RegistrateLangBuilder<>(MODID, registrate())
+            .addJade("Create Sifter")
+            .addCreativeTab( "Create sifting")
             .add("recipe.sifting", "Sifting recipe")
             .add("recipe.sifting.minimumspeed", "%1$s RPM")
-            .add("recipe.sifting.waterlogged", "Waterlogged")
-            .add("recipe.sifting.brass_required", "Brass sifter")
             .add("tooltip.mesh", "Mesh: %s")
+            .addRecipeRequirementTitle("advanced_sifter", "Brass sifter")
+            .addRecipeRequirementValue("advanced_sifter", "")
+            .addRecipeRequirementTitle("waterlogged", "Waterlogged")
+            .addRecipeRequirementValue("waterlogged", "")
             //Ponder
-            .add("ponder.sifter.header", "Block sifting")
-            .add("ponder.sifter.text_1", "Sifter process items by sifting them")
-            .add("ponder.sifter.text_2", "They can be powered from the side using cogwheels")
-            .add("ponder.sifter.text_3", "Throw or Insert items at the top")
-            .add("ponder.sifter.text_4", "After some time, the result can be obtained via Right-click")
-            .add("ponder.sifter.text_5", "The outputs can also be extracted by automation");
+            .addPonderHeader( "sifter","Block sifting")
+            .addPonderText(1, "sifter","Sifter process items by sifting them")
+            .addPonderText(2, "sifter","They can be powered from the side using cogwheels")
+            .addPonderText(3, "sifter","Throw or Insert items at the top")
+            .addPonderText(4, "sifter","After some time, the result can be obtained via Right-click")
+            .addPonderText(5, "sifter","The outputs can also be extracted by automation");
 
     }
     public static CreateRegistrate registrate() {

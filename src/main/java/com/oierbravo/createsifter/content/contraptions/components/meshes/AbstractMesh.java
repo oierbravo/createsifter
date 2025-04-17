@@ -4,11 +4,7 @@ import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.
 import com.oierbravo.createsifter.infrastucture.config.MConfigs;
 import com.oierbravo.createsifter.register.ModItemComponents;
 import com.oierbravo.createsifter.register.ModRecipes;
-import com.simibubi.create.AllDataComponents;
 import com.simibubi.create.AllSoundEvents;
-import com.simibubi.create.content.equipment.sandPaper.SandPaperItemComponent;
-import com.simibubi.create.content.equipment.sandPaper.SandPaperItemRenderer;
-import com.simibubi.create.content.equipment.sandPaper.SandPaperPolishingRecipe;
 import com.simibubi.create.foundation.item.CustomUseEffectsItem;
 import com.simibubi.create.foundation.item.render.SimpleCustomRenderer;
 import com.simibubi.create.foundation.mixin.accessor.LivingEntityAccessor;
@@ -69,9 +65,9 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
 
         ModRecipes.SiftingRecipeCacheKey siftingRecipeCacheKey;// = new ModRecipes.SiftingRecipeCacheKey()
         if(MeshUtils.isMeshItem(itemInOtherHand)) {
-            siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(itemInOtherHand, itemstack, waterlogged);
+            siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(itemInOtherHand, itemstack, waterlogged, List.of());
         } else {
-            siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(itemstack, itemInOtherHand, waterlogged);
+            siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(itemstack, itemInOtherHand, waterlogged, List.of());
         }
 
         if (SiftingRecipe.canHandSift(worldIn, siftingRecipeCacheKey)) {
@@ -130,7 +126,7 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
             boolean waterlogged = blockUnderPlayer instanceof LiquidBlock;
 
             ItemStack toSift = stack.get(ModItemComponents.MESH_SIFTING).item();
-            ModRecipes.SiftingRecipeCacheKey siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(stack, toSift, waterlogged);
+            ModRecipes.SiftingRecipeCacheKey siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(stack, toSift, waterlogged, List.of());
 
             //noinspection DataFlowIssue - toPolish won't be null as we do call .has before calling .get
             List<ItemStack> sifted =

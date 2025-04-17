@@ -1,5 +1,6 @@
 package com.oierbravo.createsifter.register;
 
+import com.oierbravo.createsifter.ModConstants;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.MeshItemComponent;
 import com.simibubi.create.Create;
 import com.simibubi.create.content.equipment.sandPaper.SandPaperItemComponent;
@@ -12,7 +13,7 @@ import org.jetbrains.annotations.ApiStatus;
 import java.util.function.UnaryOperator;
 
 public class ModItemComponents {
-    private static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, Create.ID);
+    private static final DeferredRegister.DataComponents DATA_COMPONENTS = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, ModConstants.MODID);
 
     public static final DataComponentType<MeshItemComponent> MESH_SIFTING = register(
             "mesh_sifting",

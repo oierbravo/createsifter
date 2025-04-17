@@ -1,9 +1,7 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter.brass;
 
-import com.oierbravo.createsifter.content.contraptions.components.meshes.IAdvancedMesh;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.IMesh;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.AbstractSifterBlockEntity;
-import com.oierbravo.createsifter.content.contraptions.components.sifter.andesite.SifterBlockEntity;
 import com.oierbravo.createsifter.infrastucture.config.MConfigs;
 import com.oierbravo.createsifter.register.ModBlockEntities;
 import com.simibubi.create.foundation.blockEntity.behaviour.BlockEntityBehaviour;
@@ -70,4 +68,5 @@ public class BrassSifterBlockEntity extends AbstractSifterBlockEntity {
                 (be, context) -> be.getItemHandler()
         );
     }
+
 }

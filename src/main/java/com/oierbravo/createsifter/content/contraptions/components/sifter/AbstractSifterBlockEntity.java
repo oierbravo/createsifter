@@ -1,12 +1,10 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
+import com.oierbravo.createsifter.ModLang;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.AbstractAdvancedMesh;
-import com.oierbravo.createsifter.content.contraptions.components.meshes.IMesh;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.MeshUtils;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
-import com.oierbravo.createsifter.foundation.util.ModLang;
 import com.oierbravo.createsifter.infrastucture.config.MConfigs;
-import com.oierbravo.createsifter.register.ModBlockEntities;
 import com.oierbravo.createsifter.register.ModRecipes;
 import com.oierbravo.mechanicals.foundation.blockEntity.behaviour.DynamicCycleBehavior;
 import com.oierbravo.mechanicals.foundation.blockEntity.behaviour.RecipeRequirementsBehaviour;
@@ -33,8 +31,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
-import net.neoforged.neoforge.capabilities.Capabilities;
-import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemHandlerHelper;
 import net.neoforged.neoforge.items.ItemStackHandler;
@@ -177,10 +173,6 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
         return true;
     }
 
-    @Override
-    public void playCompletionSound() {
-
-    }
 
 
     private Optional<SiftingRecipe> getRecipe(){
@@ -197,7 +189,7 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
         return itemsProcessedPerCycle;
     }
 
-    public void spawnParticles() {
+    public void showParticles() {
         if (inputInventory.getStackInSlot(0).isEmpty() || meshInventory.getStackInSlot(0).isEmpty())
             return;
 
@@ -292,19 +284,12 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
         return this.inputInventory.getStackInSlot(0);
     }
 
+
     @Override
     @OnlyIn(Dist.CLIENT)
-    public void tickAudio() {
-        super.tickAudio();
-
-        if (getSpeed() == 0)
-            return;
-        if (dynamicCycleBehaviour.isRunning())
-            return;
-
+    public void playRunningSound() {
         float pitch = Mth.clamp((Math.abs(getSpeed()) / 256f) + .45f, .85f, 1f);
-        SoundScapes.play(SoundScapes.AmbienceGroup.MILLING, worldPosition, pitch);
-    }
+        SoundScapes.play(SoundScapes.AmbienceGroup.MILLING, worldPosition, pitch);    }
 
     @Override
     public boolean matchesIngredients(SiftingRecipe siftingRecipeRecipeHolder) {
@@ -313,14 +298,10 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
             return false;
         return ItemStack.isSameItem(meshInventory.getStackInSlot(0),siftingRecipeRecipeHolder.getMesh());
     }
-    /*public boolean matchesIngredients(RecipeHolder<SiftingRecipe> siftingRecipeRecipeHolder) {
-        return matchesIngredients(siftingRecipeRecipeHolder.value());
-    }*/
-
 
     @Override
-    public void onOperationCompleted() {
-
+    public boolean hasEnoughOutputSpace(SiftingRecipe siftingRecipe) {
+        return true;
     }
 
     @Override
@@ -335,11 +316,6 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
         return getRecipe().get().getProcessingTime();
     }
 
-
-    @Override
-    public boolean hasEnoughOutputSpace() {
-        return true;
-    }
 
     private class SifterInventoryHandler extends CombinedInvWrapper {
 

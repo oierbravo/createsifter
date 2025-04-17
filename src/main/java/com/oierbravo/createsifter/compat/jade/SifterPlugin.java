@@ -11,7 +11,7 @@ import snownee.jade.api.WailaPlugin;
 
 @WailaPlugin
 public class SifterPlugin implements IWailaPlugin {
-    public static final ResourceLocation SIFTER_DATA = ModConstants.asResource("sifter_data");
+    public static final ResourceLocation SIFTER_DATA = ModConstants.asResource("data");
 
     @Override
     public void register(IWailaCommonRegistration registration) {

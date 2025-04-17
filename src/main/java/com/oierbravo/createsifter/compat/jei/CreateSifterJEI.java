@@ -95,9 +95,10 @@ public class CreateSifterJEI implements IModPlugin {
         if(recipes.isEmpty())
             return null;
 
-        SiftingRecipeBuilder builder = new SiftingRecipeBuilder(ModConstants.asResource(id));
+        SiftingRecipeBuilder builder = new SiftingRecipeBuilder();
             recipes.forEach(siftingRecipe ->
                 builder.output(siftingRecipe.getResults())
+                        .withId(ModConstants.asResource(id))
                        .waterlogged(siftingRecipe.isWaterlogged())
                        .requiredMesh(siftingRecipe.getMesh())
                        .require(siftingRecipe.getInput())

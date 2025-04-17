@@ -1,6 +1,8 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter.recipe;
 
 import com.oierbravo.createsifter.content.contraptions.components.meshes.AbstractAdvancedMesh;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.requirements.AdvancedSifterRecipeRequirement;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.requirements.WaterloggedRecipeRequirement;
 import com.oierbravo.createsifter.register.ModRecipes;
 import com.oierbravo.mechanicals.foundation.recipe.AbstractMechanicalRecipe;
 import com.oierbravo.mechanicals.foundation.recipe.AbstractMechanicalRecipeParams;
@@ -10,7 +12,10 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeInput;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
@@ -20,6 +25,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, SiftingRecipe.SiftingRecipeParams> {
     private final Ingredient input;
@@ -27,6 +33,7 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
     private final ItemStack mesh;
     private final int processingTime;
     private final boolean waterlogged;
+    private final boolean advancedSifter;
 
     public SiftingRecipe(SiftingRecipeParams params) {
         super(params);
@@ -35,6 +42,7 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
         mesh = params.mesh;
         processingTime = params.processingTime;
         waterlogged = params.waterlogged;
+        advancedSifter = params.advancedSifter;
     }
     public ResourceLocation getId(){
         return id;
@@ -117,7 +125,7 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
         return Type.INSTANCE;
     }
 
-    public boolean requiresAdvancedMesh() {
+    public boolean usesAdvancedMesh() {
         return getMesh().getItem() instanceof AbstractAdvancedMesh;
     }
     public SiftingRecipe addOutput(NonNullList<ProcessingOutput> output){
@@ -138,7 +146,23 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
     }
 
     public boolean notRequiresAdvancedMesh() {
-        return !requiresAdvancedMesh();
+        return !usesAdvancedMesh();
+    }
+
+    @Override
+    public List<IRecipeRequirement> getJeiRecipeRequirements() {
+        ArrayList<IRecipeRequirement> extraRequirements = new ArrayList<>();
+        if(usesAdvancedMesh())
+            extraRequirements.add(new AdvancedSifterRecipeRequirement(true));
+        if(isWaterlogged())
+            extraRequirements.add(new WaterloggedRecipeRequirement(true));
+        return Stream.concat(extraRequirements.stream(), super.getJeiRecipeRequirements().stream()).toList();
+    }
+
+    public Boolean requiresAdvancedSifter() {
+        if(advancedSifter)
+            return true;
+        return usesAdvancedMesh();
     }
 
     public static class Type implements RecipeType<SiftingRecipe> {
@@ -154,14 +178,16 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
         protected ItemStack mesh;
         protected int processingTime;
         protected boolean waterlogged;
+        protected boolean advancedSifter;
 
-        protected SiftingRecipeParams(ResourceLocation id) {
-            super(id);
+        protected SiftingRecipeParams() {
+            super();
             input = Ingredient.EMPTY;
             results = NonNullList.create();
             mesh = ItemStack.EMPTY;
             processingTime = 500;
             waterlogged = false;
+            advancedSifter = false;
         }
 
     }

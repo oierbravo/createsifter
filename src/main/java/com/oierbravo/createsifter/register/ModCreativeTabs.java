@@ -1,26 +1,14 @@
 package com.oierbravo.createsifter.register;
 
-import com.oierbravo.createsifter.CreateSifter;
-import com.oierbravo.createsifter.foundation.util.ModLang;
-import com.oierbravo.mechanicals.Mechanicals;
+import com.oierbravo.createsifter.ModLang;
+import com.oierbravo.mechanicals.utility.MechanicalLangIdGenerator;
 import com.simibubi.create.AllCreativeModeTabs;
-import com.simibubi.create.AllItems;
-import com.simibubi.create.Create;
-import com.simibubi.create.foundation.item.TagDependentIngredientItem;
-import com.tterrag.registrate.util.entry.ItemEntry;
-import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.List;
-
-import static com.oierbravo.createsifter.CreateSifter.modEventBus;
 import static com.oierbravo.createsifter.ModConstants.MODID;
 
 public class ModCreativeTabs {
@@ -31,7 +19,7 @@ public class ModCreativeTabs {
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = TAB_REGISTER.register("main",
             () -> CreativeModeTab.builder()
-                    .title(ModLang.translate("itemGroup.createsifter:main").component())
+                    .title(ModLang.translate(MechanicalLangIdGenerator.creativeTabId("main")).component())
                     .withTabsBefore(AllCreativeModeTabs.PALETTES_CREATIVE_TAB.getId())
                     /*.displayItems((itemDisplayParameters, output) -> {
                         List<ItemEntry<TagDependentIngredientItem>> tagDependentExclusions = List.of(

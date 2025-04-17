@@ -78,6 +78,11 @@ neoForge {
 }
 
 sourceSets.main {
+    java {
+        if (!kubejs_enabled.toBoolean()) {
+            exclude 'com/oierbravo/' + mod_id + '/compat/kubejs/**'
+        }
+    }
     resources {
         srcDir 'src/generated/resources'
         exclude '.cache/'
@@ -155,11 +160,11 @@ dependencies {
     compileOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${curios_minecraft_version}:api")
     runtimeOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${curios_minecraft_version}")
 
-    compileOnly("dev.architectury:architectury-neoforge:$architectury_version")
-    api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
-    interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs_version") // optional
-    //implementation("curse.maven:probejs-585406:5820894")
-
+    if (kubejs_enabled.toBoolean()) {
+        compileOnly("dev.architectury:architectury-neoforge:$architectury_version")
+        api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
+        interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs_version") // optional
+    }
 
     implementation("curse.maven:jade-324717:${jade_id}")
 

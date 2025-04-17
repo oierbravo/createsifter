@@ -1,4 +1,4 @@
-package com.oierbravo.createsifter.foundation.data.recipe;
+package com.oierbravo.createsifter.infrastucture.data.recipe;
 
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeBuilder;
@@ -6,18 +6,12 @@ import com.oierbravo.createsifter.register.ModBlocks;
 import com.oierbravo.createsifter.register.ModItems;
 import com.oierbravo.mechanicals.foundation.data.AbstractMechanicalRecipeGenerator;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.foundation.data.recipe.Mods;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.neoforge.common.conditions.ModLoadedCondition;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
@@ -43,12 +37,12 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
     protected void buildRecipes(RecipeOutput recipeOutput) {
 
         createAndesite("gravel").require(Blocks.GRAVEL)
-                .output(.05f, AllItems.COPPER_NUGGET::get,1)
-                .output(.01f, AllItems.ZINC_NUGGET::get,1)
-                .output(.01f, Items.IRON_NUGGET,1)
-                .output(.05f, Items.GOLD_NUGGET,1)
+                .output(.3f, AllItems.COPPER_NUGGET::get,1)
+                .output(.4f, AllItems.ZINC_NUGGET::get,1)
+                .output(.4f, Items.IRON_NUGGET,1)
+                .output(.2f, Items.GOLD_NUGGET,1)
                 .output(.10f, Items.COAL,1)
-                .output(.1f, Items.FLINT, 1)
+                .output(.5f, Items.FLINT, 1)
                 .save(recipeOutput);
 
 
@@ -58,7 +52,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .output(.05f, AllItems.CRUSHED_GOLD::get,1)
                 .output(.10f, AllItems.CRUSHED_IRON::get,1)
                 .output(.10f, Items.LAPIS_LAZULI,1)
-                .output(.15f, Items.COAL,1)
+                .output(.35f, Items.COAL,1)
                 .output(.1f, Items.FLINT, 1)
                 .output(.10f, Items.AMETHYST_SHARD,1)
                 .output(.10f, AllItems.EXP_NUGGET.get(), 1)
@@ -88,7 +82,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
         createBrass("sand").require(Blocks.SAND)
                 .output(.15f, Items.REDSTONE,2)
                 .output(.05f, Items.BLAZE_POWDER,1)
-                .output(.15f, AllItems.CRUSHED_GOLD::get,1)
+                .output(.25f, AllItems.CRUSHED_GOLD::get,1)
                 .output(.25f, Items.CACTUS,1)
                 .output(.15f, Items.GUNPOWDER,1)
                 .output(.25f, Items.BONE,1)
@@ -172,8 +166,8 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .save(recipeOutput);
 
         createString("dirt",true).require(Blocks.DIRT)
-                .output(.20f, Items.KELP)
-                .output(.30f, Items.SEAGRASS)
+                .output(.30f, Items.KELP)
+                .output(.20f, Items.SEAGRASS)
                 .output(.05f, Items.TUBE_CORAL)
                 .output(.05f, Items.BRAIN_CORAL)
                 .output(.05f, Items.BUBBLE_CORAL)
@@ -182,8 +176,8 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .save(recipeOutput);
 
         createBrass("dirt",true).require(Blocks.DIRT)
-                .output(.30f, Items.KELP)
-                .output(.40f, Items.SEAGRASS)
+                .output(.40f, Items.KELP)
+                .output(.30f, Items.SEAGRASS)
                 .output(.1f, Items.TUBE_CORAL)
                 .output(.1f, Items.BRAIN_CORAL)
                 .output(.1f, Items.BUBBLE_CORAL)

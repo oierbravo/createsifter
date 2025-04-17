@@ -1,10 +1,10 @@
-package com.oierbravo.createsifter.foundation.data;
+package com.oierbravo.createsifter.infrastucture.data;
 
 import com.oierbravo.createsifter.CreateSifter;
-import com.oierbravo.createsifter.foundation.data.recipe.CraftingRecipeGen;
-import com.oierbravo.createsifter.foundation.data.recipe.MillingRecipeGen;
-import com.oierbravo.createsifter.foundation.data.recipe.SiftingCompatRecipeGen;
-import com.oierbravo.createsifter.foundation.data.recipe.SiftingRecipeGen;
+import com.oierbravo.createsifter.infrastucture.data.recipe.CraftingRecipeGen;
+import com.oierbravo.createsifter.infrastucture.data.recipe.MillingAndCrushingRecipeGen;
+import com.oierbravo.createsifter.infrastucture.data.recipe.SiftingCompatRecipeGen;
+import com.oierbravo.createsifter.infrastucture.data.recipe.SiftingRecipeGen;
 import com.tterrag.registrate.providers.RegistrateDataProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -26,7 +26,7 @@ public class ModDataGen {
         if (event.includeServer()) {
             generator.addProvider(true, new SiftingRecipeGen(output, lookupProvider));
             generator.addProvider(true, new SiftingCompatRecipeGen(output, lookupProvider));
-            generator.addProvider(true, new MillingRecipeGen(output, lookupProvider));
+            generator.addProvider(true, new MillingAndCrushingRecipeGen(output, lookupProvider));
             generator.addProvider(true, new CraftingRecipeGen(output, lookupProvider));
         }
         event.getGenerator().addProvider(true, CreateSifter.registrate().setDataProvider(new RegistrateDataProvider(CreateSifter.registrate(), MODID, event)));

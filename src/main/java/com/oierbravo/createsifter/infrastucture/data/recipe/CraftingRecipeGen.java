@@ -1,8 +1,5 @@
-package com.oierbravo.createsifter.foundation.data.recipe;
+package com.oierbravo.createsifter.infrastucture.data.recipe;
 
-import com.oierbravo.createsifter.register.ModBlocks;
-import com.oierbravo.createsifter.register.ModItems;
-import com.simibubi.create.AllItems;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -10,8 +7,6 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import java.util.concurrent.CompletableFuture;

@@ -5,8 +5,8 @@
   "block.createsifter.crushed_netherrack": "ʞɔɐɹɹǝɥʇǝu pǝɥsnɹƆ",
   "block.createsifter.dust": "ʞɔoןq ʇsnᗡ",
   "block.createsifter.sifter": "ɹǝʇɟıS",
-  "config.jade.plugin_createsifter.sifter_data": "ɹǝʇɟıS ǝʇɐǝɹƆ",
-  "createsifter.itemGroup.createsifter:main": "buıʇɟıs ǝʇɐǝɹƆ",
+  "config.jade.plugin_createsifter.data": "ɹǝʇɟıS ǝʇɐǝɹƆ",
+  "createsifter.itemGroup:main": "buıʇɟıs ǝʇɐǝɹƆ",
   "createsifter.ponder.sifter.header": "buıʇɟıs ʞɔoןᗺ",
   "createsifter.ponder.sifter.text_1": "ɯǝɥʇ buıʇɟıs ʎq sɯǝʇı ssǝɔoɹd ɹǝʇɟıS",
   "createsifter.ponder.sifter.text_2": "sןǝǝɥʍboɔ buısn ǝpıs ǝɥʇ ɯoɹɟ pǝɹǝʍod ǝq uɐɔ ʎǝɥ⟘",
@@ -14,9 +14,7 @@
   "createsifter.ponder.sifter.text_4": "ʞɔıןɔ-ʇɥbıᴚ ɐıʌ pǝuıɐʇqo ǝq uɐɔ ʇןnsǝɹ ǝɥʇ 'ǝɯıʇ ǝɯos ɹǝʇɟⱯ",
   "createsifter.ponder.sifter.text_5": "uoıʇɐɯoʇnɐ ʎq pǝʇɔɐɹʇxǝ ǝq osןɐ uɐɔ sʇndʇno ǝɥ⟘",
   "createsifter.recipe.sifting": "ǝdıɔǝɹ buıʇɟıS",
-  "createsifter.recipe.sifting.brass_required": "ɹǝʇɟıs ssɐɹᗺ",
   "createsifter.recipe.sifting.minimumspeed": "WԀᴚ %1$s",
-  "createsifter.recipe.sifting.waterlogged": "pǝbboןɹǝʇɐM",
   "createsifter.tooltip.mesh": "%s :ɥsǝW",
   "item.createsifter.advanced_brass_mesh": "ɥsǝW ssɐɹᗺ pǝɔuɐʌpⱯ",
   "item.createsifter.advanced_custom_mesh": "ɥsǝW ɯoʇsnƆ pǝɔuɐʌpⱯ",
@@ -47,5 +45,9 @@
   "item.createsifter.string_mesh": "ɥsǝW buıɹʇS",
   "item.createsifter.sturdy_mesh": "ɥsǝW ʎpɹnʇS",
   "item.createsifter.tuff_pebble": "ǝןqqǝԀ ɟɟn⟘",
-  "item.createsifter.zinc_mesh": "ɥsǝW ɔuıZ"
+  "item.createsifter.zinc_mesh": "ɥsǝW ɔuıZ",
+  "mechanicals.ui.recipe_requirement.advanced_sifter.tooltip.title": "ɹǝʇɟıs ssɐɹᗺ",
+  "mechanicals.ui.recipe_requirement.advanced_sifter.tooltip.value": "",
+  "mechanicals.ui.recipe_requirement.waterlogged.tooltip.title": "pǝbboןɹǝʇɐM",
+  "mechanicals.ui.recipe_requirement.waterlogged.tooltip.value": ""
 }

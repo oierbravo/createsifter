@@ -1,4 +1,4 @@
-package com.oierbravo.createsifter.foundation.data.recipe;
+package com.oierbravo.createsifter.infrastucture.data.recipe;
 
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeBuilder;

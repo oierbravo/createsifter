@@ -1,23 +1,21 @@
 package com.oierbravo.createsifter.register;
 
 import com.oierbravo.createsifter.ModConstants;
-import com.oierbravo.createsifter.content.contraptions.components.meshes.IMesh;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.AbstractSifterBlockEntity;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeBuilder;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeSerializer;
+import com.oierbravo.mechanicals.foundation.recipe.IRecipeRequirement;
 import com.simibubi.create.foundation.recipe.RecipeFinder;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
@@ -34,13 +32,12 @@ public class ModRecipes {
 
     public static final Supplier<RecipeType<SiftingRecipe>> SIFTING_TYPE =
             RECIPE_TYPES.register(
-                    "extruding_type",
-                    // We need the qualifying generic here due to generics being generics.
-                    () -> RecipeType.simple(ModConstants.asResource("extruding_type"))
+                    "sifting_type",
+                    () -> RecipeType.simple(ModConstants.asResource("sifting_type"))
 
         );
 
-    public static final Supplier<SiftingRecipeSerializer> EXTRUDING_SERIALIZER =
+    public static final Supplier<SiftingRecipeSerializer> SIFTING_SERIALIZER =
             SERIALIZERS.register(SiftingRecipe.Type.ID, () -> SiftingRecipeSerializer.INSTANCE);
 
     public static void register(IEventBus eventBus) {
@@ -80,12 +77,12 @@ public class ModRecipes {
     }
 
     public static List<SiftingRecipe> findRecipesWithMatchingIngredients(Level level, ItemStack mesh, ItemStack input, boolean waterlogged){
-        SiftingRecipeCacheKey key = new SiftingRecipeCacheKey(mesh, input, waterlogged);
+        SiftingRecipeCacheKey key = new SiftingRecipeCacheKey(mesh, input, waterlogged, List.of());
         return findRecipesWithMatchingIngredients(level, key);
     }
-    public record SiftingRecipeCacheKey(ItemStack mesh, ItemStack input, boolean waterlogged) implements ISiftingRecipeCacheKey{
+    public record SiftingRecipeCacheKey(ItemStack mesh, ItemStack input, boolean waterlogged, List<IRecipeRequirement> recipeRequirements) implements ISiftingRecipeCacheKey{
         public SiftingRecipeCacheKey(AbstractSifterBlockEntity sifter){
-            this(sifter.getMeshItemStack(), sifter.getInputItemStack(), sifter.isWaterlogged());
+            this(sifter.getMeshItemStack(), sifter.getInputItemStack(), sifter.isWaterlogged(), List.of());
         }
 
         @Override
@@ -110,10 +107,15 @@ public class ModRecipes {
         public boolean getWaterlogged() {
             return waterlogged;
         }
+
+        @Override
+        public List<IRecipeRequirement> getRecipeRequirements() {
+            return recipeRequirements;
+        }
     }
-    public record SiftingRecipeJEICacheKey(ItemStack mesh, Ingredient input, boolean waterlogged) implements ISiftingRecipeCacheKey{
+    public record SiftingRecipeJEICacheKey(ItemStack mesh, Ingredient input, boolean waterlogged, List<IRecipeRequirement> recipeRequirements) implements ISiftingRecipeCacheKey{
         public SiftingRecipeJEICacheKey(SiftingRecipe recipe){
-            this(recipe.getMesh(), recipe.getInput(), recipe.isWaterlogged());
+            this(recipe.getMesh(), recipe.getInput(), recipe.isWaterlogged(), recipe.getRecipeRequirements());
         }
 
 
@@ -140,12 +142,18 @@ public class ModRecipes {
         public boolean getWaterlogged() {
             return waterlogged;
         }
+
+        @Override
+        public List<IRecipeRequirement> getRecipeRequirements() {
+            return recipeRequirements;
+        }
     }
     public interface ISiftingRecipeCacheKey{
         String toString();
         Ingredient getInput();
         ItemStack getMesh();
         boolean getWaterlogged();
+        List<IRecipeRequirement> getRecipeRequirements();
     }
 
     public static List<RecipeHolder<SiftingRecipe>> getAllHolders() {
@@ -157,21 +165,22 @@ public class ModRecipes {
         if(recipes.isEmpty())
             return null;
         if(byHand){
-            recipes = recipes.stream().filter(siftingRecipe -> !siftingRecipe.requiresAdvancedMesh()).toList();
+            recipes = recipes.stream().filter(siftingRecipe -> !siftingRecipe.usesAdvancedMesh()).toList();
 
         }
-        SiftingRecipeBuilder builder = new SiftingRecipeBuilder(generateMergedResourceLocation(key));
+        SiftingRecipeBuilder builder = new SiftingRecipeBuilder();
         recipes.forEach(siftingRecipe ->
                 builder.output(siftingRecipe.getResults())
+                        .withId(generateMergedResourceLocation(key))
                         .waterlogged(key.getWaterlogged())
                         .requiredMesh(key.getMesh())
                         .require(key.getInput())
+                        .withRequirements(key.getRecipeRequirements())
         );
         return builder.build();
     }
     public static ResourceLocation generateMergedResourceLocation(ISiftingRecipeCacheKey key){
         return ModConstants.asResource(key.toString());
     }
-    //public static HashMap<SiftingRecipeCacheKey,List<SiftingRecipe>> getRecipesMerged(){
 
 }

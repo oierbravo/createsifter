@@ -3,7 +3,6 @@ package com.oierbravo.createsifter.content.contraptions.components.sifter.recipe
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import com.oierbravo.createsifter.ModConstants;
 import com.oierbravo.mechanicals.foundation.recipe.IRecipeRequirement;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import net.createmod.catnip.codecs.stream.CatnipStreamCodecBuilders;
@@ -11,7 +10,6 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -28,30 +26,31 @@ public class SiftingRecipeSerializer implements RecipeSerializer<SiftingRecipe> 
     public final StreamCodec<RegistryFriendlyByteBuf, SiftingRecipe> STREAM_CODEC = StreamCodec.of(this::toNetwork, this::fromNetwork);
 
     private SiftingRecipe fromNetwork(RegistryFriendlyByteBuf buffer) {
-        ResourceLocation recipeId = ResourceLocation.STREAM_CODEC.decode(buffer);
         Ingredient input = Ingredient.CONTENTS_STREAM_CODEC.decode(buffer);
         ItemStack mesh = ItemStack.STREAM_CODEC.decode(buffer);
         NonNullList<ProcessingOutput> result = CatnipStreamCodecBuilders.nonNullList(ProcessingOutput.STREAM_CODEC).decode(buffer);
         int processingTime = ByteBufCodecs.VAR_INT.decode(buffer);
+        boolean advancedSifter = ByteBufCodecs.BOOL.decode(buffer);
         boolean waterlogged = ByteBufCodecs.BOOL.decode(buffer);
         List<IRecipeRequirement> recipeRequirements = IRecipeRequirement.LIST_STREAM_CODEC.decode(buffer);
 
-        return new SiftingRecipeBuilder(recipeId)
+        return new SiftingRecipeBuilder()
                 .require(input)
                 .requiredMesh(mesh)
                 .output(result)
                 .processingTime(processingTime)
+                .requiresAdvancedSifter(advancedSifter)
                 .waterlogged(waterlogged)
                 .withRequirements(recipeRequirements)
                 .build();
     }
 
     private void toNetwork(RegistryFriendlyByteBuf buffer, SiftingRecipe siftingRecipe) {
-        ResourceLocation.STREAM_CODEC.encode(buffer, siftingRecipe.getId());
         Ingredient.CONTENTS_STREAM_CODEC.encode(buffer, siftingRecipe.getInput());
         ItemStack.STREAM_CODEC.encode(buffer, siftingRecipe.getMesh());
         CatnipStreamCodecBuilders.nonNullList(ProcessingOutput.STREAM_CODEC).encode(buffer, siftingRecipe.getResults());
         ByteBufCodecs.VAR_INT.encode(buffer, siftingRecipe.getProcessingTime());
+        ByteBufCodecs.BOOL.encode(buffer, siftingRecipe.requiresAdvancedSifter());
         ByteBufCodecs.BOOL.encode(buffer, siftingRecipe.isWaterlogged());
         IRecipeRequirement.LIST_STREAM_CODEC.encode(buffer, siftingRecipe.getRecipeRequirements());
     }
@@ -63,28 +62,21 @@ public class SiftingRecipeSerializer implements RecipeSerializer<SiftingRecipe> 
                             ProcessingOutput.CODEC.listOf().fieldOf("results").forGetter(SiftingRecipe::getResults),
                             ItemStack.CODEC.fieldOf("mesh").forGetter(SiftingRecipe::getMesh),
                             ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("processingTime", 0).forGetter(SiftingRecipe::getProcessingTime),
+                            Codec.BOOL.optionalFieldOf("advancedSifter", false).forGetter(SiftingRecipe::isWaterlogged),
                             Codec.BOOL.optionalFieldOf("waterlogged", false).forGetter(SiftingRecipe::isWaterlogged),
                             IRecipeRequirement.LIST_CODEC.optionalFieldOf("requirements", List.of()).forGetter(SiftingRecipe::getRecipeRequirements),
                             ICondition.LIST_CODEC.optionalFieldOf(ConditionalOps.DEFAULT_CONDITIONS_KEY, List.of()).forGetter(SiftingRecipe::getConditions)
-                    ).apply(instance, (input, processingOutput, mesh, processingTime, waterlogged, requirements, iConditions) -> {
-                        SiftingRecipeBuilder builder = new SiftingRecipeBuilder(ModConstants.asResource(SiftingRecipe.Type.ID));
-
-                        builder
-                                .require(input)
-                                .output(processingOutput)
-                                .requiredMesh(mesh)
-                                .processingTime(processingTime)
-                                .waterlogged(waterlogged)
-                                .withRequirements(requirements)
-                                .withConditions(iConditions)
-                        ;
-                        return builder.build();
-                    })
+                    ).apply(instance, (input, processingOutput, mesh, processingTime,advancedSifter, waterlogged, requirements, iConditions) -> new SiftingRecipeBuilder()
+                            .require(input)
+                            .output(processingOutput)
+                            .requiredMesh(mesh)
+                            .processingTime(processingTime)
+                            .requiresAdvancedSifter(advancedSifter)
+                            .waterlogged(waterlogged)
+                            .withRequirements(requirements)
+                            .withConditions(iConditions)
+                            .build())
     );
-
-    public static final ResourceLocation ID =
-            ResourceLocation.fromNamespaceAndPath(ModConstants.MODID, SiftingRecipe.Type.ID);
-
 
 
     @Override

@@ -1,4 +1,4 @@
-package com.oierbravo.createsifter.foundation.util;
+package com.oierbravo.createsifter;
 
 import net.createmod.catnip.lang.Lang;
 import net.createmod.catnip.lang.LangBuilder;

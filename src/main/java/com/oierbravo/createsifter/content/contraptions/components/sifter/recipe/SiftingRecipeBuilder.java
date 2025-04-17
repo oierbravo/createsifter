@@ -2,7 +2,6 @@ package com.oierbravo.createsifter.content.contraptions.components.sifter.recipe
 
 import com.oierbravo.mechanicals.foundation.recipe.AbstractMechanicalRecipeBuilder;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
-import com.simibubi.create.content.processing.recipe.ProcessingRecipeBuilder;
 import com.simibubi.create.foundation.data.SimpleDatagenIngredient;
 import com.simibubi.create.foundation.data.recipe.Mods;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -18,17 +17,12 @@ import java.util.List;
 
 public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<SiftingRecipe, SiftingRecipe.SiftingRecipeParams, SiftingRecipeBuilder> {
 
-    public SiftingRecipeBuilder(){
-        super();
-    }
-
-    public SiftingRecipeBuilder create(ResourceLocation id) {
-        params = new SiftingRecipe.SiftingRecipeParams(id);
+    public SiftingRecipeBuilder create() {
+        params = new SiftingRecipe.SiftingRecipeParams();
         return this;
     }
-    public SiftingRecipeBuilder(ResourceLocation id){
-        this();
-        params = new SiftingRecipe.SiftingRecipeParams(id);
+    public SiftingRecipeBuilder(){
+        params = new SiftingRecipe.SiftingRecipeParams();
     }
 
     public SiftingRecipeBuilder require(Ingredient ingredient){
@@ -122,6 +116,14 @@ public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<Siftin
     }
     public SiftingRecipeBuilder isWaterlogged(){
         return waterlogged(true);
+    }
+
+    public SiftingRecipeBuilder requiresAdvancedSifter(){
+        return requiresAdvancedSifter(true);
+    }
+    public SiftingRecipeBuilder requiresAdvancedSifter(boolean advancedSifter){
+        params.advancedSifter = true;
+        return this;
     }
     @Override
     public SiftingRecipe build() {

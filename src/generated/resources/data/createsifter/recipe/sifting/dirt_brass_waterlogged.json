@@ -1,5 +1,6 @@
 {
   "type": "createsifter:sifting",
+  "advancedSifter": true,
   "input": {
     "item": "minecraft:dirt"
   },
@@ -10,11 +11,11 @@
   "processingTime": 500,
   "results": [
     {
-      "chance": 0.3,
+      "chance": 0.4,
       "id": "minecraft:kelp"
     },
     {
-      "chance": 0.4,
+      "chance": 0.3,
       "id": "minecraft:seagrass"
     },
     {

@@ -1,14 +1,14 @@
 package com.oierbravo.createsifter.compat.jei.category;
 
 import com.oierbravo.createsifter.ModConstants;
+import com.oierbravo.createsifter.ModLang;
 import com.oierbravo.createsifter.compat.jei.category.animations.AbstractAnimatedSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedBrassSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedSifter;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
-
-import com.oierbravo.createsifter.foundation.util.ModLang;
 import com.oierbravo.createsifter.register.ModBlocks;
 import com.oierbravo.createsifter.register.ModRecipes;
+import com.oierbravo.mechanicals.compat.jei.RecipeRequirementRenderer;
 import com.oierbravo.mechanicals.utility.LibLang;
 import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.ItemIcon;
@@ -89,8 +89,10 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 20, 2); // Input arrow
        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 50, 32); //Output arrow
 
-       drawSifter(graphics, recipe.requiresAdvancedMesh(), recipe.isWaterlogged());
-       drawRequirements(recipe, graphics, 67, 4);
+       drawSifter(graphics, recipe.usesAdvancedMesh(), recipe.isWaterlogged());
+       //drawRequirements(recipe, graphics, 67, 4);
+       RecipeRequirementRenderer.drawRequirements(recipe,graphics, 67,4);
+
     }
     protected void drawRequirements(SiftingRecipe recipe, GuiGraphics guiGraphics, int x, int y){
         Minecraft minecraft = Minecraft.getInstance();
@@ -104,12 +106,12 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
 
 
         ArrayList<Pair<Component,Component>> requirementComponents = new ArrayList<>();
-        if(recipe.requiresAdvancedMesh()){
+        if(recipe.usesAdvancedMesh()){
             requirementComponents.add(Pair.of(ModLang.translate("recipe.sifting.brass_required").component(),Component.empty()));
         }
 
         if(recipe.isWaterlogged()){
-            requirementComponents.add(Pair.of(ModLang.translate("recipe.sifting.waterlogged").component(),Component.empty()));
+            requirementComponents.add(Pair.of(ModLang.translate("recipe.sifting.advancedSifter").component(),Component.empty()));
         }
         requirementComponents.addAll(recipe.getRequirementsTooltips());
 

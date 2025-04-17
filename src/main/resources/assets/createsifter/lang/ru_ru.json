@@ -5,8 +5,7 @@
   "block.createsifter.crushed_netherrack": "Дроблёный незерак",
   "block.createsifter.dust": "Блок пыли",
   "block.createsifter.sifter": "Просеиватель",
-  "config.jade.plugin_createsifter.sifter_data": "Create: Просеиватель",
-  "createsifter.itemGroup.createsifter:main": "Create: Просеивание",
+  "config.jade.plugin_createsifter.data": "Create: Просеиватель",
   "createsifter.ponder.sifter.header": "Просеивание блоков",
   "createsifter.ponder.sifter.text_1": "Просеиватель перерабатывает предметы, просеивая их",
   "createsifter.ponder.sifter.text_2": "Они могут запитаны сбоку с помощью шестерней",
@@ -14,9 +13,9 @@
   "createsifter.ponder.sifter.text_4": "Через некоторое время результат можно будет получить, щёлкнув ПКМ",
   "createsifter.ponder.sifter.text_5": "Результат также может быть извлечён с помощью автоматизации",
   "createsifter.recipe.sifting": "Рецепт просеивания",
-  "createsifter.recipe.sifting.brass_required": "Латунный просеиватель",
+  "mechanicals.ui.recipe_requirement.advanced_sifter.tooltip.title": "Латунный просеиватель",
   "createsifter.recipe.sifting.minimumspeed": "%1$s об/мин",
-  "createsifter.recipe.sifting.waterlogged": "Затопленный",
+  "mechanicals.ui.recipe_requirement.waterlogged.tooltip.title": "Затопленный",
   "createsifter.tooltip.mesh": "Сетка: %s",
   "item.createsifter.advanced_brass_mesh": "Усовершенствованная латунная сетка",
   "item.createsifter.advanced_custom_mesh": "Усовершенствованная пользовательская сетка",
@@ -48,5 +47,5 @@
   "item.createsifter.sturdy_mesh": "Прочная сетка",
   "item.createsifter.tuff_pebble": "Туфовая галька",
   "item.createsifter.zinc_mesh": "Цинковая сетка",
-  "itemGroup.createsifter:main": "Create: Просеивание"
+  "createsifter.itemGroup:main": "Create: Просеивание"
 }

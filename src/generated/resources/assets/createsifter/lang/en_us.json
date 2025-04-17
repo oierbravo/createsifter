@@ -5,8 +5,8 @@
   "block.createsifter.crushed_netherrack": "Crushed netherrack",
   "block.createsifter.dust": "Dust block",
   "block.createsifter.sifter": "Sifter",
-  "config.jade.plugin_createsifter.sifter_data": "Create Sifter",
-  "createsifter.itemGroup.createsifter:main": "Create sifting",
+  "config.jade.plugin_createsifter.data": "Create Sifter",
+  "createsifter.itemGroup:main": "Create sifting",
   "createsifter.ponder.sifter.header": "Block sifting",
   "createsifter.ponder.sifter.text_1": "Sifter process items by sifting them",
   "createsifter.ponder.sifter.text_2": "They can be powered from the side using cogwheels",
@@ -14,9 +14,7 @@
   "createsifter.ponder.sifter.text_4": "After some time, the result can be obtained via Right-click",
   "createsifter.ponder.sifter.text_5": "The outputs can also be extracted by automation",
   "createsifter.recipe.sifting": "Sifting recipe",
-  "createsifter.recipe.sifting.brass_required": "Brass sifter",
   "createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
-  "createsifter.recipe.sifting.waterlogged": "Waterlogged",
   "createsifter.tooltip.mesh": "Mesh: %s",
   "item.createsifter.advanced_brass_mesh": "Advanced Brass Mesh",
   "item.createsifter.advanced_custom_mesh": "Advanced Custom Mesh",
@@ -47,5 +45,9 @@
   "item.createsifter.string_mesh": "String Mesh",
   "item.createsifter.sturdy_mesh": "Sturdy Mesh",
   "item.createsifter.tuff_pebble": "Tuff Pebble",
-  "item.createsifter.zinc_mesh": "Zinc Mesh"
+  "item.createsifter.zinc_mesh": "Zinc Mesh",
+  "mechanicals.ui.recipe_requirement.advanced_sifter.tooltip.title": "Brass sifter",
+  "mechanicals.ui.recipe_requirement.advanced_sifter.tooltip.value": "",
+  "mechanicals.ui.recipe_requirement.waterlogged.tooltip.title": "Waterlogged",
+  "mechanicals.ui.recipe_requirement.waterlogged.tooltip.value": ""
 }
