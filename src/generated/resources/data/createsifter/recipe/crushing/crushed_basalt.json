@@ -1,0 +1,14 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "minecraft:basalt"
+    }
+  ],
+  "processing_time": 250,
+  "results": [
+    {
+      "id": "createsifter:crushed_basalt"
+    }
+  ]
+}

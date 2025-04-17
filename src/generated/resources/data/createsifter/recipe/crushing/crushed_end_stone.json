@@ -1,0 +1,14 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "minecraft:end_stone"
+    }
+  ],
+  "processing_time": 250,
+  "results": [
+    {
+      "id": "createsifter:crushed_end_stone"
+    }
+  ]
+}
