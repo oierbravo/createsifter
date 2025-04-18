@@ -1,7 +1,5 @@
 package com.oierbravo.createsifter.ponders;
 
-import com.oierbravo.createsifter.CreateSifter;
-import com.oierbravo.createsifter.ModConstants;
 import com.oierbravo.createsifter.register.ModBlocks;
 import com.tterrag.registrate.util.entry.ItemProviderEntry;
 import com.tterrag.registrate.util.entry.RegistryEntry;
@@ -27,12 +25,17 @@ public class ModPonderPlugin implements PonderPlugin {
 
 		HELPER.forComponents(ModBlocks.SIFTER)
 				.addStoryBoard("sifter", SifterScenes::sifter);
+
+		HELPER.forComponents(ModBlocks.BRASS_SIFTER)
+				.addStoryBoard("sifter", SifterScenes::sifter);
 	}
 
 	@Override
 	public void registerTags(PonderTagRegistrationHelper<ResourceLocation> helper) {
 		PonderTagRegistrationHelper<RegistryEntry<?,?>> TAG_HELPER = helper.withKeyFunction(RegistryEntry::getId);
-		TAG_HELPER.addToTag(KINETIC_APPLIANCES).add(ModBlocks.SIFTER);
+		TAG_HELPER.addToTag(KINETIC_APPLIANCES)
+				.add(ModBlocks.SIFTER)
+				.add(ModBlocks.BRASS_SIFTER);
 	}
 
 

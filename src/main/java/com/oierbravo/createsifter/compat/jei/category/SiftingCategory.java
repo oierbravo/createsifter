@@ -9,7 +9,6 @@ import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.
 import com.oierbravo.createsifter.register.ModBlocks;
 import com.oierbravo.createsifter.register.ModRecipes;
 import com.oierbravo.mechanicals.compat.jei.RecipeRequirementRenderer;
-import com.oierbravo.mechanicals.utility.LibLang;
 import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.ItemIcon;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
@@ -20,17 +19,12 @@ import mezz.jei.api.gui.ingredient.IRecipeSlotsView;
 import mezz.jei.api.recipe.IFocusGroup;
 import mezz.jei.api.recipe.RecipeIngredientRole;
 import mezz.jei.api.recipe.RecipeType;
-import net.createmod.catnip.data.Pair;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.material.Fluids;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -94,48 +88,7 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
        RecipeRequirementRenderer.drawRequirements(recipe,graphics, 67,4);
 
     }
-    protected void drawRequirements(SiftingRecipe recipe, GuiGraphics guiGraphics, int x, int y){
-        Minecraft minecraft = Minecraft.getInstance();
-        Font fontRenderer = minecraft.font;
-        int index = 0;
-        int distance = 9;
-        int offsetX = 5;
-        int offsetY = 14;
 
-        guiGraphics.drawString(fontRenderer, LibLang.translate("ui.recipe.requirements.title").component().withStyle(), x, y, 0xFFFFFFFF, true);
-
-
-        ArrayList<Pair<Component,Component>> requirementComponents = new ArrayList<>();
-        if(recipe.usesAdvancedMesh()){
-            requirementComponents.add(Pair.of(ModLang.translate("recipe.sifting.brass_required").component(),Component.empty()));
-        }
-
-        if(recipe.isWaterlogged()){
-            requirementComponents.add(Pair.of(ModLang.translate("recipe.sifting.advancedSifter").component(),Component.empty()));
-        }
-        requirementComponents.addAll(recipe.getRequirementsTooltips());
-
-
-        if(requirementComponents.isEmpty()){
-            guiGraphics.drawString(fontRenderer, LibLang.translate("ui.recipe_requirement.none.tooltip").component().withStyle(),x + offsetX, y + offsetY + distance * index, 0xFF808080, false);
-            return;
-        }
-
-        for( Pair<Component,Component> pair : requirementComponents){
-            int oneLinerLenght = pair.getSecond().getString().length() + pair.getSecond().getString().length();
-            if(oneLinerLenght < 19){
-                guiGraphics.drawString(fontRenderer, pair.getFirst().plainCopy().append(" ").append(pair.getSecond()), x + offsetX, y + offsetY + distance * index, 0xFF808080, false);
-                index++;
-                continue;
-            }
-            guiGraphics.drawString(fontRenderer, pair.getFirst(), x + offsetX, y + offsetY + distance * index, 0xFF808080, false);
-            index++;
-            guiGraphics.drawString(fontRenderer, pair.getSecond(), x + offsetX * 2, y + offsetY + distance * index, 0xFF808080, false);
-            index++;
-
-        }
-
-    }
     protected void drawSifter(GuiGraphics guiGraphics, boolean pAdvanced, boolean waterlogged){
         int x = 25;
         int y = 27;
