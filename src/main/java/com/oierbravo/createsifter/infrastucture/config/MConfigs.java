@@ -14,7 +14,11 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.function.Supplier;
-
+/**
+ * Credits to the Creators of Create
+ * https://github.com/Creators-of-Create/Create/blob/mc1.20.1/dev/src/main/java/com/simibubi/create/infrastructure/config/AllConfigs.java
+ * License: MIT
+ */
 @EventBusSubscriber(bus = EventBusSubscriber.Bus.MOD)
 public class MConfigs {
     private static final Map<ModConfig.Type, ConfigBase> CONFIGS = new EnumMap<>(ModConfig.Type.class);

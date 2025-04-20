@@ -40,36 +40,27 @@ body:
     -   type: input
         attributes:
             label: Operating System
-            description: The operating system you were using when the bug occured
+            description: The operating system you were using when the bug occurred
             placeholder: Windows 11
-        validations:
-            required: true
-    -   type: dropdown
-        attributes:
-            label: Mod Version
-            description: The version of the mod you were using when the bug occured
-            options:
-                - "1.6.1.d-36"
-                - "1.6.1.c-36"
-                - "1.6.0.d-9"
-                - "1.6.0.c-36"
-                - "1.5.3.b-285"
-                - "1.5.2.b-285"
-        validations:
-            required: true
-    -   type: dropdown
-        attributes:
-            label: Minecraft Version
-            description: The version of Minecraft you were using when the bug occured
-            options:
-                - "1.19.2"
         validations:
             required: true
     -   type: input
         attributes:
-            label: Forge Version
-            description: The version of Forge you were using when the bug occured
-            placeholder: 36.2.0
+            label: Mod Version
+            description: The version of the mod you were using when the bug occurred
+        validations:
+            required: true
+    -   type: input
+        attributes:
+            label: Minecraft Version
+            description: The version of Minecraft you were using when the bug occurred
+        validations:
+            required: true
+    -   type: input
+        attributes:
+            label: NeoForge Version
+            description: The version of minecraft you were using when the bug occurred
+            placeholder: 21.1.29
         validations:
             required: true
     -   type: textarea

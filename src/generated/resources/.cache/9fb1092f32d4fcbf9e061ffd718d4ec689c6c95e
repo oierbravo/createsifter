@@ -1,7 +1,6 @@
-// 1.21.1	2025-04-17T23:52:56.378340759	Recipes
+// 1.21.1	2025-04-20T20:36:42.429023886	Recipes
 34d0b632b8e7aee9cdaca98414a56369ed95a67d data/createsifter/recipe/crushing/crushed_basalt.json
 f6b1714c22063c3849a3fae88f6ab05ebffc26a4 data/createsifter/recipe/crushing/crushed_end_stone.json
-7ed166329bb91835437aa6ad6fa03b30d62678b0 data/createsifter/recipe/crushing/crushed_netherrack.json
 30bf73e1a40e14becb458028e7bf53ffef5c25b6 data/createsifter/recipe/crushing/dust.json
 e11d52570cf10b5701da2fba466aee9fbcf9c577 data/createsifter/recipe/crushing/soul_sand.json
 f976fbefb3e9a32856eadf0b3f87ec741a53d361 data/createsifter/recipe/milling/crushed_basalt.json
