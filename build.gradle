@@ -3,6 +3,7 @@ plugins {
     id "net.neoforged.moddev.legacyforge" version "2.0.74"
     id "dev.ithundxr.silk" version "0.11.15"
     id "me.modmuss50.mod-publish-plugin" version "0.8.3"
+    id "maven-publish"
 }
 apply from: "./gradle/java.gradle"
 apply from: "gradle/property_loader.gradle"
@@ -249,6 +250,34 @@ publishMods {
             minecraftVersions.add(minecraft_version)
             requires("create")
             optional("jei", "kubejs","kubejs-create","crafttweaker","createtweaker")
+        }
+    }
+}
+
+final slimJar = tasks.register("slimJar", Jar) {
+    archiveClassifier = "slim"
+    from(sourceSets.main.output)
+}
+obfuscation.reobfuscate(slimJar, sourceSets.main)
+publishing {
+    repositories {
+        maven {
+            name = "fosilRepository"
+            url = uri("https://maven.fosil.eu/releases")
+            credentials {
+                username = System.getenv()["MAVEN_USER"]
+                password = System.getenv()["MAVEN_PASSWORD"]
+            }
+        }
+    }
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId base.archivesName.get()
+            from components.java
+
+            artifact(tasks.jar) {
+                classifier = "all"
+            }
         }
     }
 }
