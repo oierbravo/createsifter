@@ -236,6 +236,10 @@ publishMods {
         }
     }
 }
+final slimJar = tasks.register("slimJar", Jar) {
+    archiveClassifier = "slim"
+    from(sourceSets.main.output)
+}
 publishing {
     repositories {
         maven {
@@ -243,13 +247,22 @@ publishing {
             url = uri("https://maven.fosil.eu/releases")
             credentials {
                 username = System.getenv()["MAVEN_USER"]
-                password = System.getenv()["MAVEN_PASS"]
+                password = System.getenv()["MAVEN_PASSWORD"]
             }
         }
     }
     publications {
-        mavenJava(MavenPublication) {
-            artifact jar
+        create('mavenJava', MavenPublication) {
+            artifactId base.archivesName.get()
+            from components.java
+
+            artifact(slimJar) {
+                classifier = "slim"
+            }
+
+            artifact(tasks.jar) {
+                classifier = "all"
+            }
         }
     }
 }
