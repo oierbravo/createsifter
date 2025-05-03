@@ -35,3 +35,10 @@ mandatory = true
 versionRange="[6.0.4,6.1.0)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies."${mod_id}"]]
+modId = "mechanicals"
+mandatory = true
+versionRange="[1.0.0,1.1.0)"
+ordering = "AFTER"
+side = "BOTH"

@@ -1,9 +1,9 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter.recipe;
 
 import com.oierbravo.createsifter.content.contraptions.components.meshes.AbstractAdvancedMesh;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.MeshUtils;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.requirements.AdvancedSifterRecipeRequirement;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.requirements.WaterloggedRecipeRequirement;
-import com.oierbravo.createsifter.register.ModRecipes;
 import com.oierbravo.mechanicals.foundation.recipe.AbstractMechanicalRecipe;
 import com.oierbravo.mechanicals.foundation.recipe.AbstractMechanicalRecipeParams;
 import com.oierbravo.mechanicals.foundation.recipe.IRecipeRequirement;
@@ -21,9 +21,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -54,7 +52,7 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
 
     @Override
     public boolean matches(RecipeInput recipeInput, Level level) {
-        return false;
+        return getInput().test(recipeInput.getItem(0)) && getMesh().is(recipeInput.getItem(1).getItem());
     }
 
     @Override
@@ -128,14 +126,12 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
     public boolean usesAdvancedMesh() {
         return getMesh().getItem() instanceof AbstractAdvancedMesh;
     }
-    public SiftingRecipe addOutput(NonNullList<ProcessingOutput> output){
-        this.results.addAll(output);
-        return this;
+    public static boolean canHandSift(Level level, SiftingRecipeInput input, boolean waterlogged) {
+        if(MeshUtils.isAdvancedMesh(input.mesh()))
+            return false;
+        return SiftingRecipeManager.getRecipeForHandSifting(level, input, waterlogged).isPresent();
     }
-    public static boolean canHandSift(Level world, ModRecipes.SiftingRecipeCacheKey key) {
-        return !ModRecipes.findRecipesWithMatchingIngredients(world, key).isEmpty();
-    }
-    public static List<ItemStack> applyHandSifting(Level world, Vec3 position, ModRecipes.SiftingRecipeCacheKey key) {
+    /*public static List<ItemStack> applyHandSifting(Level world, Vec3 position, ModRecipes.SiftingRecipeCacheKey key) {
 
         Optional<SiftingRecipe> recipe = ModRecipes.findMergedRecipesWithMatchingIngredients(world, key);
 
@@ -143,6 +139,22 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
             return recipe.get().rollResults();
         }
         return Collections.singletonList(key.input());
+    }*/
+    public static List<ItemStack> applyHandSifting(SiftingRecipe recipe) {
+        return recipe.rollResults();
+
+/*        if(recipe.isPresent()){
+            return recipe.get().rollResults();
+        }
+        return Collections.singletonList(key.input());*/
+    }
+    public static List<ItemStack> applyHandSifting(Level world, Vec3 position, SiftingRecipe recipe) {
+        return recipe.rollResults();
+
+/*        if(recipe.isPresent()){
+            return recipe.get().rollResults();
+        }
+        return Collections.singletonList(key.input());*/
     }
 
     public boolean notRequiresAdvancedMesh() {
@@ -152,17 +164,27 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
     @Override
     public List<IRecipeRequirement> getJeiRecipeRequirements() {
         ArrayList<IRecipeRequirement> extraRequirements = new ArrayList<>();
-        if(usesAdvancedMesh())
+        if(requiresAdvancedSifter())
             extraRequirements.add(new AdvancedSifterRecipeRequirement(true));
         if(isWaterlogged())
             extraRequirements.add(new WaterloggedRecipeRequirement(true));
         return Stream.concat(extraRequirements.stream(), super.getJeiRecipeRequirements().stream()).toList();
     }
-
+    public boolean advancedSifter(){
+        return advancedSifter;
+    }
     public Boolean requiresAdvancedSifter() {
-        if(advancedSifter)
+        if(usesAdvancedMesh())
             return true;
-        return usesAdvancedMesh();
+        return advancedSifter;
+    }
+
+    @Override
+    public ArrayList<IRecipeRequirement> getRecipeRequirementsToCheck() {
+        ArrayList<IRecipeRequirement> recipeRequirementArrayList = getRecipeRequirements();
+        recipeRequirementArrayList.add(new WaterloggedRecipeRequirement(waterlogged));
+        recipeRequirementArrayList.add(new AdvancedSifterRecipeRequirement(advancedSifter));
+        return recipeRequirementArrayList;
     }
 
     public static class Type implements RecipeType<SiftingRecipe> {

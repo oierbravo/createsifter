@@ -1,9 +1,10 @@
 package com.oierbravo.createsifter.content.contraptions.components.meshes;
 
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeInput;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeManager;
 import com.oierbravo.createsifter.infrastucture.config.MConfigs;
 import com.oierbravo.createsifter.register.ModItemComponents;
-import com.oierbravo.createsifter.register.ModRecipes;
 import com.simibubi.create.AllSoundEvents;
 import com.simibubi.create.foundation.item.CustomUseEffectsItem;
 import com.simibubi.create.foundation.item.render.SimpleCustomRenderer;
@@ -39,6 +40,7 @@ import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.util.FakePlayer;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public abstract class AbstractMesh extends Item implements CustomUseEffectsItem, IMesh {
@@ -56,21 +58,16 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
             return new InteractionResultHolder<>(InteractionResult.PASS, itemstack);
         }
 
-        Block blockUnderPlayer = playerIn.getBlockStateOn().getBlock();
-        boolean waterlogged = blockUnderPlayer instanceof LiquidBlock;
+        Block blockPlayerIn = playerIn.getInBlockState().getBlock();
+        boolean waterlogged = blockPlayerIn instanceof LiquidBlock ;
 
         InteractionHand otherHand =
                 handIn == InteractionHand.MAIN_HAND ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND;
         ItemStack itemInOtherHand = playerIn.getItemInHand(otherHand);
 
-        ModRecipes.SiftingRecipeCacheKey siftingRecipeCacheKey;// = new ModRecipes.SiftingRecipeCacheKey()
-        if(MeshUtils.isMeshItem(itemInOtherHand)) {
-            siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(itemInOtherHand, itemstack, waterlogged, List.of());
-        } else {
-            siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(itemstack, itemInOtherHand, waterlogged, List.of());
-        }
+        SiftingRecipeInput recipeInput = SiftingRecipeInput.fromStacks(itemstack, itemInOtherHand);
 
-        if (SiftingRecipe.canHandSift(worldIn, siftingRecipeCacheKey)) {
+        if (SiftingRecipe.canHandSift(worldIn, recipeInput, waterlogged)) {
             ItemStack item = itemInOtherHand.copy();
             ItemStack toSift = item.split(1);
             playerIn.startUsingItem(handIn);
@@ -90,8 +87,7 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
             if (itemEntity.position()
                     .distanceTo(playerIn.position()) > 3)
                 continue;
-            ItemStack stack = itemEntity.getItem();
-            if (!SiftingRecipe.canHandSift(worldIn, siftingRecipeCacheKey))
+            if (!SiftingRecipe.canHandSift(worldIn, recipeInput, waterlogged))
                 continue;
             pickUp = itemEntity;
             break;
@@ -118,26 +114,27 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
     }
 
     @Override
-    public ItemStack finishUsingItem(ItemStack stack, Level worldIn, LivingEntity entityLiving) {
+    public ItemStack finishUsingItem(ItemStack meshStack, Level worldIn, LivingEntity entityLiving) {
         if (!(entityLiving instanceof Player player))
-            return stack;
-        if (stack.has(ModItemComponents.MESH_SIFTING)) {
-            Block blockUnderPlayer = player.getBlockStateOn().getBlock();
-            boolean waterlogged = blockUnderPlayer instanceof LiquidBlock;
+            return meshStack;
+        if (meshStack.has(ModItemComponents.MESH_SIFTING)) {
+            Block blockPlayerIn = player.getInBlockState().getBlock();
+            boolean waterlogged = blockPlayerIn instanceof LiquidBlock;
 
-            ItemStack toSift = stack.get(ModItemComponents.MESH_SIFTING).item();
-            ModRecipes.SiftingRecipeCacheKey siftingRecipeCacheKey = new ModRecipes.SiftingRecipeCacheKey(stack, toSift, waterlogged, List.of());
+            ItemStack toSift = meshStack.get(ModItemComponents.MESH_SIFTING).item();
+            Optional<SiftingRecipe> siftingRecipe = SiftingRecipeManager.getRecipeForHandSifting(player.level(), SiftingRecipeInput.fromStacks(toSift, meshStack), waterlogged);
 
-            //noinspection DataFlowIssue - toPolish won't be null as we do call .has before calling .get
+            if(siftingRecipe.isEmpty())
+                return meshStack;
             List<ItemStack> sifted =
-                    SiftingRecipe.applyHandSifting(worldIn, entityLiving.position(), siftingRecipeCacheKey);
+                    SiftingRecipe.applyHandSifting(siftingRecipe.get());
 
             if (worldIn.isClientSide) {
                 spawnParticles(entityLiving.getEyePosition(1)
                                 .add(entityLiving.getLookAngle()
                                         .scale(.5f)),
                         toSift, worldIn);
-                return stack;
+                return meshStack;
             }
 
             if (!sifted.isEmpty()) {
@@ -151,12 +148,12 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
                 });
 
             }
-            stack.remove(ModItemComponents.MESH_SIFTING);
+            meshStack.remove(ModItemComponents.MESH_SIFTING);
             if(MConfigs.server().mesh.useMeshDurabilityWithHand.get())
-                stack.hurtAndBreak(1, entityLiving, LivingEntity.getSlotForHand(entityLiving.getUsedItemHand()));
+                meshStack.hurtAndBreak(1, entityLiving, LivingEntity.getSlotForHand(entityLiving.getUsedItemHand()));
         }
 
-        return stack;
+        return meshStack;
     }
 
     public static void spawnParticles(Vec3 location, ItemStack polishedStack, Level world) {
@@ -236,4 +233,5 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
     public void initializeClient(Consumer<IClientItemExtensions> consumer) {
         consumer.accept(SimpleCustomRenderer.create(this, new MeshItemRenderer()));
     }
+
 }

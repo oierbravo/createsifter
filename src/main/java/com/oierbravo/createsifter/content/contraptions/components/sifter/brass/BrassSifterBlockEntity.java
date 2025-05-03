@@ -69,4 +69,13 @@ public class BrassSifterBlockEntity extends AbstractSifterBlockEntity {
         );
     }
 
+    @Override
+    public boolean isAdvancedSifter() {
+        return true;
+    }
+
+    @Override
+    protected int getItemsPerCycle() {
+        return MConfigs.server().brassSifter.itemsPerCycle.get();
+    }
 }

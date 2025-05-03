@@ -12,8 +12,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
-import static com.oierbravo.createsifter.register.ModRecipes.findRecipesWithMatchingIngredients;
-
 public class SifterBlockEntity extends AbstractSifterBlockEntity {
 
     @Override

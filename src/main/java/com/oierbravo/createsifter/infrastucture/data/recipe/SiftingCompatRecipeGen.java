@@ -60,10 +60,10 @@ public class SiftingCompatRecipeGen extends SiftingRecipeGen{
                 .saveCompat(recipeOutput);
 
         createString("arch_leaves").require(ItemTags.LEAVES)
-                .output(.01f, Mods.ARS_N,"blue_archwood_sapling",1)
-                .output(.01f, Mods.ARS_N,"red_archwood_sapling",1)
-                .output(.01f, Mods.ARS_N,"green_archwood_sapling",1)
-                .output(.01f, Mods.ARS_N,"purple_archwood_sapling",1)
+                .output(.05f, Mods.ARS_N,"blue_archwood_sapling",1)
+                .output(.05f, Mods.ARS_N,"red_archwood_sapling",1)
+                .output(.05f, Mods.ARS_N,"green_archwood_sapling",1)
+                .output(.05f, Mods.ARS_N,"purple_archwood_sapling",1)
                 .withCondition(new ModLoadedCondition(Mods.ARS_N.getId()))
                 .saveCompat(recipeOutput);
 

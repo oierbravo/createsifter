@@ -59,7 +59,6 @@ public class CreateSifter {
 
         modEventBus.addListener(this::registerCapabilities);
         modEventBus.addListener(this::doClientStuff);
-
         generateLangEntries();
     }
     private void generateLangEntries(){
@@ -71,8 +70,10 @@ public class CreateSifter {
             .add("tooltip.mesh", "Mesh: %s")
             .addRecipeRequirementTitle("advanced_sifter", "Brass sifter")
             .addRecipeRequirementValue("advanced_sifter", "")
+            .addRecipeRequirementMissing("advanced_sifter", "Requires brass sifter")
             .addRecipeRequirementTitle("waterlogged", "Waterlogged")
             .addRecipeRequirementValue("waterlogged", "")
+            .addRecipeRequirementMissing("waterlogged", "Not Wartelogged")
             //Ponder
             .addPonderHeader( "sifter","Block sifting")
             .addPonderText(1, "sifter","Sifter process items by sifting them")

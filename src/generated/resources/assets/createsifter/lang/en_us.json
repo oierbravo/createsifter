@@ -46,8 +46,10 @@
   "item.createsifter.sturdy_mesh": "Sturdy Mesh",
   "item.createsifter.tuff_pebble": "Tuff Pebble",
   "item.createsifter.zinc_mesh": "Zinc Mesh",
+  "mechanicals.ui.recipe_requirement.advanced_sifter.tooltip.missing": "Requires brass sifter",
   "mechanicals.ui.recipe_requirement.advanced_sifter.tooltip.title": "Brass sifter",
   "mechanicals.ui.recipe_requirement.advanced_sifter.tooltip.value": "",
+  "mechanicals.ui.recipe_requirement.waterlogged.tooltip.missing": "Not Wartelogged",
   "mechanicals.ui.recipe_requirement.waterlogged.tooltip.title": "Waterlogged",
   "mechanicals.ui.recipe_requirement.waterlogged.tooltip.value": ""
 }

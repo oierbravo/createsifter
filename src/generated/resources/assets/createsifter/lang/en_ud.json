@@ -46,8 +46,10 @@
   "item.createsifter.sturdy_mesh": "ɥsǝW ʎpɹnʇS",
   "item.createsifter.tuff_pebble": "ǝןqqǝԀ ɟɟn⟘",
   "item.createsifter.zinc_mesh": "ɥsǝW ɔuıZ",
+  "mechanicals.ui.recipe_requirement.advanced_sifter.tooltip.missing": "ɹǝʇɟıs ssɐɹq sǝɹınbǝᴚ",
   "mechanicals.ui.recipe_requirement.advanced_sifter.tooltip.title": "ɹǝʇɟıs ssɐɹᗺ",
   "mechanicals.ui.recipe_requirement.advanced_sifter.tooltip.value": "",
+  "mechanicals.ui.recipe_requirement.waterlogged.tooltip.missing": "pǝbboןǝʇɹɐM ʇoN",
   "mechanicals.ui.recipe_requirement.waterlogged.tooltip.title": "pǝbboןɹǝʇɐM",
   "mechanicals.ui.recipe_requirement.waterlogged.tooltip.value": ""
 }

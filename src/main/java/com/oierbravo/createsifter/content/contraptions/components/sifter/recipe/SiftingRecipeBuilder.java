@@ -1,6 +1,8 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter.recipe;
 
 import com.oierbravo.mechanicals.foundation.recipe.AbstractMechanicalRecipeBuilder;
+import com.oierbravo.mechanicals.foundation.recipe.IRecipeRequirement;
+import com.oierbravo.mechanicals.foundation.recipe.RecipeRequirementType;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import com.simibubi.create.foundation.data.SimpleDatagenIngredient;
 import com.simibubi.create.foundation.data.recipe.Mods;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<SiftingRecipe, SiftingRecipe.SiftingRecipeParams, SiftingRecipeBuilder> {
 
@@ -122,7 +125,7 @@ public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<Siftin
         return requiresAdvancedSifter(true);
     }
     public SiftingRecipeBuilder requiresAdvancedSifter(boolean advancedSifter){
-        params.advancedSifter = true;
+        params.advancedSifter = advancedSifter;
         return this;
     }
     @Override
@@ -131,6 +134,8 @@ public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<Siftin
     }
 
 
-
-
+    public boolean hasRequirement(RecipeRequirementType<?> type) {
+        Optional<IRecipeRequirement> requirement = params.recipeRequirements.stream().filter(iRecipeRequirement -> iRecipeRequirement.getType() == type).findFirst();
+        return requirement.isPresent();
+    }
 }

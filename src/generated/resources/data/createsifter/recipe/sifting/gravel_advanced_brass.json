@@ -10,23 +10,23 @@
   "processingTime": 500,
   "results": [
     {
-      "chance": 0.1,
+      "chance": 0.2,
       "id": "create:crushed_raw_copper"
     },
     {
-      "chance": 0.1,
+      "chance": 0.2,
       "id": "create:crushed_raw_zinc"
     },
     {
-      "chance": 0.05,
+      "chance": 0.15,
       "id": "create:crushed_raw_gold"
     },
     {
-      "chance": 0.15,
+      "chance": 0.25,
       "id": "create:crushed_raw_iron"
     },
     {
-      "chance": 0.1,
+      "chance": 0.2,
       "id": "minecraft:lapis_lazuli"
     },
     {
@@ -38,7 +38,7 @@
       "id": "minecraft:emerald"
     },
     {
-      "chance": 0.1,
+      "chance": 0.15,
       "id": "minecraft:amethyst_shard"
     },
     {

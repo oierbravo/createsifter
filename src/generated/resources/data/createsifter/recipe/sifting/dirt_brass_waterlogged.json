@@ -1,6 +1,5 @@
 {
   "type": "createsifter:sifting",
-  "advancedSifter": true,
   "input": {
     "item": "minecraft:dirt"
   },

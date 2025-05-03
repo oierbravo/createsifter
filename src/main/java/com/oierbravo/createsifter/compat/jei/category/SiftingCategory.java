@@ -6,8 +6,8 @@ import com.oierbravo.createsifter.compat.jei.category.animations.AbstractAnimate
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedBrassSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedSifter;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeManager;
 import com.oierbravo.createsifter.register.ModBlocks;
-import com.oierbravo.createsifter.register.ModRecipes;
 import com.oierbravo.mechanicals.compat.jei.RecipeRequirementRenderer;
 import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.ItemIcon;
@@ -38,7 +38,7 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
             ModLang.translate("recipe." + SiftingRecipe.Type.ID).component(),
             new EmptyBackground(177, 100),
             new ItemIcon(() -> new ItemStack(ModBlocks.SIFTER.asItem())),
-            ModRecipes::getAllHolders,
+            SiftingRecipeManager::getAllHolders,
             List.of(
                     ModBlocks.SIFTER::asStack,
                     ModBlocks.BRASS_SIFTER::asStack
@@ -83,7 +83,7 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 20, 2); // Input arrow
        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 50, 32); //Output arrow
 
-       drawSifter(graphics, recipe.usesAdvancedMesh(), recipe.isWaterlogged());
+       drawSifter(graphics, recipe.requiresAdvancedSifter(), recipe.isWaterlogged());
        //drawRequirements(recipe, graphics, 67, 4);
        RecipeRequirementRenderer.drawRequirements(recipe,graphics, 67,4);
 

@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class BrassSifterConfigs extends ConfigBase {
 
-    public final ConfigFloat minimumSpeed = f(1,1,"minimumSpeed", Comments.minimumSpeed);
     public final ConfigInt outputCapacity = i(16,1,"outputCapacity", Comments.outputCapacity);
     public final ConfigInt itemsPerCycle = i(8,1,"outputCapacity", Comments.itemsPerCycle);
 

@@ -4,8 +4,8 @@ import com.oierbravo.createsifter.ModLang;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.AbstractAdvancedMesh;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.MeshUtils;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeManager;
 import com.oierbravo.createsifter.infrastucture.config.MConfigs;
-import com.oierbravo.createsifter.register.ModRecipes;
 import com.oierbravo.mechanicals.foundation.blockEntity.behaviour.DynamicCycleBehavior;
 import com.oierbravo.mechanicals.foundation.blockEntity.behaviour.RecipeRequirementsBehaviour;
 import com.oierbravo.mechanicals.register.MechanicalRecipeRequirementTypes;
@@ -158,27 +158,38 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
 
         if(!recipeRequirementsBehaviour.checkRequirements(siftingRecipe))
             return false;
+        //if(siftingRecipe.requiresAdvancedSifter() && !isAdvancedSifter())
+        //    return false;
 
         if(simulate)
             return true;
 
         ItemStack stackInSlot = inputInventory.getStackInSlot(0);
-        if(!stackInSlot.isEmpty()) {
-            stackInSlot.shrink(1);
-            inputInventory.setStackInSlot(0, stackInSlot);
+        for(int i = 0;i <getItemsPerCycle();i++){
+            if(!stackInSlot.isEmpty()) {
+                stackInSlot.shrink(1);
+                inputInventory.setStackInSlot(0, stackInSlot);
 
-            siftingRecipe.rollResults()
-                    .forEach(stack -> tryToInsertOutputItem(outputInventory, stack, false));
+                siftingRecipe.rollResults()
+                        .forEach(stack -> tryToInsertOutputItem(outputInventory, stack, false));
+            }
         }
+
         return true;
     }
-
+    public boolean isAdvancedSifter(){
+        return false;
+    }
+    protected int getItemsPerCycle(){
+        return 1;
+    }
 
 
     private Optional<SiftingRecipe> getRecipe(){
         if(this.level == null)
             return Optional.empty();
-        Optional<SiftingRecipe> recipe = ModRecipes.findMergedRecipesWithMatchingIngredients(this);
+        Optional<SiftingRecipe> recipe = SiftingRecipeManager.getRecipeForSifter(this);
+        //Optional<SiftingRecipe> recipe = ModRecipes.findMergedRecipesWithMatchingIngredients(this);
         return recipe;
     }
 

@@ -150,7 +150,7 @@ repositories {
 dependencies {
     implementation 'org.jetbrains:annotations:22.0.0'
 
-    jarJar(implementation("com.oierbravo.mechanicals:Mechanicals:${minecraft_version}-${mechanicals}"))
+    implementation("com.oierbravo.mechanicals:Mechanicals:${minecraft_version}-${mechanicals}")
 
     implementation("com.simibubi.create:create-${minecraft_version}:${create_version}:slim") { transitive = false }
     implementation("net.createmod.ponder:Ponder-NeoForge-${minecraft_version}:${ponder_version}")
@@ -222,6 +222,7 @@ publishMods {
             clientRequired = true
             serverRequired = true
             requires("create")
+            requires("mechanicals-lib")
             optional("jei")
         }
     }
@@ -232,6 +233,7 @@ publishMods {
             projectId = "${modrinth_id}"
             minecraftVersions.add(minecraft_version)
             requires("create")
+            requires("mechanicals-lib")
             optional("jei")
         }
     }

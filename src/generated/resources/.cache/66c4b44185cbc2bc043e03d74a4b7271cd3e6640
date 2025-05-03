@@ -1,4 +1,4 @@
-// 1.21.1	2025-04-08T03:15:27.260031835	Sifting Compat recipes recipes.
+// 1.21.1	2025-05-03T14:27:24.811597118	Sifting Compat recipes recipes.
 eabbde7f9213dd1fe356e75ca87ee1243ffd317c data/createsifter/advancement/recipes/sifting/ae2_dust_andesite.json
 35b14f8c0fb864cba0a7f175547d1d3f31dbda43 data/createsifter/advancement/recipes/sifting/ae2_dust_brass.json
 639fe43e620bf17d5d394e766cb027169cf37ece data/createsifter/advancement/recipes/sifting/ae2_sand_advanced_brass.json
@@ -14,6 +14,6 @@ f672254fb03bb606e8df7b945acf0e1d4e30b791 data/createsifter/recipe/sifting/compat
 67fe6729141e03bdfa9efb13fd8212a49313dfd2 data/createsifter/recipe/sifting/compat/ae2_sand_andesite.json
 16cc19fb117023a51edf3f8384897d377b58d6a8 data/createsifter/recipe/sifting/compat/ae2_sand_brass.json
 83d40a641fd6f49c02e1a7cf740d2436418adaac data/createsifter/recipe/sifting/compat/arch_leaves_andesite.json
-b9b3dea03aaee96226b57271070ba1421bf99d65 data/createsifter/recipe/sifting/compat/arch_leaves_string.json
+2772551c8da5eaf26a93ee304832aef94aaf54e8 data/createsifter/recipe/sifting/compat/arch_leaves_string.json
 d5dfafeab807af425f8d05159e7d112c470bec90 data/createsifter/recipe/sifting/compat/enderio_dust_andesite.json
 0958038a4fb0b3e79e2eefdebf7b6b0183b354e8 data/createsifter/recipe/sifting/compat/enderio_dust_brass.json

@@ -1,5 +1,6 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.requirements;
 
+import com.oierbravo.createsifter.content.contraptions.components.sifter.AbstractSifterBlockEntity;
 import com.oierbravo.mechanicals.foundation.recipe.IRecipeRequirement;
 import com.oierbravo.mechanicals.foundation.recipe.RecipeRequirementType;
 import net.minecraft.world.level.Level;
@@ -9,7 +10,10 @@ public record WaterloggedRecipeRequirement(boolean waterlogged) implements IReci
 
     @Override
     public boolean test(Level level, BlockEntity blockEntity) {
-        return waterlogged;
+        if(blockEntity instanceof AbstractSifterBlockEntity sifter){
+            return sifter.isWaterlogged() == waterlogged;
+        }
+        return false;
     }
 
     @Override

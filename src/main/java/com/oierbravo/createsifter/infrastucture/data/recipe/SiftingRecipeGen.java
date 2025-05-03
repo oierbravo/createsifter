@@ -59,14 +59,14 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .save(recipeOutput);
 
         createAdvancedBrass("gravel").require(Blocks.GRAVEL)
-                .output(.10f, AllItems.CRUSHED_COPPER::get,1)
-                .output(.10f, AllItems.CRUSHED_ZINC::get,1)
-                .output(.05f, AllItems.CRUSHED_GOLD::get,1)
-                .output(.15f, AllItems.CRUSHED_IRON::get,1)
-                .output(.10f, Items.LAPIS_LAZULI,1)
+                .output(.20f, AllItems.CRUSHED_COPPER::get,1)
+                .output(.20f, AllItems.CRUSHED_ZINC::get,1)
+                .output(.15f, AllItems.CRUSHED_GOLD::get,1)
+                .output(.25f, AllItems.CRUSHED_IRON::get,1)
+                .output(.20f, Items.LAPIS_LAZULI,1)
                 .output(.05f, Items.DIAMOND,1)
                 .output(.02f, Items.EMERALD,1)
-                .output(.10f, Items.AMETHYST_SHARD,1)
+                .output(.15f, Items.AMETHYST_SHARD,1)
                 .output(.1f, AllItems.EXP_NUGGET.get(), 1)
                 .save(recipeOutput);
 

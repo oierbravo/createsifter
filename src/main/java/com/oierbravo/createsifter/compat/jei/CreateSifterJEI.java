@@ -5,6 +5,7 @@ import com.oierbravo.createsifter.ModConstants;
 import com.oierbravo.createsifter.compat.jei.category.SiftingCategory;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeBuilder;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeManager;
 import com.oierbravo.createsifter.register.ModRecipes;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import mezz.jei.api.IModPlugin;
@@ -56,7 +57,7 @@ public class CreateSifterJEI implements IModPlugin {
     public static ArrayListMultimap<Ingredient,SiftingRecipe> getRecipesGroupedByIngredient(){
         ArrayListMultimap<Ingredient,SiftingRecipe> groupedRecipes = ArrayListMultimap.create();
 
-        ModRecipes.getAllHolders().stream().map(RecipeHolder::value).forEach(siftingRecipe -> {
+        SiftingRecipeManager.getAllHolders().stream().map(RecipeHolder::value).forEach(siftingRecipe -> {
             ModRecipes.SiftingRecipeJEICacheKey key = new ModRecipes.SiftingRecipeJEICacheKey(siftingRecipe);
             groupedRecipes.put(siftingRecipe.getInput(), siftingRecipe);
         });
@@ -94,14 +95,16 @@ public class CreateSifterJEI implements IModPlugin {
     public static SiftingRecipe mergeJEIRecipes(String id, List<SiftingRecipe> recipes){
         if(recipes.isEmpty())
             return null;
+        SiftingRecipeManager.mergeRecipes(recipes);
 
         SiftingRecipeBuilder builder = new SiftingRecipeBuilder();
             recipes.forEach(siftingRecipe ->
                 builder.output(siftingRecipe.getResults())
-                        .withId(ModConstants.asResource(id))
-                       .waterlogged(siftingRecipe.isWaterlogged())
-                       .requiredMesh(siftingRecipe.getMesh())
-                       .require(siftingRecipe.getInput())
+                        //.withId(ModConstants.asResource(id))
+                        .requiresAdvancedSifter(siftingRecipe.advancedSifter())
+                        .waterlogged(siftingRecipe.isWaterlogged())
+                        .requiredMesh(siftingRecipe.getMesh())
+                        .require(siftingRecipe.getInput())
         );
         return builder.build();
     }

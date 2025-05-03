@@ -50,7 +50,7 @@ public class SiftingRecipeSerializer implements RecipeSerializer<SiftingRecipe> 
         ItemStack.STREAM_CODEC.encode(buffer, siftingRecipe.getMesh());
         CatnipStreamCodecBuilders.nonNullList(ProcessingOutput.STREAM_CODEC).encode(buffer, siftingRecipe.getResults());
         ByteBufCodecs.VAR_INT.encode(buffer, siftingRecipe.getProcessingTime());
-        ByteBufCodecs.BOOL.encode(buffer, siftingRecipe.requiresAdvancedSifter());
+        ByteBufCodecs.BOOL.encode(buffer, siftingRecipe.advancedSifter());
         ByteBufCodecs.BOOL.encode(buffer, siftingRecipe.isWaterlogged());
         IRecipeRequirement.LIST_STREAM_CODEC.encode(buffer, siftingRecipe.getRecipeRequirements());
     }
@@ -62,7 +62,7 @@ public class SiftingRecipeSerializer implements RecipeSerializer<SiftingRecipe> 
                             ProcessingOutput.CODEC.listOf().fieldOf("results").forGetter(SiftingRecipe::getResults),
                             ItemStack.CODEC.fieldOf("mesh").forGetter(SiftingRecipe::getMesh),
                             ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("processingTime", 0).forGetter(SiftingRecipe::getProcessingTime),
-                            Codec.BOOL.optionalFieldOf("advancedSifter", false).forGetter(SiftingRecipe::isWaterlogged),
+                            Codec.BOOL.optionalFieldOf("advancedSifter", false).forGetter(SiftingRecipe::advancedSifter),
                             Codec.BOOL.optionalFieldOf("waterlogged", false).forGetter(SiftingRecipe::isWaterlogged),
                             IRecipeRequirement.LIST_CODEC.optionalFieldOf("requirements", List.of()).forGetter(SiftingRecipe::getRecipeRequirements),
                             ICondition.LIST_CODEC.optionalFieldOf(ConditionalOps.DEFAULT_CONDITIONS_KEY, List.of()).forGetter(SiftingRecipe::getConditions)
