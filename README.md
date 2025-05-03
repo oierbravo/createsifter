@@ -2,7 +2,7 @@
 
 # Create Sifting
 
-A simple sifter for the amazing create mod.
+A simple sifter for the amazing Create mod.
 This mod it's meant to be used in modpacks.
 
 Heavily inspired on ex nihilo sieve.
@@ -35,7 +35,7 @@ Heavily inspired on ex nihilo sieve.
 
 ## Brass Sifter
 - `High` redstone disables processing
-- Filters for allow or deny outputs.
+- Output filter.
 - 8x processing per cycle, configurable.
 - Bigger output capaticy, configurable.
 
@@ -43,10 +43,12 @@ Heavily inspired on ex nihilo sieve.
 ## Recipes
 
 ### Waterlogged feature (optional)
+- `"waterlogged":"true"`
 - Sifters can be waterlogged to get different output.
 - In hand meshes act as waterlogged when the player is in a LiquidBlock
 
 ### Advanced sifter per recipe (optional)
+- `"advancedSifter":"true"`
 - Recipes can require brass sifter for normal meshes too.
 
 ### Compact recipes.
@@ -56,6 +58,47 @@ Heavily inspired on ex nihilo sieve.
   - Ars nouveau
   - AE2
 
-### Recipes examples... working on the documentation.
+### Recipes examples
+- See [Included recipes](https://github.com/oierbravo/createsifter/tree/mc1.21.1/dev/src/generated/resources/data/createsifter/recipe/sifting "Included recipes")
 
+### KubeJS
+- Remove al Sifting recipes.
+```js
+ServerEvents.recipes(event => {
+  event.remove({ type: 'createsifter:sifting' })
+})
+```
+- Add recipes
+```js
+ServerEvents.recipes(event => {
+  /** 
+    createsifter.sifting(Output[] result, Ingredient ingredient, ItemStack mesh)
+    .processingTime(int time) // optional, default: 500
+    .waterlogged(true) //optional, default: false
+    .advancedSifter(true) //optional, default: false
+  **/
+  event.recipes.createsifter.sifting([Output.of('minecraft:clay'),Output.of('minecraft:redstone')],'minecraft:sand',"createsifter:andesite_mesh")
+})
+```
+- Custom meshes
+```js
+StartupEvents.registry('item', event => {
+    
+    //Basic mesh
+	event.create('diamond_mesh','createsifter:mesh')
+      .displayName('Diamond Mesh')
+      .parentModel("createsifter:block/meshes/mesh")
+      .texture("mesh","kubejs:item/diamond_mesh")
+      .maxDamage(77) //Mesh durability
+	
+	//Advanced mesh
+	event.create('advanced_diamond_mesh','createsifter:advanced_mesh')
+      .displayName('Advanced Diamond Mesh')
+      .parentModel("createsifter:block/meshes/advanced_mesh")
+      .texture("mesh","kubejs:item/diamond_mesh")
+      .maxDamage(200) //Mesh durability
+	
+})
+
+```
 **Thanks to the Creators of Create.**
