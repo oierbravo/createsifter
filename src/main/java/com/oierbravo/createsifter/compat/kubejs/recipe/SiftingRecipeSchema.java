@@ -20,10 +20,11 @@ public interface SiftingRecipeSchema {
     RecipeKey<Ingredient> INPUT = IngredientComponent.NON_EMPTY_INGREDIENT.key("input", ComponentRole.INPUT).noFunctions();
     RecipeKey<ItemStack> MESH = ItemStackComponent.ITEM_STACK.key("mesh", ComponentRole.INPUT).noFunctions();
     RecipeKey<Integer> PROCESSING_TIME = NumberComponent.INT.key("processingTime", ComponentRole.OTHER).optional(500).alwaysWrite();
+    RecipeKey<Boolean> ADVANCED_SIFTER = BooleanComponent.BOOLEAN.key("advancedSifter", ComponentRole.OTHER).optional(false);
     RecipeKey<Boolean> WATERLOGGED = BooleanComponent.BOOLEAN.key("waterlogged", ComponentRole.OTHER).optional(false);
     RecipeKey<List<IRecipeRequirement>> RECIPE_REQUIREMENTS = RecipeRequirementsComponent.RECIPE_REQUIREMENT.asList().key("requirements", ComponentRole.OTHER).optional(List.of()).allowEmpty();
 
 
-    RecipeSchema SCHEMA = new RecipeSchema(OUTPUTS, INPUT, MESH, PROCESSING_TIME,WATERLOGGED, RECIPE_REQUIREMENTS).factory(SiftingKubeRecipe.FACTORY);
+    RecipeSchema SCHEMA = new RecipeSchema(OUTPUTS, INPUT, MESH, PROCESSING_TIME, ADVANCED_SIFTER, WATERLOGGED, RECIPE_REQUIREMENTS).factory(SiftingKubeRecipe.FACTORY);
 
 }
