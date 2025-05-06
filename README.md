@@ -8,14 +8,14 @@ This mod it's meant to be used in modpacks.
 Heavily inspired on ex nihilo sieve.
 
 ## 1.21.1-2.x Version Requires Mechanicals Lib 
-- [Curseforge](https://github.com/oierbravo/createsifter/tree/mc1.19/dev "Curseforge")
-- [Modrinth](https://github.com/oierbravo/createsifter/tree/mc1.19/dev "Modrinth")
+- [Curseforge](https://www.curseforge.com/minecraft/mc-mods/mechanicals-lib)
+- [Modrinth](https://modrinth.com/mod/mechanicals-lib")
 
 ## Version support & documentation
 - 1.21.1: Supported. Documentation refers to this version.
-- 1.20.1: Only critical issues
-- 1.19.x: Unsupported: [Documentation](https://github.com/oierbravo/createsifter/tree/mc1.19/dev "Documentation") 
-- 1.18.x: Unsupported: [Documentation](https://github.com/oierbravo/createsifter/tree/mc1.18/dev "Documentation")
+- 1.20.1: Only critical issues [1.20.x Documentation](https://github.com/oierbravo/createsifter/tree/mc1.20.1/dev)
+- 1.19.x: Unsupported: [1.19.x Documentation](https://github.com/oierbravo/createsifter/tree/mc1.19/dev) 
+- 1.18.x: Unsupported: [1.18.x Documentation](https://github.com/oierbravo/createsifter/tree/mc1.18/dev)
 
 ## Meshes
 > Works with the sifter or in hand (like create sandpaper)
@@ -68,6 +68,10 @@ ServerEvents.recipes(event => {
   event.remove({ type: 'createsifter:sifting' })
 })
 ```
+- Chanced output (binding)
+```js
+Output.of('minecraft:clay', 0.5)
+```
 - Add recipes
 ```js
 ServerEvents.recipes(event => {
@@ -77,10 +81,11 @@ ServerEvents.recipes(event => {
     .waterlogged(true) //optional, default: false
     .advancedSifter(true) //optional, default: false
   **/
-  event.recipes.createsifter.sifting([Output.of('minecraft:clay'),Output.of('minecraft:redstone')],'minecraft:sand',"createsifter:andesite_mesh")
+  event.recipes.createsifter.sifting([Output.of('minecraft:clay',0.5),Output.of('minecraft:redstone')],'minecraft:sand',"createsifter:andesite_mesh")
 })
 ```
 - Custom meshes
+  - Texture location (for this examples): `kubejs/assets/kubejs/textures/item/diamond_mesh.png`
 ```js
 StartupEvents.registry('item', event => {
     
@@ -94,11 +99,13 @@ StartupEvents.registry('item', event => {
 	//Advanced mesh
 	event.create('advanced_diamond_mesh','createsifter:advanced_mesh')
       .displayName('Advanced Diamond Mesh')
-      .parentModel("createsifter:block/meshes/advanced_mesh")
+      .parentModel("createsifter:block/meshes/mesh")
       .texture("mesh","kubejs:item/diamond_mesh")
+      .texture("frame","micraft:block/diamond_block")
       .maxDamage(200) //Mesh durability
 	
 })
-
 ```
+
+
 **Thanks to the Creators of Create.**

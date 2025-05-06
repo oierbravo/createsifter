@@ -48,6 +48,7 @@ public class CreateSifter {
 
 
         ModBlocks.register();
+
         ModItems.register();
         ModBlockEntities.register();
         ModItemComponents.register(modEventBus);

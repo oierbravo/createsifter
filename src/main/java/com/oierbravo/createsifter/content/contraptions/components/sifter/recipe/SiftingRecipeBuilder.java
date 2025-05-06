@@ -133,7 +133,6 @@ public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<Siftin
         return new SiftingRecipe(this.params);
     }
 
-
     public boolean hasRequirement(RecipeRequirementType<?> type) {
         Optional<IRecipeRequirement> requirement = params.recipeRequirements.stream().filter(iRecipeRequirement -> iRecipeRequirement.getType() == type).findFirst();
         return requirement.isPresent();
