@@ -10,10 +10,10 @@ public record AdvancedSifterRecipeRequirement(boolean advancedSifter) implements
 
     @Override
     public boolean test(Level level, BlockEntity blockEntity) {
-        if(blockEntity instanceof AbstractSifterBlockEntity sifter){
+        if(blockEntity instanceof AbstractSifterBlockEntity sifter && advancedSifter){
             return sifter.isAdvancedSifter() == advancedSifter;
         }
-        return false;
+        return true;
     }
 
     @Override

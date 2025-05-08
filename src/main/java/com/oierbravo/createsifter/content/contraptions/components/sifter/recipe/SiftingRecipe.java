@@ -131,15 +131,7 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
             return false;
         return SiftingRecipeManager.getRecipeForHandSifting(level, input, waterlogged).isPresent();
     }
-    /*public static List<ItemStack> applyHandSifting(Level world, Vec3 position, ModRecipes.SiftingRecipeCacheKey key) {
 
-        Optional<SiftingRecipe> recipe = ModRecipes.findMergedRecipesWithMatchingIngredients(world, key);
-
-        if(recipe.isPresent()){
-            return recipe.get().rollResults();
-        }
-        return Collections.singletonList(key.input());
-    }*/
     public static List<ItemStack> applyHandSifting(SiftingRecipe recipe) {
         return recipe.rollResults();
 
@@ -150,11 +142,6 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
     }
     public static List<ItemStack> applyHandSifting(Level world, Vec3 position, SiftingRecipe recipe) {
         return recipe.rollResults();
-
-/*        if(recipe.isPresent()){
-            return recipe.get().rollResults();
-        }
-        return Collections.singletonList(key.input());*/
     }
 
     public boolean notRequiresAdvancedMesh() {
