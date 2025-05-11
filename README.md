@@ -61,7 +61,7 @@ Heavily inspired on ex nihilo sieve.
 ### Recipes examples
 - See [Included recipes](https://github.com/oierbravo/createsifter/tree/mc1.21.1/dev/src/generated/resources/data/createsifter/recipe/sifting "Included recipes")
 
-### KubeJS
+### KubeJS 7.1 (Minecraft 1.21.1)
 - Remove al Sifting recipes.
 ```js
 ServerEvents.recipes(event => {
