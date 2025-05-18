@@ -203,7 +203,8 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
     public void showParticles() {
         if (inputInventory.getStackInSlot(0).isEmpty() || meshInventory.getStackInSlot(0).isEmpty())
             return;
-
+        if(!isSpeedRequirementFulfilled())
+            return;
         ItemParticleOption data = new ItemParticleOption(ParticleTypes.ITEM, inputInventory.getStackInSlot(0));
         float angle = level.random.nextFloat() * 360;
         Vec3 offset = new Vec3(0, 0, 0.5f);
