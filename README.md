@@ -7,6 +7,8 @@ This mod it's meant to be used in modpacks.
 
 Heavily inspired on ex nihilo sieve.
 
+## [Dedicated wiki](https://wiki.mechanicalmods.net/mods/create-sifter/)
+
 ## 1.21.1-2.x Version Requires Mechanicals Lib 
 - [Curseforge](https://www.curseforge.com/minecraft/mc-mods/mechanicals-lib)
 - [Modrinth](https://modrinth.com/mod/mechanicals-lib")
