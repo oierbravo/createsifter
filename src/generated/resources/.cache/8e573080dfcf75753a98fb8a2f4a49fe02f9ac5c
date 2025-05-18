@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-03T13:18:36.37341173	Sifting recipes recipes.
+// 1.21.1	2025-05-18T12:28:51.469498172	Sifting recipes recipes.
 b7a9544e59f933cc71305692fe1809cb9a163888 data/createsifter/advancement/recipes/sifting/crushed_basalt_advance_sturdy.json
 f82f348be784c6a3e12b21af326b6610927a7065 data/createsifter/advancement/recipes/sifting/crushed_basalt_sturdy.json
 1e676b88063fcbc0d97c5aac7e820e3ecea39603 data/createsifter/advancement/recipes/sifting/crushed_end_stone_advance_sturdy.json
@@ -24,9 +24,9 @@ d62dd5911dbdcbe64cf1be9fff4654a9a8d34e21 data/createsifter/recipe/sifting/crushe
 aae150819dbab9cd6046dad62183c6fe05927cfe data/createsifter/recipe/sifting/crushed_basalt_sturdy.json
 e7b61cf66796f910f3e9304275db3672c56f54c2 data/createsifter/recipe/sifting/crushed_end_stone_advance_sturdy.json
 dcc66fe6cc2861ab9b1d111aeb40e770a518c592 data/createsifter/recipe/sifting/crushed_end_stone_sturdy.json
-690c2919d5556a2b64f943e465beb0bf96ef3df7 data/createsifter/recipe/sifting/crushed_netherrack_advanced_brass.json
+f1eb10f58d8883f9fb3de95f97ae6db301de0f76 data/createsifter/recipe/sifting/crushed_netherrack_advanced_brass.json
 3de938f7a4b1b4e8d47822e7552601a9f576d99b data/createsifter/recipe/sifting/crushed_netherrack_brass.json
-0a6317a9f3d0e8e711bf701358d981921631fac2 data/createsifter/recipe/sifting/dirt_andesite.json
+3668ae3b70be1250d7c09fe96169c69780efb3eb data/createsifter/recipe/sifting/dirt_andesite.json
 ef22612224cf541a7ac0b635f6daa926c23664df data/createsifter/recipe/sifting/dirt_brass_waterlogged.json
 12d06c0d3306918bd234fa137e982ad4834a83b8 data/createsifter/recipe/sifting/dirt_string.json
 1d8ffa122ece9a8fcb2261c199f3f977e5a75287 data/createsifter/recipe/sifting/dirt_string_waterlogged.json

@@ -30,7 +30,7 @@
       "id": "minecraft:blaze_powder"
     },
     {
-      "chance": 0.5,
+      "chance": 0.02,
       "id": "minecraft:netherite_scrap"
     },
     {

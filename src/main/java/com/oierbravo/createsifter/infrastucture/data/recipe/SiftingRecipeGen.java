@@ -163,6 +163,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .output(.05f, Items.SWEET_BERRIES)
                 .output(.05f, Items.BROWN_MUSHROOM)
                 .output(.05f, Items.RED_MUSHROOM)
+                .output(.05f, Items.FERN)
                 .save(recipeOutput);
 
         createString("dirt",true).require(Blocks.DIRT)
@@ -215,7 +216,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .output(.30f,Items.GOLD_NUGGET)
                 .output(.10f,Items.QUARTZ)
                 .output(.20f, Items.BLAZE_POWDER,1)
-                .output(.5f, Items.NETHERITE_SCRAP,1)
+                .output(.02f, Items.NETHERITE_SCRAP,1)
                 .output(.40f, AllItems.EXP_NUGGET.get(), 1)
                 .save(recipeOutput);
 

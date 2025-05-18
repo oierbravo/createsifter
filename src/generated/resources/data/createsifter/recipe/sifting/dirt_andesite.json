@@ -72,6 +72,10 @@
     {
       "chance": 0.05,
       "id": "minecraft:red_mushroom"
+    },
+    {
+      "chance": 0.05,
+      "id": "minecraft:fern"
     }
   ]
 }
