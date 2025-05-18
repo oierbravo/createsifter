@@ -64,6 +64,10 @@
     {
       "chance": 0.01,
       "id": "minecraft:sweet_berries"
+    },
+    {
+      "chance": 0.1,
+      "id": "minecraft:fern"
     }
   ]
 }

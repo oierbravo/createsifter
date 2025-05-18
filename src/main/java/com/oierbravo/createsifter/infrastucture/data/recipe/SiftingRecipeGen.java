@@ -12,6 +12,7 @@ import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
@@ -34,8 +35,7 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
     }
 
     @Override
-    protected void buildRecipes(RecipeOutput recipeOutput) {
-
+    protected void buildRecipes(@NotNull RecipeOutput recipeOutput) {
         createAndesite("gravel").require(Blocks.GRAVEL)
                 .output(.3f, AllItems.COPPER_NUGGET::get,1)
                 .output(.4f, AllItems.ZINC_NUGGET::get,1)
@@ -143,6 +143,8 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
                 .output(.01f, Items.POTATO)
                 .output(.01f, Items.CARROT)
                 .output(.01f, Items.SWEET_BERRIES)
+                .output(.1f, Items.FERN)
+
                 .save(recipeOutput);
 
 

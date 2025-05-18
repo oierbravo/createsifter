@@ -36,7 +36,7 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     public final static CreateRecipeCategory.Info<SiftingRecipe> INFO = new CreateRecipeCategory.Info<>(
             TYPE,
             ModLang.translate("recipe." + SiftingRecipe.Type.ID).component(),
-            new EmptyBackground(177, 100),
+            new EmptyBackground(177, 120),
             new ItemIcon(() -> new ItemStack(ModBlocks.SIFTER.asItem())),
             SiftingRecipeManager::getAllHolders,
             List.of(

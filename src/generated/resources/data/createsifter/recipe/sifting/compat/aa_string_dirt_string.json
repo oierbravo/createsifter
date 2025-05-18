@@ -1,0 +1,31 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "actuallyadditions"
+    }
+  ],
+  "type": "createsifter:sifting",
+  "input": {
+    "item": "minecraft:dirt"
+  },
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:string_mesh"
+  },
+  "processingTime": 500,
+  "results": [
+    {
+      "chance": 0.05,
+      "id": "actuallyadditions:canola_seeds"
+    },
+    {
+      "chance": 0.05,
+      "id": "actuallyadditions:rice_seeds"
+    },
+    {
+      "chance": 0.05,
+      "id": "actuallyadditions:flax_seeds"
+    }
+  ]
+}

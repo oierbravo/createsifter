@@ -1,4 +1,8 @@
-// 1.21.1	2025-05-03T14:27:24.811597118	Sifting Compat recipes recipes.
+// 1.21.1	2025-05-18T14:08:07.75552659	Sifting Compat recipes recipes.
+1ba15655df84314f7292c595e41b4406a5b0ff2a data/createsifter/advancement/recipes/sifting/aa_dirt_andesite.json
+ec187eb2efcb4be0fd2f8a7779bd44cbabfb9299 data/createsifter/advancement/recipes/sifting/aa_gravel_andesite.json
+835fc16895c391b43c0047c64d29ce79c7e4e5db data/createsifter/advancement/recipes/sifting/aa_gravel_brass.json
+79f74cccd296623d387f7aa14b3c5382b0259e7a data/createsifter/advancement/recipes/sifting/aa_string_dirt_string.json
 eabbde7f9213dd1fe356e75ca87ee1243ffd317c data/createsifter/advancement/recipes/sifting/ae2_dust_andesite.json
 35b14f8c0fb864cba0a7f175547d1d3f31dbda43 data/createsifter/advancement/recipes/sifting/ae2_dust_brass.json
 639fe43e620bf17d5d394e766cb027169cf37ece data/createsifter/advancement/recipes/sifting/ae2_sand_advanced_brass.json
@@ -8,8 +12,12 @@ c0604be3dc20208f6d174ae18c2155d4e9a1a523 data/createsifter/advancement/recipes/s
 1e429e9c7d00f5cd02802b1c1c084ad6484480c3 data/createsifter/advancement/recipes/sifting/arch_leaves_string.json
 d3f8ee6e01dbce2c54a13728bd1bd0ba5f4daecf data/createsifter/advancement/recipes/sifting/enderio_dust_andesite.json
 4201775e21702dd031ba877cee9372ef244c0f66 data/createsifter/advancement/recipes/sifting/enderio_dust_brass.json
-f98cf0d17b1199bf8accf38687e30202815ec33b data/createsifter/recipe/sifting/compat/ae2_dust_andesite.json
-f672254fb03bb606e8df7b945acf0e1d4e30b791 data/createsifter/recipe/sifting/compat/ae2_dust_brass.json
+1107569cb24d41235cbe8666e0d8909ee14e0838 data/createsifter/recipe/sifting/compat/aa_dirt_andesite.json
+bbb49fa1ac922ed369aa44e12da2748eb5dc6c22 data/createsifter/recipe/sifting/compat/aa_gravel_andesite.json
+87fd3dffa553d06abce2965aaac7be69ebcf3c6b data/createsifter/recipe/sifting/compat/aa_gravel_brass.json
+da29a48caa63b2ef2c80d0c7584eff53b270c65e data/createsifter/recipe/sifting/compat/aa_string_dirt_string.json
+466a5f302fe3a9fa9e759c3c211b080a18b9cb36 data/createsifter/recipe/sifting/compat/ae2_dust_andesite.json
+e5e7ba862813daf553c6f85d040727e880f7bf3b data/createsifter/recipe/sifting/compat/ae2_dust_brass.json
 6a6fc9dcdb8e71c422b32123fc6f940e8da0fbf7 data/createsifter/recipe/sifting/compat/ae2_sand_advanced_brass.json
 67fe6729141e03bdfa9efb13fd8212a49313dfd2 data/createsifter/recipe/sifting/compat/ae2_sand_andesite.json
 16cc19fb117023a51edf3f8384897d377b58d6a8 data/createsifter/recipe/sifting/compat/ae2_sand_brass.json

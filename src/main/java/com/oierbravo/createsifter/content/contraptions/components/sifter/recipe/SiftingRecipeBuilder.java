@@ -1,5 +1,6 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter.recipe;
 
+import com.oierbravo.mechanicals.foundation.data.CompatMods;
 import com.oierbravo.mechanicals.foundation.recipe.AbstractMechanicalRecipeBuilder;
 import com.oierbravo.mechanicals.foundation.recipe.IRecipeRequirement;
 import com.oierbravo.mechanicals.foundation.recipe.RecipeRequirementType;
@@ -84,8 +85,16 @@ public class SiftingRecipeBuilder extends AbstractMechanicalRecipeBuilder<Siftin
         return output(1, id, 1);
     }
 
-    public SiftingRecipeBuilder output(Mods mod, String id) {
-        return output(1, mod.asResource(id), 1);
+    public SiftingRecipeBuilder output(CompatMods mod, String id) {
+        return output(mod, id, 1,1);
+    }
+
+    public SiftingRecipeBuilder output(CompatMods mod, String id, float chance) {
+        return output(mod, id, chance,1);
+    }
+
+    public SiftingRecipeBuilder output(CompatMods mod, String id, float chance, int amount) {
+        return output(chance, mod.asResource(id), amount);
     }
 
     public SiftingRecipeBuilder output(float chance, ResourceLocation registryName, int amount) {
