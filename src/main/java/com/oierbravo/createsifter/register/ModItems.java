@@ -157,6 +157,7 @@ public class ModItems {
 
     //public static final ItemEntry<Item> GOLD = metalPiece()
     public static final ItemEntry<Item>
+            PIECE_COPPER = metalPiece("copper", AllItems.CRUSHED_COPPER),
             PIECE_GOLD = metalPiece("gold", AllItems.CRUSHED_GOLD),
             PIECE_IRON = metalPiece("iron", AllItems.CRUSHED_IRON),
             PIECE_ZINC = metalPiece("zinc", AllItems.CRUSHED_ZINC);

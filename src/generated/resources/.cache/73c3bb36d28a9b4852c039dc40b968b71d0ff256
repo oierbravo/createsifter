@@ -1,12 +1,12 @@
-// 1.21.1	2025-05-23T22:28:30.429844817	Registrate Provider for createsifter [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+// 1.21.1	2025-05-23T23:14:15.635149644	Registrate Provider for createsifter [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
 d9dbad30255b64233e922d850b855f702c69071f assets/createsifter/blockstates/brass_sifter.json
 b8ff47e64695312a2893d80bd50c479412559bda assets/createsifter/blockstates/crushed_basalt.json
 823a8aed585c73fa6018da90e8a3f6de84a2c74f assets/createsifter/blockstates/crushed_end_stone.json
 a205af59dfc965739cd9dd6463d3c9a1b558a385 assets/createsifter/blockstates/crushed_netherrack.json
 0ae9397138a0836fde056e1d28d6ae9cadc78392 assets/createsifter/blockstates/dust.json
 9f90dc6f23ce5cca32dca8c9193a8702368b9a43 assets/createsifter/blockstates/sifter.json
-331f9ef6bb9159311a84e4fe4e21bb7c68e879cb assets/createsifter/lang/en_ud.json
-ab867ec4e20f5a77f4f151aafbaa9d1ea12fdac7 assets/createsifter/lang/en_us.json
+8ad466bf30509aacce4a85d9260c7883424f83f4 assets/createsifter/lang/en_ud.json
+4ad9899c8e19e930c8111b4d0a5ab1ba17aea208 assets/createsifter/lang/en_us.json
 15e0eba680e8aaea6b276231e28725bcefd185fe assets/createsifter/models/block/crushed_basalt.json
 f711edd5b87942993aa87bbafb04607131d24996 assets/createsifter/models/block/crushed_end_stone.json
 5f5953e10de3b39b8a58e5d745becd2fc88fedf0 assets/createsifter/models/block/crushed_netherrack.json
@@ -24,6 +24,7 @@ a3be14f01449212624a49514ee6cbaba0ccac76a assets/createsifter/models/item/deepsla
 aa1112fa0eda9056eb201f04ccc6064e320471ef assets/createsifter/models/item/dust.json
 2c8b9aaa1b12bbbec589751c97ccd2d25831a9fd assets/createsifter/models/item/granite_pebble.json
 d145c72fc7a34bfe3afe6b7b4600c5c72ccb990e assets/createsifter/models/item/raw_aluminum_piece.json
+3bfeee60e4ff4761b089c5bd3e6d0446f7d4e44e assets/createsifter/models/item/raw_copper_piece.json
 756f707a88efd6c5d7de074ab8d8455cc1f78ad1 assets/createsifter/models/item/raw_gold_piece.json
 d595b2257c0a82833ca5b9a991485571ad0a12e6 assets/createsifter/models/item/raw_iron_piece.json
 e360e6d016ad1f04bd32eeecac91e6031e0db4ca assets/createsifter/models/item/raw_lead_piece.json
@@ -41,7 +42,7 @@ f897c8a2000ae5a79c017546acda95e0d7213c2d assets/createsifter/models/item/stone_p
 49d0726b70139b04fe21da448e0b77d90909318b data/c/tags/item/enchantables.json
 e5295e51e606222cdebb48aa29e3565834443ac3 data/c/tags/item/meshes.json
 081b4606925a000f75017d4cdc87136bc66056dc data/c/tags/item/pebbles.json
-7ff9c2d8942852d1e2b54543abf07def220ec367 data/c/tags/item/pieces.json
+f808517c3eaa81fe117645be8c4f5267450bf939 data/c/tags/item/pieces.json
 2d87d302de6b2363244579b216bc0dc2dbf122c9 data/createsifter/advancement/recipes/misc/crafting/advanced_brass_mesh.json
 57410907251f8e1a2fc5eaef692a1ed9ae7db17d data/createsifter/advancement/recipes/misc/crafting/advanced_sturdy_mesh.json
 44425990c1e2f2bc3e53d227b6d9ca233fd0b41b data/createsifter/advancement/recipes/misc/crafting/andesite_mesh.json
@@ -58,6 +59,7 @@ a6e646d58fd40021537212fc37c844498f3df258 data/createsifter/advancement/recipes/m
 e7cbc15c32f87824e9d436a8417b4a9c8380e836 data/createsifter/advancement/recipes/misc/shapeless/diorite_pebble.json
 63a2e9e4a15077810d348ecc6bb55ff1b20768dd data/createsifter/advancement/recipes/misc/shapeless/granite_pebble.json
 1cb3d637090cdd49e8257fd598c51b5f0713ae81 data/createsifter/advancement/recipes/misc/shapeless/raw_aluminum_piece.json
+72ab48cabd501b13c75b653120cd1adf104ccee5 data/createsifter/advancement/recipes/misc/shapeless/raw_copper_piece.json
 9b1ec01ffbae97b5cdb05fbaa8845ed88c939ca3 data/createsifter/advancement/recipes/misc/shapeless/raw_gold_piece.json
 99177f6dae06e532d63781c0998f69bddfbe4e3e data/createsifter/advancement/recipes/misc/shapeless/raw_iron_piece.json
 e6d7fffe7a9652b62ddee5559df0033beed8fbff data/createsifter/advancement/recipes/misc/shapeless/raw_lead_piece.json
@@ -93,6 +95,7 @@ c19b6dc8bf17a502079dd6d79c4e50d32d7a94f3 data/createsifter/recipe/crafting/brass
 c6d7623239535216931cff551c209332e07bb50d data/createsifter/recipe/shapeless/diorite_pebble.json
 f6044cc8ed70c57353ad33c62b4cccc7a26b09a6 data/createsifter/recipe/shapeless/granite_pebble.json
 13a80937a2ff9a3195dd1d0dc7d1b94f894e9005 data/createsifter/recipe/shapeless/raw_aluminum_piece.json
+486f1386ba4eb0cbb5ac674b8c61883df216245a data/createsifter/recipe/shapeless/raw_copper_piece.json
 93f03f24db1f2aa532f579ab8e576321a197856f data/createsifter/recipe/shapeless/raw_gold_piece.json
 e9a443efd59d825fd6c1c985ee1c5b7eeb1a87de data/createsifter/recipe/shapeless/raw_iron_piece.json
 fd9d980f3c9326c9601b10c76df222060784e47c data/createsifter/recipe/shapeless/raw_lead_piece.json
