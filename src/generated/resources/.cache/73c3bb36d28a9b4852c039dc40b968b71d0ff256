@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-03T13:18:36.37114658	Registrate Provider for createsifter [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
+// 1.21.1	2025-05-23T22:28:30.429844817	Registrate Provider for createsifter [Registries, Data Maps, Recipes, Advancements, Loot Tables, Tags (enchantments), Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), generic_server_provider, Blockstates, Item models, Lang (en_us/en_ud), generic_client_provider]
 d9dbad30255b64233e922d850b855f702c69071f assets/createsifter/blockstates/brass_sifter.json
 b8ff47e64695312a2893d80bd50c479412559bda assets/createsifter/blockstates/crushed_basalt.json
 823a8aed585c73fa6018da90e8a3f6de84a2c74f assets/createsifter/blockstates/crushed_end_stone.json
@@ -38,6 +38,7 @@ df9a7d960a8cef8b46f123fdd97ad69c10aaf880 assets/createsifter/models/item/raw_zin
 20f9955d7f4bb8e2282a17b47fba93d9e80f74f4 assets/createsifter/models/item/sifter.json
 f897c8a2000ae5a79c017546acda95e0d7213c2d assets/createsifter/models/item/stone_pebble.json
 5edc9dbacf5a4d1149d2fbf7e4f7c2693d3efd1b assets/createsifter/models/item/tuff_pebble.json
+49d0726b70139b04fe21da448e0b77d90909318b data/c/tags/item/enchantables.json
 e5295e51e606222cdebb48aa29e3565834443ac3 data/c/tags/item/meshes.json
 081b4606925a000f75017d4cdc87136bc66056dc data/c/tags/item/pebbles.json
 7ff9c2d8942852d1e2b54543abf07def220ec367 data/c/tags/item/pieces.json
@@ -107,3 +108,4 @@ ca929f368ebffcdb61ed85eb95d144593fd84998 data/createsifter/recipe/shapeless/ston
 370e860e3f5f6cfa9858b452af295be59810ad95 data/createsifter/recipe/shapeless/tuff_pebble.json
 fc24c3251e0091467ecc9875ed575d5e4e0be73a data/minecraft/tags/block/mineable/pickaxe.json
 24e8d1761b030b2583977740a6ef7761f34cabbb data/minecraft/tags/block/mineable/shovel.json
+49d0726b70139b04fe21da448e0b77d90909318b data/minecraft/tags/item/enchantable/durability.json

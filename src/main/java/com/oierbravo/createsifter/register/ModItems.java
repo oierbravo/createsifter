@@ -1,7 +1,8 @@
 package com.oierbravo.createsifter.register;
 
 import com.oierbravo.createsifter.ModConstants;
-import com.oierbravo.createsifter.content.contraptions.components.meshes.*;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedMesh;
+import com.oierbravo.createsifter.content.contraptions.components.meshes.Mesh;
 import com.simibubi.create.AllItems;
 import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.AssetLookup;
@@ -12,14 +13,14 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.Tags;
 
 import static com.oierbravo.createsifter.CreateSifter.REGISTRATE;
-import static com.tterrag.registrate.providers.RegistrateRecipeProvider.inventoryTrigger;
 
 public class ModItems {
 
@@ -28,6 +29,7 @@ public class ModItems {
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(8))
                     .tag(AllTags.commonItemTag("meshes"))
+                    .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
                             .define('C', Items.STRING)
                             .define('S', Items.STICK)
@@ -43,6 +45,7 @@ public class ModItems {
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(16))
                     .tag(AllTags.commonItemTag("meshes"))
+                    .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
                             .define('C', AllItems.ANDESITE_ALLOY)
                             .define('S', Items.STICK)
@@ -57,12 +60,14 @@ public class ModItems {
             REGISTRATE.item("zinc_mesh", Mesh::new)
                     .model(AssetLookup.existingItemModel())
                     .tag(AllTags.commonItemTag("meshes"))
+                    .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .register();
     public static final ItemEntry<Mesh> BRASS_MESH =
             REGISTRATE.item("brass_mesh", Mesh::new)
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(64))
                     .tag(AllTags.commonItemTag("meshes"))
+                    .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
                             .define('C', AllItems.BRASS_INGOT)
                             .define('S', Items.STICK)
@@ -78,6 +83,7 @@ public class ModItems {
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(64))
                     .tag(AllTags.commonItemTag("meshes"))
+                    .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
                             .define('C', AllItems.STURDY_SHEET)
                             .define('S', Items.STICK)
@@ -93,6 +99,7 @@ public class ModItems {
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(64))
                     .tag(AllTags.commonItemTag("meshes"))
+                    .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .register();
 
     public static final ItemEntry<AdvancedMesh> ADVANCED_BRASS_MESH =
@@ -108,6 +115,7 @@ public class ModItems {
                             .unlockedBy("has_sifter", RegistrateRecipeProvider.has(ModBlocks.SIFTER))
                             .save(p, ModConstants.asResource("crafting/" + c.getName())))
                     .tag(AllTags.commonItemTag("meshes"))
+                    .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .register();
 
     public static final ItemEntry<AdvancedMesh> ADVANCED_STURDY_MESH =
@@ -115,6 +123,7 @@ public class ModItems {
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(256))
                     .tag(AllTags.commonItemTag("meshes"))
+                    .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
                             .define('S', AllItems.STURDY_SHEET)
                             .define('M', ModItems.STURDY_MESH)

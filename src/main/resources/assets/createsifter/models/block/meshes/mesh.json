@@ -1,9 +1,9 @@
 {
 	"credit": "Made with Blockbench",
 	"textures": {
+		"particle": "block/stripped_oak_log",
 		"frame": "block/stripped_oak_log",
-		"mesh": "createsifter:item/andesite_mesh",
-		"particle": "block/stripped_oak_log"
+		"mesh": "createsifter:item/andesite_mesh"
 	},
 	"elements": [
 		{
@@ -83,7 +83,7 @@
 			"translation": [0, 8.5, -4.5]
 		},
 		"ground": {
-			"translation": [0, 0, 0]
+			"translation": [0, 4.25, 0]
 		},
 		"gui": {
 			"rotation": [90, 0, 0],

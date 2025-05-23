@@ -11,6 +11,7 @@ import com.simibubi.create.foundation.item.render.SimpleCustomRenderer;
 import com.simibubi.create.foundation.mixin.accessor.LivingEntityAccessor;
 import net.createmod.catnip.data.TriState;
 import net.createmod.catnip.math.VecHelper;
+import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
@@ -25,6 +26,10 @@ import net.minecraft.world.flag.FeatureFlagSet;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.Enchantments;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -41,11 +46,42 @@ import net.neoforged.neoforge.common.util.FakePlayer;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 
 public abstract class AbstractMesh extends Item implements CustomUseEffectsItem, IMesh {
     public AbstractMesh(Properties pProperties) {
         super(pProperties);
+    }
+
+    @Override
+    public boolean isPrimaryItemFor(ItemStack stack, Holder<Enchantment> enchantment) {
+        return enchantment.getKey() == Enchantments.UNBREAKING;
+    }
+
+    @Override
+    public boolean isBookEnchantable(ItemStack stack, ItemStack book) {
+        ItemEnchantments itemEnchantments = EnchantmentHelper.getEnchantmentsForCrafting(book);
+        Set<Holder<Enchantment>> enchantments = itemEnchantments.keySet();
+        if(enchantments.size() > 1)
+            return false;
+        for(Holder<Enchantment> enchantment : enchantments ){
+            if(enchantment.is(Enchantments.UNBREAKING))
+                return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean supportsEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
+        if(!enchantment.is(Enchantments.UNBREAKING))
+            return false;
+        return super.supportsEnchantment(stack, enchantment);
+    }
+
+    @Override
+    public boolean isEnchantable(ItemStack stack) {
+        return true;
     }
 
     @Override
@@ -225,7 +261,7 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
 
     @Override
     public int getEnchantmentValue() {
-        return 1;
+        return 20;
     }
 
     @Override

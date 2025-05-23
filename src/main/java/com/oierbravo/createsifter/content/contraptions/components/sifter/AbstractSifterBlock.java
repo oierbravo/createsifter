@@ -1,8 +1,6 @@
 package com.oierbravo.createsifter.content.contraptions.components.sifter;
 
-import com.oierbravo.createsifter.content.contraptions.components.meshes.AbstractMesh;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.IMesh;
-import com.oierbravo.createsifter.register.ModBlockEntities;
 import com.oierbravo.createsifter.register.ModShapes;
 import com.simibubi.create.content.kinetics.base.KineticBlock;
 import com.simibubi.create.content.kinetics.simpleRelays.ICogWheel;
@@ -12,6 +10,7 @@ import net.createmod.catnip.data.Iterate;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -24,7 +23,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -42,6 +40,20 @@ public abstract class AbstractSifterBlock<BE extends BlockEntity> extends Kineti
         super(properties);
         registerDefaultState(super.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, false));
     }
+
+    public static InteractionResultHolder<ItemStack> tryToInsertMesh(BlockState state, Level world, BlockPos pos,
+                                       ItemStack stack,  boolean simulate) {
+        if (!state.hasBlockEntity())
+            return InteractionResultHolder.fail(ItemStack.EMPTY);
+
+        BlockEntity be = world.getBlockEntity(pos);
+        if (!(be instanceof AbstractSifterBlockEntity sifterBE))
+            return InteractionResultHolder.fail(ItemStack.EMPTY);
+        if(!sifterBE.tryToInsertMesh(stack,null,simulate))
+            return InteractionResultHolder.fail(ItemStack.EMPTY);
+        return InteractionResultHolder.success(ItemStack.EMPTY);
+    }
+
     @Override
     public VoxelShape getShape(BlockState state, BlockGetter worldIn, BlockPos pos, CollisionContext context) {
         return ModShapes.SIFTER;
@@ -59,7 +71,7 @@ public abstract class AbstractSifterBlock<BE extends BlockEntity> extends Kineti
 
         if(stack.getItem() instanceof IMesh){
             withBlockEntityDo(level, pos,  sifter -> {
-                ((AbstractSifterBlockEntity) sifter).insertMesh(stack, player);
+                ((AbstractSifterBlockEntity) sifter).tryToInsertMesh(stack, player, false);
             });
             return ItemInteractionResult.SUCCESS;
         }
