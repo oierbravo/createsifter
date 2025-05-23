@@ -25,6 +25,7 @@ Heavily inspired on ex nihilo sieve.
 - Advanced meshes only work with the brass sifter.
 - Configurable mesh durability.
   - By default, only applies to hand sifting.
+  - Enchantable with *Unbreaking*
 - Added zinc mesh for modpacks.
 
 ## Sifter
