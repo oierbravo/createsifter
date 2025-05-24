@@ -394,6 +394,8 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
         public @NotNull ItemStack extractItem(int slot, int amount, boolean simulate) {
             if (inputInventory == getHandlerFromIndex(getIndexForSlot(slot)))
                 return ItemStack.EMPTY;
+            if (meshInventory == getHandlerFromIndex(getIndexForSlot(slot)))
+                return ItemStack.EMPTY;
             return super.extractItem(slot, amount, simulate);
         }
 
