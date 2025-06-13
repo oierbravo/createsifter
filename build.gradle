@@ -249,7 +249,7 @@ publishing {
             url = uri("https://maven.fosil.eu/releases")
             credentials {
                 username = System.getenv()["MAVEN_USER"]
-                password = System.getenv()["MAVEN_PASSWORD"]
+                password = System.getenv()["MAVEN_PASS"]
             }
         }
     }
