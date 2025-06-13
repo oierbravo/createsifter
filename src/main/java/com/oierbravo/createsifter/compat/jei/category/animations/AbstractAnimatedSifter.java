@@ -1,15 +1,16 @@
 package com.oierbravo.createsifter.compat.jei.category.animations;
 
 import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.ByteBufferBuilder;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.content.kinetics.base.KineticBlock;
-import com.simibubi.create.foundation.fluid.FluidRenderer;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.gui.UIRenderHelper;
+import net.createmod.catnip.platform.NeoForgeCatnipServices;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -52,15 +53,16 @@ public abstract class AbstractAnimatedSifter<SIFTER extends KineticBlock> extend
 
 
         if(isWaterlogged){
-            renderWaterlogged(matrixStack);
+            renderWaterlogged(guiGraphics);
         }
         matrixStack.popPose();
     }
-    private void renderWaterlogged(PoseStack matrixStack){
+    private void renderWaterlogged(GuiGraphics guiGraphics){
         AnimatedKinetics.DEFAULT_LIGHTING.applyLighting();
         MultiBufferSource buffer = MultiBufferSource.immediate(new ByteBufferBuilder(1536));
         /*MultiBufferSource.BufferSource buffer =
                 MultiBufferSource.immediate(Tesselator.getInstance().begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX));*/
+        PoseStack matrixStack = guiGraphics.pose();
         matrixStack.pushPose();
         UIRenderHelper.flipForGuiRender(matrixStack);
         matrixStack.scale(22, 18, 22);
@@ -69,10 +71,19 @@ public abstract class AbstractAnimatedSifter<SIFTER extends KineticBlock> extend
         float to = 18f / 16f;
         matrixStack.mulPose(Axis.XP.rotationDegrees(22.5f));
         matrixStack.mulPose(Axis.YP.rotationDegrees(22.5f));
-        FluidRenderer.renderFluidBox(Fluids.WATER.getSource(),1000, from, from, from, to, to, to, buffer, matrixStack, LightTexture.FULL_BRIGHT, false,false);
-        matrixStack.popPose();
-        //buffer.endBatch();
+
+        float xMin = 2 / 16f;
+        float xMax = 2 / 16f;
+        final float yMin = 2 / 16f;
+        final float yMax = yMin + 12 / 16f * 1;
+        final float zMin = 2 / 16f;
+        final float zMax = 14 / 16f;
+        //matrixStack.scale(16, 16, 16);
+        NeoForgeCatnipServices.FLUID_RENDERER.renderFluidBox(Fluids.WATER.defaultFluidState(), from, from, from, to, to, to, guiGraphics.bufferSource(), matrixStack, LightTexture.FULL_BRIGHT, false, true);
+        guiGraphics.flush();
         Lighting.setupFor3DItems();
+
+        matrixStack.popPose();
     }
 
     abstract PartialModel getMeshModel();

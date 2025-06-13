@@ -7,10 +7,12 @@ import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeBuilder;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeManager;
 import com.oierbravo.createsifter.register.ModRecipes;
-import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
+import com.oierbravo.mechanicals.utility.MechanicalItemStackUtils;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
-import mezz.jei.api.registration.*;
+import mezz.jei.api.registration.IRecipeCatalystRegistration;
+import mezz.jei.api.registration.IRecipeCategoryRegistration;
+import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -18,8 +20,8 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
-
 import java.util.List;
+import java.util.function.Supplier;
 
 @JeiPlugin
 @SuppressWarnings("unused")
@@ -36,22 +38,17 @@ public class CreateSifterJEI implements IModPlugin {
 
     @Override
     public void registerCategories(IRecipeCategoryRegistration registration) {
-        CreateRecipeCategory.Factory<SiftingRecipe> factory = SiftingCategory::new;
-        CreateRecipeCategory<SiftingRecipe> category = factory.create(SiftingCategory.INFO);
-
-        registration.addRecipeCategories(category);
+        registration.addRecipeCategories(SiftingCategory.INFO);
     }
 
     @Override
     public void registerRecipes(IRecipeRegistration registration) {
-        List<SiftingRecipe> recipes = getRecipesMerged();
-        registration.addRecipes(SiftingCategory.TYPE, getRecipesMerged());
-
+        SiftingCategory.INFO.registerRecipes(registration);
     }
 
     @Override
     public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
-        SiftingCategory.INFO.catalysts().forEach(supplier -> registration.addRecipeCatalyst(supplier.get(),SiftingCategory.TYPE));
+        SiftingCategory.INFO.registerCatalysts(registration);
     }
 
     public static ArrayListMultimap<Ingredient,SiftingRecipe> getRecipesGroupedByIngredient(){
@@ -63,10 +60,10 @@ public class CreateSifterJEI implements IModPlugin {
         });
         return groupedRecipes;
     }
-    public static List<SiftingRecipe> getRecipesMerged(){
+    public static Supplier<List<RecipeHolder<SiftingRecipe>>> getRecipesMerged(){
         ArrayListMultimap<Ingredient,SiftingRecipe> groupedRecipes = getRecipesGroupedByIngredient();
 
-        List<SiftingRecipe> mergedRecipes = new java.util.ArrayList<>(List.of());
+        List<RecipeHolder<SiftingRecipe>> mergedRecipes = new java.util.ArrayList<>(List.of());
 
         for(Ingredient key : groupedRecipes.keySet()){
             ArrayListMultimap<Item,SiftingRecipe> groupedMeshes = ArrayListMultimap.create();
@@ -90,22 +87,32 @@ public class CreateSifterJEI implements IModPlugin {
 
             }
         }
-        return mergedRecipes;
+
+        return () -> mergedRecipes;
     }
-    public static SiftingRecipe mergeJEIRecipes(String id, List<SiftingRecipe> recipes){
+    public static RecipeHolder<SiftingRecipe> mergeJEIRecipes(String id, List<SiftingRecipe> recipes){
         if(recipes.isEmpty())
             return null;
         SiftingRecipeManager.mergeRecipes(recipes);
 
         SiftingRecipeBuilder builder = new SiftingRecipeBuilder();
-            recipes.forEach(siftingRecipe ->
+            recipes.forEach(siftingRecipe -> {
                 builder.output(siftingRecipe.getResults())
-                        //.withId(ModConstants.asResource(id))
                         .requiresAdvancedSifter(siftingRecipe.advancedSifter())
                         .waterlogged(siftingRecipe.isWaterlogged())
                         .requiredMesh(siftingRecipe.getMesh())
-                        .require(siftingRecipe.getInput())
+                        .require(siftingRecipe.getInput());
+                if(!siftingRecipe.getJeiRecipeRequirements().isEmpty())
+                    builder.withRequirements(siftingRecipe.getRecipeRequirements());
+
+            }
         );
-        return builder.build();
+        SiftingRecipe resultRecipe = builder.build();
+        return new RecipeHolder<>(generateResourceLocation(resultRecipe, id),resultRecipe);
+    }
+    private static ResourceLocation generateResourceLocation(SiftingRecipe siftingRecipe, String suffix){
+        String meshPath = MechanicalItemStackUtils.getResorceLocation(siftingRecipe.getMesh()).getPath();
+        String inputPath = MechanicalItemStackUtils.getResorceLocation(siftingRecipe.getInput()).getPath();
+        return ModConstants.asResource().withPath(meshPath + "_" + inputPath + "_" + suffix);
     }
 }

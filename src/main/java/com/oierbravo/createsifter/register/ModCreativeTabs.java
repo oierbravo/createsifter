@@ -1,13 +1,17 @@
 package com.oierbravo.createsifter.register;
 
+import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModLang;
 import com.oierbravo.mechanicals.utility.MechanicalLangIdGenerator;
+import com.oierbravo.mechanicals.utility.MechanicalRegistrateDisplayItemsGenerator;
 import com.simibubi.create.AllCreativeModeTabs;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.List;
 
 import static com.oierbravo.createsifter.ModConstants.MODID;
 
@@ -21,28 +25,23 @@ public class ModCreativeTabs {
             () -> CreativeModeTab.builder()
                     .title(ModLang.translate(MechanicalLangIdGenerator.creativeTabId("main")).component())
                     .withTabsBefore(AllCreativeModeTabs.PALETTES_CREATIVE_TAB.getId())
-                    /*.displayItems((itemDisplayParameters, output) -> {
-                        List<ItemEntry<TagDependentIngredientItem>> tagDependentExclusions = List.of(
-                                AllItems.CRUSHED_OSMIUM,
-                                AllItems.CRUSHED_PLATINUM,
-                                AllItems.CRUSHED_SILVER,
-                                AllItems.CRUSHED_TIN,
-                                AllItems.CRUSHED_LEAD,
-                                AllItems.CRUSHED_QUICKSILVER,
-                                AllItems.CRUSHED_BAUXITE,
-                                AllItems.CRUSHED_URANIUM,
-                                AllItems.CRUSHED_NICKEL
-                        );
-                        for (RegistryEntry<Item, Item> entry : CreateSifter.registrate().getAll(Registries.ITEM)) {
-                            if (!(entry.get() instanceof TagDependentIngredientItem))
-                                output.accept(entry.get());
-
-                            if (entry.get() instanceof TagDependentIngredientItem && !((TagDependentIngredientItem) entry.get()).shouldHide()) {
-                                output.accept(entry.get());
-                            }
-                        }
-
-                        })*/
+                    .displayItems(
+                            MechanicalRegistrateDisplayItemsGenerator.create(true)
+                                    .withItems(CreateSifter.registrate().getAll(Registries.ITEM))
+                                    .withBlocks(CreateSifter.registrate().getAll(Registries.BLOCK))
+                                    .withTagDependentExclusions(List.of(
+                                            ModItems.PIECE_BAUXITE,
+                                            ModItems.PIECE_LEAD,
+                                            ModItems.PIECE_NICKEL,
+                                            ModItems.PIECE_OSMIUM,
+                                            ModItems.PIECE_PLATINUM,
+                                            ModItems.PIECE_SILVER,
+                                            ModItems.PIECE_QUICKSILVER,
+                                            ModItems.PIECE_PLATINUM,
+                                            ModItems.PIECE_TIN,
+                                            ModItems.PIECE_URANIUM
+                                    ))
+                    )
                     .icon(ModBlocks.SIFTER::asStack)
                     .build());
 

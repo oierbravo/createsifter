@@ -134,11 +134,6 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
 
     public static List<ItemStack> applyHandSifting(SiftingRecipe recipe) {
         return recipe.rollResults();
-
-/*        if(recipe.isPresent()){
-            return recipe.get().rollResults();
-        }
-        return Collections.singletonList(key.input());*/
     }
     public static List<ItemStack> applyHandSifting(Level world, Vec3 position, SiftingRecipe recipe) {
         return recipe.rollResults();

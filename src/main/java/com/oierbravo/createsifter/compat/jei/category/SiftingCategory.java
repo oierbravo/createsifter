@@ -1,15 +1,13 @@
 package com.oierbravo.createsifter.compat.jei.category;
 
 import com.oierbravo.createsifter.ModConstants;
-import com.oierbravo.createsifter.ModLang;
 import com.oierbravo.createsifter.compat.jei.category.animations.AbstractAnimatedSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedBrassSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedSifter;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
-import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeManager;
 import com.oierbravo.createsifter.register.ModBlocks;
+import com.oierbravo.mechanicals.compat.jei.CreateRecipeCategoryBuilder;
 import com.oierbravo.mechanicals.compat.jei.RecipeRequirementRenderer;
-import com.simibubi.create.compat.jei.EmptyBackground;
 import com.simibubi.create.compat.jei.ItemIcon;
 import com.simibubi.create.compat.jei.category.CreateRecipeCategory;
 import com.simibubi.create.content.processing.recipe.ProcessingOutput;
@@ -28,22 +26,22 @@ import net.minecraft.world.level.material.Fluids;
 import java.util.Iterator;
 import java.util.List;
 
-public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
+import static com.oierbravo.createsifter.compat.jei.CreateSifterJEI.getRecipesMerged;
 
+public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     public final static ResourceLocation UID = ModConstants.asResource(SiftingRecipe.Type.ID);
     public final static RecipeType<SiftingRecipe> TYPE = new mezz.jei.api.recipe.RecipeType<>(UID, SiftingRecipe.class);
 
-    public final static CreateRecipeCategory.Info<SiftingRecipe> INFO = new CreateRecipeCategory.Info<>(
-            TYPE,
-            ModLang.translate("recipe." + SiftingRecipe.Type.ID).component(),
-            new EmptyBackground(177, 120),
-            new ItemIcon(() -> new ItemStack(ModBlocks.SIFTER.asItem())),
-            SiftingRecipeManager::getAllHolders,
-            List.of(
-                    ModBlocks.SIFTER::asStack,
-                    ModBlocks.BRASS_SIFTER::asStack
-            )
-    );
+    @SuppressWarnings("unchecked")
+    public final static CreateRecipeCategory<SiftingRecipe> INFO = CreateRecipeCategoryBuilder
+            .builder(SiftingRecipe.class)
+            .addRecipes(getRecipesMerged())
+            .catalyst(ModBlocks.SIFTER)
+            .catalyst(ModBlocks.BRASS_SIFTER)
+            .icon(new ItemIcon(() -> new ItemStack(ModBlocks.SIFTER.asItem())))
+            .emptyBackground(177, 120)
+            .build(ModConstants.asResource("sifting"), SiftingCategory::new);
+
 
     public SiftingCategory(CreateRecipeCategory.Info<SiftingRecipe> info) {
         super(info);

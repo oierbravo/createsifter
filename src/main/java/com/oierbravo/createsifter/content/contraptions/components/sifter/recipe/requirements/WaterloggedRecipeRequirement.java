@@ -25,4 +25,5 @@ public record WaterloggedRecipeRequirement(boolean waterlogged) implements IReci
     public RecipeRequirementType<?> getType() {
         return null;
     }
+
 }

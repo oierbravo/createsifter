@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 
 import static com.oierbravo.createsifter.ModConstants.MODID;
 
-public class SiftingCompatRecipeGen extends SiftingRecipeGen{
+public class SiftingCompatRecipeGen extends SiftingRecipeGen {
     public SiftingCompatRecipeGen(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
         super(output, registries,
                 MODID,
