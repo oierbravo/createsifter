@@ -6,16 +6,15 @@ import com.mojang.blaze3d.vertex.Tesselator;
 import com.mojang.math.Axis;
 import com.simibubi.create.compat.jei.category.animations.AnimatedKinetics;
 import com.simibubi.create.content.kinetics.base.KineticBlock;
-import com.simibubi.create.foundation.fluid.FluidRenderer;
 import com.simibubi.create.foundation.gui.AllGuiTextures;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import dev.engine_room.flywheel.lib.model.baked.PartialModel;
 import net.createmod.catnip.gui.UIRenderHelper;
+import net.createmod.catnip.platform.CatnipServices;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.world.level.material.Fluids;
-import net.minecraftforge.fluids.FluidStack;
 
 public abstract class BaseAnimatedSifter<SIFTER extends KineticBlock> extends AnimatedKinetics {
     private boolean isWaterlogged = false;
@@ -70,7 +69,7 @@ public abstract class BaseAnimatedSifter<SIFTER extends KineticBlock> extends An
         float to = 18f / 16f;
         matrixStack.mulPose(Axis.XP.rotationDegrees(22.5f));
         matrixStack.mulPose(Axis.YP.rotationDegrees(22.5f));
-        FluidRenderer.renderFluidBox(Fluids.WATER.getSource(),1000, from, from, from, to, to, to, buffer, matrixStack, LightTexture.FULL_BRIGHT, false,false);
+        CatnipServices.FLUID_RENDERER.renderFluidBox(Fluids.WATER.getSource().defaultFluidState(),from, from, from, to, to, to, buffer, matrixStack, LightTexture.FULL_BRIGHT, false,false);
         matrixStack.popPose();
         buffer.endBatch();
         Lighting.setupFor3DItems();

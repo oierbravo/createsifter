@@ -4,10 +4,9 @@ package com.oierbravo.createsifter.foundation.data.recipe;
 import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModRecipeTypes;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.SiftingRecipeSerializer;
-import com.simibubi.create.foundation.data.recipe.CreateRecipeProvider;
+import com.simibubi.create.api.data.recipe.BaseRecipeProvider;
 import com.simibubi.create.foundation.recipe.IRecipeTypeInfo;
 import net.createmod.catnip.platform.CatnipServices;
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -17,17 +16,16 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Supplier;
 import java.util.function.UnaryOperator;
 
-public abstract class ModProcessingRecipeGen extends CreateRecipeProvider {
+public abstract class ModProcessingRecipeGen extends BaseRecipeProvider {
     protected static final List<ModProcessingRecipeGen> GENERATORS = new ArrayList<>();
     public ModProcessingRecipeGen(PackOutput generator) {
-        super(generator);
+        super(generator, CreateSifter.MODID);
     }
     public static void registerAll(DataGenerator gen, PackOutput output) {
         GENERATORS.add(new SiftingRecipeGen(output));
@@ -47,8 +45,8 @@ public abstract class ModProcessingRecipeGen extends CreateRecipeProvider {
             }
         });
     }
-    protected GeneratedRecipe create(String namespace,
-                                                                     Supplier<ItemLike> singleIngredient, UnaryOperator<SiftingRecipeBuilder> transform) {
+    protected BaseRecipeProvider.GeneratedRecipe create(String namespace,
+                                                        Supplier<ItemLike> singleIngredient, UnaryOperator<SiftingRecipeBuilder> transform) {
         SiftingRecipeSerializer serializer = getSerializer();
         GeneratedRecipe generatedRecipe = c -> {
             ItemLike itemLike = singleIngredient.get();

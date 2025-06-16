@@ -3,8 +3,7 @@
   "block.createsifter.crushed_end_stone": "Crushed end stone",
   "block.createsifter.dust": "Dust block",
   "block.createsifter.sifter": "Sifter",
-  "createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
-  "createsifter.tooltip.minimumspeed": "Requires %1$s RPM",
+  "config.jade.plugin_createsifter.sifter_data": "Create Sifting data",
   "create.recipe.sifting": "Sifting recipe",
   "createsifter.ponder.sifter.header": "Block sifting",
   "createsifter.ponder.sifter.text_1": "Sifter process items by sifting them",
@@ -14,6 +13,7 @@
   "createsifter.ponder.sifter.text_5": "The outputs can also be extracted by automation",
   "createsifter.recipe.sifting": "Sifting recipe",
   "createsifter.recipe.sifting.brass_required": "Brass sifter required",
+  "createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
   "createsifter.recipe.sifting.waterlogged": "Waterlogged",
   "item.createsifter.advanced_brass_mesh": "Advanced Brass Mesh",
   "item.createsifter.advanced_custom_mesh": "Advanced Custom Mesh",
@@ -22,7 +22,5 @@
   "item.createsifter.custom_mesh": "Custom Mesh",
   "item.createsifter.string_mesh": "String Mesh",
   "item.createsifter.zinc_mesh": "Zinc Mesh",
-  "itemGroup.createsifter:main": "Create sifting",
-  "config.jade.plugin_createsifter.sifter_data": "Sifter data",
-  "createsifter.tooltip.mesh": "Mesh: %s"
+  "itemGroup.createsifter:main": "Create sifting"
 }
