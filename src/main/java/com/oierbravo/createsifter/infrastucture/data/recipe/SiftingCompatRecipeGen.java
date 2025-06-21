@@ -4,6 +4,7 @@ import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeBuilder;
 import com.oierbravo.createsifter.register.ModBlocks;
 import com.oierbravo.mechanicals.foundation.data.CompatMods;
+import com.simibubi.create.AllItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
@@ -98,5 +99,23 @@ public class SiftingCompatRecipeGen extends SiftingRecipeGen {
                 .forCompat(CompatMods.AA)
                 .saveCompat(recipeOutput);
 
+        createBrass("br_gravel").require(Blocks.GRAVEL)
+                .output(0.1f, AllItems.CRUSHED_URANIUM.get(), 1)
+                .forCompat(CompatMods.BR)
+                .saveCompat(recipeOutput);
+
+        createAdvancedBrass("br_gravel").require(Blocks.GRAVEL)
+                .output(0.2f, AllItems.CRUSHED_URANIUM.get(), 1)                .forCompat(CompatMods.BR)
+                .saveCompat(recipeOutput);
+
+
+        createAndesite("fluxnetworks_dust").require(ModBlocks.DUST)
+                .output(CompatMods.FN,"flux_dust",.01f,1)
+                .forCompat(CompatMods.FN)
+                .saveCompat(recipeOutput);
+        createBrass("fluxnetworks_dust").require(ModBlocks.DUST)
+                .output(CompatMods.FN,"flux_dust",.05f,1)
+                .forCompat(CompatMods.FN)
+                .saveCompat(recipeOutput);
     }
 }

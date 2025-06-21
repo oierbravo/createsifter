@@ -1,0 +1,23 @@
+{
+  "neoforge:conditions": [
+    {
+      "type": "neoforge:mod_loaded",
+      "modid": "fluxnetworks"
+    }
+  ],
+  "type": "createsifter:sifting",
+  "input": {
+    "item": "createsifter:dust"
+  },
+  "mesh": {
+    "count": 1,
+    "id": "createsifter:brass_mesh"
+  },
+  "processingTime": 500,
+  "results": [
+    {
+      "chance": 0.05,
+      "id": "fluxnetworks:flux_dust"
+    }
+  ]
+}

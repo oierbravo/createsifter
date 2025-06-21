@@ -179,6 +179,12 @@ dependencies {
     //runtimeOnly("curse.maven:ars-nouveau-401955:6333245")
     runtimeOnly("curse.maven:geckolib-388172:6304958")
     runtimeOnly("curse.maven:applied-energistics-2-223794:6225422")
+
+    implementation("curse.maven:extreme-reactors-250277:6648747")
+    implementation("curse.maven:zerocore-247921:6648746")
+
+
+    runtimeOnly("curse.maven:flux-networks-248020:6089446")
     //runtimeOnly("curse.maven:ex-deorum-901420:6162365")
 
 }

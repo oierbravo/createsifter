@@ -1,9 +1,6 @@
 package com.oierbravo.createsifter.infrastucture.data;
 
-import com.oierbravo.createsifter.infrastucture.data.recipe.CraftingRecipeGen;
-import com.oierbravo.createsifter.infrastucture.data.recipe.MillingAndCrushingRecipeGen;
-import com.oierbravo.createsifter.infrastucture.data.recipe.SiftingCompatRecipeGen;
-import com.oierbravo.createsifter.infrastucture.data.recipe.SiftingRecipeGen;
+import com.oierbravo.createsifter.infrastucture.data.recipe.*;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.PackOutput;
@@ -24,6 +21,7 @@ public class ModDataGen {
             generator.addProvider(true, new SiftingCompatRecipeGen(output, lookupProvider));
             generator.addProvider(true, new MillingAndCrushingRecipeGen(output, lookupProvider));
             generator.addProvider(true, new CraftingRecipeGen(output, lookupProvider));
+            generator.addProvider(true, new SmeltingRecipeGen(output, lookupProvider));
         }
     }
 }
