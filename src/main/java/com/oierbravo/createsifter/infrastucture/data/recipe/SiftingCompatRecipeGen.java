@@ -101,21 +101,37 @@ public class SiftingCompatRecipeGen extends SiftingRecipeGen {
 
         createBrass("br_gravel").require(Blocks.GRAVEL)
                 .output(0.1f, AllItems.CRUSHED_URANIUM.get(), 1)
-                .forCompat(CompatMods.BR)
+                .forCompat(CompatMods.BIG_R)
                 .saveCompat(recipeOutput);
 
         createAdvancedBrass("br_gravel").require(Blocks.GRAVEL)
-                .output(0.2f, AllItems.CRUSHED_URANIUM.get(), 1)                .forCompat(CompatMods.BR)
+                .output(0.2f, AllItems.CRUSHED_URANIUM.get(), 1)
+                .forCompat(CompatMods.BIG_R)
                 .saveCompat(recipeOutput);
 
 
         createAndesite("fluxnetworks_dust").require(ModBlocks.DUST)
-                .output(CompatMods.FN,"flux_dust",.01f,1)
-                .forCompat(CompatMods.FN)
+                .output(CompatMods.FLUX_N,"flux_dust",.01f,1)
+                .forCompat(CompatMods.FLUX_N)
                 .saveCompat(recipeOutput);
         createBrass("fluxnetworks_dust").require(ModBlocks.DUST)
-                .output(CompatMods.FN,"flux_dust",.05f,1)
-                .forCompat(CompatMods.FN)
+                .output(CompatMods.FLUX_N,"flux_dust",.05f,1)
+                .forCompat(CompatMods.FLUX_N)
+                .saveCompat(recipeOutput);
+
+
+        createString("fd_string_dirt").require(Blocks.DIRT)
+                .output(CompatMods.FARM_D, "cabbage_seeds",0.05f,1)
+                .output(CompatMods.FARM_D, "tomato_seeds",0.05f,1)
+                .output(CompatMods.FARM_D, "rice",0.05f,1)
+                .forCompat(CompatMods.FARM_D)
+                .saveCompat(recipeOutput);
+
+        createAndesite("fd_dirt").require(Blocks.DIRT)
+                .output(CompatMods.FARM_D, "cabbage_seeds",0.1f,1)
+                .output(CompatMods.FARM_D, "tomato_seeds",0.1f,1)
+                .output(CompatMods.FARM_D, "rice",0.1f,1)
+                .forCompat(CompatMods.FARM_D)
                 .saveCompat(recipeOutput);
     }
 }

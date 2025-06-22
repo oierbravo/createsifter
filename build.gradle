@@ -185,6 +185,7 @@ dependencies {
 
 
     runtimeOnly("curse.maven:flux-networks-248020:6089446")
+    runtimeOnly("curse.maven:farmers-delight-398521:6597295")
     //runtimeOnly("curse.maven:ex-deorum-901420:6162365")
 
 }

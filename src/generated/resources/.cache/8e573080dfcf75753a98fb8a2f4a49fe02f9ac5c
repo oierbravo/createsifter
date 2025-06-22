@@ -1,4 +1,4 @@
-// 1.21.1	2025-05-18T14:16:36.499247517	Sifting recipes recipes.
+// 1.21.1	2025-06-22T22:28:46.320019196	Sifting recipes recipes.
 b7a9544e59f933cc71305692fe1809cb9a163888 data/createsifter/advancement/recipes/sifting/crushed_basalt_advance_sturdy.json
 f82f348be784c6a3e12b21af326b6610927a7065 data/createsifter/advancement/recipes/sifting/crushed_basalt_sturdy.json
 1e676b88063fcbc0d97c5aac7e820e3ecea39603 data/createsifter/advancement/recipes/sifting/crushed_end_stone_advance_sturdy.json
@@ -39,5 +39,5 @@ a4cffdeb08eb586ccc5df9688d5e32201979cf1b data/createsifter/recipe/sifting/leaves
 61c88aafb773935846560423012d7a444a5a8463 data/createsifter/recipe/sifting/leaves_string.json
 55bef649186bebfa2c10ae22fbafc7edc0f2d262 data/createsifter/recipe/sifting/sand_andesite.json
 d1668fcbb84d35693420493b9795351cae2ed47a data/createsifter/recipe/sifting/sand_brass.json
-140170d0b5da7b52f2c7c23586a80edd3e0fc53e data/createsifter/recipe/sifting/soul_sand_advanced_brass.json
-0b84b4ab9630abdc94db0c9de225ec40f036b43e data/createsifter/recipe/sifting/soul_sand_brass.json
+72563e61e8bac0ebdc17f510271c7dfaaa2ee3ce data/createsifter/recipe/sifting/soul_sand_advanced_brass.json
+49bfb14d07e0398c5e6f688e4a665efe222bf6d0 data/createsifter/recipe/sifting/soul_sand_brass.json

@@ -192,12 +192,14 @@ public class SiftingRecipeGen extends AbstractMechanicalRecipeGenerator<SiftingR
 
         createBrass("soul_sand").require(Blocks.SOUL_SAND)
                 .output(.10f, Items.QUARTZ,1)
+                .output(.05f, Items.NETHER_WART,1)
                 .output(.10f, AllItems.EXP_NUGGET.get(), 1)
                 .save(recipeOutput);
 
         createAdvancedBrass("soul_sand").require(Blocks.SOUL_SAND)
                 .output(.45f, Items.QUARTZ,1)
                 .output(.15f, Items.QUARTZ,1)
+                .output(.10f, Items.NETHER_WART,1)
                 .output(.05f, Items.GHAST_TEAR,1)
                 .output(.20f, AllItems.EXP_NUGGET.get(), 1)
                 .save(recipeOutput);

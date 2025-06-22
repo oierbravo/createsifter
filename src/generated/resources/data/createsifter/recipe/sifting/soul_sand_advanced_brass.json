@@ -18,6 +18,10 @@
       "id": "minecraft:quartz"
     },
     {
+      "chance": 0.1,
+      "id": "minecraft:nether_wart"
+    },
+    {
       "chance": 0.05,
       "id": "minecraft:ghast_tear"
     },

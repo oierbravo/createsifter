@@ -1,4 +1,4 @@
-// 1.21.1	2025-06-20T14:08:25.635251106	Sifting Compat recipes recipes.
+// 1.21.1	2025-06-22T22:40:24.564710727	Sifting Compat recipes recipes.
 1ba15655df84314f7292c595e41b4406a5b0ff2a data/createsifter/advancement/recipes/sifting/aa_dirt_andesite.json
 ec187eb2efcb4be0fd2f8a7779bd44cbabfb9299 data/createsifter/advancement/recipes/sifting/aa_gravel_andesite.json
 835fc16895c391b43c0047c64d29ce79c7e4e5db data/createsifter/advancement/recipes/sifting/aa_gravel_brass.json
@@ -14,6 +14,8 @@ c0604be3dc20208f6d174ae18c2155d4e9a1a523 data/createsifter/advancement/recipes/s
 da0ef07123544d112283b0463794cb976b863362 data/createsifter/advancement/recipes/sifting/br_gravel_brass.json
 d3f8ee6e01dbce2c54a13728bd1bd0ba5f4daecf data/createsifter/advancement/recipes/sifting/enderio_dust_andesite.json
 4201775e21702dd031ba877cee9372ef244c0f66 data/createsifter/advancement/recipes/sifting/enderio_dust_brass.json
+0a9b54bd132b64252e8206b4ddeabcb35f5921e6 data/createsifter/advancement/recipes/sifting/fd_dirt_andesite.json
+92ef0aebb1de26168ef6d7c44ac1ac9c4959c9d0 data/createsifter/advancement/recipes/sifting/fd_string_dirt_string.json
 5a60f054fba85377e5dd49a673a9e8d2c87ca377 data/createsifter/advancement/recipes/sifting/fluxnetworks_dust_andesite.json
 000c9b8c5a1c1f54a20fb9566d29c044aca2bbca data/createsifter/advancement/recipes/sifting/fluxnetworks_dust_brass.json
 1107569cb24d41235cbe8666e0d8909ee14e0838 data/createsifter/recipe/sifting/compat/aa_dirt_andesite.json
@@ -31,5 +33,7 @@ a2cf8708debab698d724529c844fdde341d58d80 data/createsifter/recipe/sifting/compat
 d21ebeac38de2208235154e8ca795937a2561574 data/createsifter/recipe/sifting/compat/br_gravel_brass.json
 d5dfafeab807af425f8d05159e7d112c470bec90 data/createsifter/recipe/sifting/compat/enderio_dust_andesite.json
 0958038a4fb0b3e79e2eefdebf7b6b0183b354e8 data/createsifter/recipe/sifting/compat/enderio_dust_brass.json
+7c5e9641003dfca5ab83c9bb34544af29401409f data/createsifter/recipe/sifting/compat/fd_dirt_andesite.json
+0c47898e072f2ff67b9b00cca68de83df5dbf9f9 data/createsifter/recipe/sifting/compat/fd_string_dirt_string.json
 454eda984140c4d84c6db59b6fab65b947ae5e56 data/createsifter/recipe/sifting/compat/fluxnetworks_dust_andesite.json
 34a211d4611a20351fd360e6ccf5dd22d032fbec data/createsifter/recipe/sifting/compat/fluxnetworks_dust_brass.json
