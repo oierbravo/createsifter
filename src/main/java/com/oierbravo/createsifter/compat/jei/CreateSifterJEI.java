@@ -21,7 +21,6 @@ import net.minecraft.world.item.crafting.RecipeHolder;
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.List;
-import java.util.function.Supplier;
 
 @JeiPlugin
 @SuppressWarnings("unused")
@@ -60,7 +59,7 @@ public class CreateSifterJEI implements IModPlugin {
         });
         return groupedRecipes;
     }
-    public static Supplier<List<RecipeHolder<SiftingRecipe>>> getRecipesMerged(){
+    public static List<RecipeHolder<SiftingRecipe>> getRecipesMerged(){
         ArrayListMultimap<Ingredient,SiftingRecipe> groupedRecipes = getRecipesGroupedByIngredient();
 
         List<RecipeHolder<SiftingRecipe>> mergedRecipes = new java.util.ArrayList<>(List.of());
@@ -87,8 +86,7 @@ public class CreateSifterJEI implements IModPlugin {
 
             }
         }
-
-        return () -> mergedRecipes;
+        return mergedRecipes;
     }
     public static RecipeHolder<SiftingRecipe> mergeJEIRecipes(String id, List<SiftingRecipe> recipes){
         if(recipes.isEmpty())

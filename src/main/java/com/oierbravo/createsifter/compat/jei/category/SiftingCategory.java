@@ -1,6 +1,7 @@
 package com.oierbravo.createsifter.compat.jei.category;
 
 import com.oierbravo.createsifter.ModConstants;
+import com.oierbravo.createsifter.compat.jei.CreateSifterJEI;
 import com.oierbravo.createsifter.compat.jei.category.animations.AbstractAnimatedSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedBrassSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedSifter;
@@ -26,8 +27,6 @@ import net.minecraft.world.level.material.Fluids;
 import java.util.Iterator;
 import java.util.List;
 
-import static com.oierbravo.createsifter.compat.jei.CreateSifterJEI.getRecipesMerged;
-
 public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     public final static ResourceLocation UID = ModConstants.asResource(SiftingRecipe.Type.ID);
     public final static RecipeType<SiftingRecipe> TYPE = new mezz.jei.api.recipe.RecipeType<>(UID, SiftingRecipe.class);
@@ -35,7 +34,7 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     @SuppressWarnings("unchecked")
     public final static CreateRecipeCategory<SiftingRecipe> INFO = CreateRecipeCategoryBuilder
             .builder(SiftingRecipe.class)
-            .addRecipes(getRecipesMerged())
+            .addRecipes(CreateSifterJEI::getRecipesMerged)
             .catalyst(ModBlocks.SIFTER)
             .catalyst(ModBlocks.BRASS_SIFTER)
             .icon(new ItemIcon(() -> new ItemStack(ModBlocks.SIFTER.asItem())))

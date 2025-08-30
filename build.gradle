@@ -171,6 +171,7 @@ dependencies {
     }
 
     implementation("curse.maven:jade-324717:${jade_id}")
+   // implementation("curse.maven:kubejs-tweaks-1306367:6934294")
 
 
     implementation("curse.maven:enderio-64578:6307311")
