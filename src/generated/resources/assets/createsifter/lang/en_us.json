@@ -16,6 +16,7 @@
   "createsifter.recipe.sifting": "Sifting recipe",
   "createsifter.recipe.sifting.minimumspeed": "%1$s RPM",
   "createsifter.tooltip.mesh": "Mesh: %s",
+  "emi.category.createsifter.sifting": "Sifting recipe",
   "item.createsifter.advanced_brass_mesh": "Advanced Brass Mesh",
   "item.createsifter.advanced_custom_mesh": "Advanced Custom Mesh",
   "item.createsifter.advanced_sturdy_mesh": "Advanced Sturdy Mesh",

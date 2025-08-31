@@ -83,6 +83,12 @@ sourceSets.main {
         if (!kubejs_enabled.toBoolean()) {
             exclude 'com/oierbravo/' + mod_id + '/compat/kubejs/**'
         }
+        if (!recipe_viewer.equals("jei")) {
+            exclude 'com/oierbravo/' + mod_id + '/compat/jei/**'
+        }
+        if (!recipe_viewer.equals("emi")) {
+            exclude 'com/oierbravo/' + mod_id + '/compat/emi/**'
+        }
     }
     resources {
         srcDir 'src/generated/resources'
@@ -141,6 +147,10 @@ repositories {
             includeGroup "dev.architectury"
         }
     }
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+    }
     mavenLocal()
     flatDir {
         dirs 'libs'
@@ -159,7 +169,6 @@ dependencies {
     implementation("com.tterrag.registrate:Registrate:${registrate_version}")
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:${mixin_extras_version}"))
 
-    implementation("mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}")
 
     compileOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${curios_minecraft_version}:api")
     runtimeOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${curios_minecraft_version}")
@@ -168,6 +177,13 @@ dependencies {
         compileOnly("dev.architectury:architectury-neoforge:$architectury_version")
         api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
         interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs_version") // optional
+    }
+
+    if(recipe_viewer.equals("jei")){
+        implementation("mezz.jei:jei-${jei_minecraft_version}-neoforge:${jei_version}")
+    } else if(recipe_viewer.equals("emi")){
+        compileOnly "dev.emi:emi-neoforge:${emi_version}:api"
+        runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
     }
 
     implementation("curse.maven:jade-324717:${jade_id}")

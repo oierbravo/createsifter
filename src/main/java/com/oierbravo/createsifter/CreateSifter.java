@@ -71,6 +71,7 @@ public class CreateSifter {
             .add("recipe.sifting", "Sifting recipe")
             .add("recipe.sifting.minimumspeed", "%1$s RPM")
             .add("tooltip.mesh", "Mesh: %s")
+            .addRaw("emi.category.createsifter.sifting", "Sifting recipe")
             .addRecipeRequirementTitle("advanced_sifter", "Brass sifter")
             .addRecipeRequirementValue("advanced_sifter", "")
             .addRecipeRequirementMissing("advanced_sifter", "Requires brass sifter")
