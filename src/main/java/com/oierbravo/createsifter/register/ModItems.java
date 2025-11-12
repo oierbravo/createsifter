@@ -4,16 +4,18 @@ import com.oierbravo.createsifter.ModConstants;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.AdvancedMesh;
 import com.oierbravo.createsifter.content.contraptions.components.meshes.Mesh;
 import com.simibubi.create.AllItems;
-import com.simibubi.create.AllTags;
 import com.simibubi.create.foundation.data.AssetLookup;
-import com.simibubi.create.foundation.data.recipe.CompatMetals;
+import com.simibubi.create.foundation.data.recipe.CommonMetal;
 import com.simibubi.create.foundation.item.TagDependentIngredientItem;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
@@ -28,7 +30,7 @@ public class ModItems {
             REGISTRATE.item("string_mesh", Mesh::new)
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(8))
-                    .tag(AllTags.commonItemTag("meshes"))
+                    .tag(commonItemTag("meshes"))
                     .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
                             .define('C', Items.STRING)
@@ -44,7 +46,7 @@ public class ModItems {
             REGISTRATE.item("andesite_mesh", Mesh::new)
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(16))
-                    .tag(AllTags.commonItemTag("meshes"))
+                    .tag(commonItemTag("meshes"))
                     .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
                             .define('C', AllItems.ANDESITE_ALLOY)
@@ -59,14 +61,14 @@ public class ModItems {
     public static final ItemEntry<Mesh> ZINC_MESH =
             REGISTRATE.item("zinc_mesh", Mesh::new)
                     .model(AssetLookup.existingItemModel())
-                    .tag(AllTags.commonItemTag("meshes"))
+                    .tag(commonItemTag("meshes"))
                     .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .register();
     public static final ItemEntry<Mesh> BRASS_MESH =
             REGISTRATE.item("brass_mesh", Mesh::new)
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(64))
-                    .tag(AllTags.commonItemTag("meshes"))
+                    .tag(commonItemTag("meshes"))
                     .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
                             .define('C', AllItems.BRASS_INGOT)
@@ -82,7 +84,7 @@ public class ModItems {
             REGISTRATE.item("sturdy_mesh", Mesh::new)
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(64))
-                    .tag(AllTags.commonItemTag("meshes"))
+                    .tag(commonItemTag("meshes"))
                     .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
                             .define('C', AllItems.STURDY_SHEET)
@@ -98,7 +100,7 @@ public class ModItems {
             REGISTRATE.item("custom_mesh", Mesh::new)
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(64))
-                    .tag(AllTags.commonItemTag("meshes"))
+                    .tag(commonItemTag("meshes"))
                     .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .register();
 
@@ -114,7 +116,7 @@ public class ModItems {
                             .pattern(" S ")
                             .unlockedBy("has_sifter", RegistrateRecipeProvider.has(ModBlocks.SIFTER))
                             .save(p, ModConstants.asResource("crafting/" + c.getName())))
-                    .tag(AllTags.commonItemTag("meshes"))
+                    .tag(commonItemTag("meshes"))
                     .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .register();
 
@@ -122,7 +124,7 @@ public class ModItems {
             REGISTRATE.item("advanced_sturdy_mesh", AdvancedMesh::new)
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(256))
-                    .tag(AllTags.commonItemTag("meshes"))
+                    .tag(commonItemTag("meshes"))
                     .tag(Tags.Items.ENCHANTABLES, ItemTags.DURABILITY_ENCHANTABLE)
                     .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
                             .define('S', AllItems.STURDY_SHEET)
@@ -138,7 +140,7 @@ public class ModItems {
             REGISTRATE.item("advanced_custom_mesh", AdvancedMesh::new)
                     .model(AssetLookup.existingItemModel())
                     .properties(properties -> properties.durability(256))
-                    .tag(AllTags.commonItemTag("meshes"))
+                    .tag(commonItemTag("meshes"))
                     .register();
 
 
@@ -163,21 +165,21 @@ public class ModItems {
             PIECE_ZINC = metalPiece("zinc", AllItems.CRUSHED_ZINC);
 
     public static final ItemEntry<TagDependentIngredientItem>
-            PIECE_OSMIUM = compatMetalPiece(CompatMetals.OSMIUM, AllItems.CRUSHED_OSMIUM),
-            PIECE_PLATINUM = compatMetalPiece(CompatMetals.PLATINUM, AllItems.CRUSHED_PLATINUM),
-            PIECE_SILVER = compatMetalPiece(CompatMetals.SILVER, AllItems.CRUSHED_SILVER),
-            PIECE_TIN = compatMetalPiece(CompatMetals.TIN, AllItems.CRUSHED_TIN),
-            PIECE_LEAD = compatMetalPiece(CompatMetals.LEAD, AllItems.CRUSHED_LEAD),
-            PIECE_QUICKSILVER = compatMetalPiece(CompatMetals.QUICKSILVER, AllItems.CRUSHED_QUICKSILVER),
-            PIECE_BAUXITE = compatMetalPiece(CompatMetals.ALUMINUM, AllItems.CRUSHED_BAUXITE),
-            PIECE_URANIUM = compatMetalPiece(CompatMetals.URANIUM, AllItems.CRUSHED_URANIUM),
-            PIECE_NICKEL = compatMetalPiece(CompatMetals.NICKEL, AllItems.CRUSHED_NICKEL);
+            PIECE_OSMIUM = compatMetalPiece(CommonMetal.OSMIUM, AllItems.CRUSHED_OSMIUM),
+            PIECE_PLATINUM = compatMetalPiece(CommonMetal.PLATINUM, AllItems.CRUSHED_PLATINUM),
+            PIECE_SILVER = compatMetalPiece(CommonMetal.SILVER, AllItems.CRUSHED_SILVER),
+            PIECE_TIN = compatMetalPiece(CommonMetal.TIN, AllItems.CRUSHED_TIN),
+            PIECE_LEAD = compatMetalPiece(CommonMetal.LEAD, AllItems.CRUSHED_LEAD),
+            PIECE_QUICKSILVER = compatMetalPiece(CommonMetal.QUICKSILVER, AllItems.CRUSHED_QUICKSILVER),
+            PIECE_BAUXITE = compatMetalPiece(CommonMetal.ALUMINUM, AllItems.CRUSHED_BAUXITE),
+            PIECE_URANIUM = compatMetalPiece(CommonMetal.URANIUM, AllItems.CRUSHED_URANIUM),
+            PIECE_NICKEL = compatMetalPiece(CommonMetal.NICKEL, AllItems.CRUSHED_NICKEL);
 
     private static ItemEntry<Item> pebble(String name, Block fullBlock) {
         return REGISTRATE
                 .item( name + "_pebble",
                         Item::new)
-                .tag(AllTags.commonItemTag("pebbles"))
+                .tag(commonItemTag("pebbles"))
                 .recipe((itemItemDataGenContext, registrateRecipeProvider) ->
                         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,fullBlock,1).requires(itemItemDataGenContext.get(),4)
                                 .unlockedBy("has_sifter", RegistrateRecipeProvider.has(ModBlocks.SIFTER))
@@ -188,7 +190,7 @@ public class ModItems {
         return REGISTRATE
                 .item( "raw_" + metalName + "_piece",
                         Item::new)
-                .tag(AllTags.commonItemTag("pieces"))
+                .tag(commonItemTag("pieces"))
                 .recipe((itemItemDataGenContext, registrateRecipeProvider) ->
                         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,fullItem.get() ,1).requires(itemItemDataGenContext.get(),4)
                                 .unlockedBy("has_sifter", RegistrateRecipeProvider.has(ModBlocks.SIFTER))
@@ -196,16 +198,16 @@ public class ModItems {
                 .register();
     }
 
-    private static ItemEntry<TagDependentIngredientItem> compatMetalPiece(CompatMetals metal, ItemEntry<TagDependentIngredientItem> fullItem) {
-        String metalName = metal.getName();
+    private static ItemEntry<TagDependentIngredientItem> compatMetalPiece(CommonMetal metal, ItemEntry<TagDependentIngredientItem> fullItem) {
+        String metalName = metal.name;
         return compatMetalPiece(metalName, fullItem);
     }
 
     private static ItemEntry<TagDependentIngredientItem> compatMetalPiece(String metalName, ItemEntry<TagDependentIngredientItem> fullItem) {
         return REGISTRATE
                 .item( "raw_" + metalName + "_piece",
-                        props -> new TagDependentIngredientItem(props, AllTags.commonItemTag("ores/" + metalName)))
-                .tag(AllTags.commonItemTag("pieces"))
+                        props -> new TagDependentIngredientItem(props, commonItemTag("ores/" + metalName)))
+                .tag(commonItemTag("pieces"))
                 .recipe((itemTagDependentIngredientItemDataGenContext, registrateRecipeProvider) ->
                         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,fullItem.get() ,1).requires(itemTagDependentIngredientItemDataGenContext.get(),4)
                             .unlockedBy("has_sifter", RegistrateRecipeProvider.has(ModBlocks.SIFTER))
@@ -213,6 +215,9 @@ public class ModItems {
                 .register();
     }
 
+    public static TagKey<Item> commonItemTag(String path) {
+        return TagKey.create(BuiltInRegistries.ITEM.key(), ResourceLocation.fromNamespaceAndPath("c", path));
+    }
 
     public static void register() {}
 

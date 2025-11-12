@@ -163,7 +163,7 @@ public abstract class AbstractMesh extends Item implements CustomUseEffectsItem,
             if(siftingRecipe.isEmpty())
                 return meshStack;
             List<ItemStack> sifted =
-                    SiftingRecipe.applyHandSifting(siftingRecipe.get());
+                    SiftingRecipe.applyHandSifting(siftingRecipe.get(), worldIn.random);
 
             if (worldIn.isClientSide) {
                 spawnParticles(entityLiving.getEyePosition(1)

@@ -190,7 +190,7 @@ public abstract class AbstractSifterBlockEntity extends KineticBlockEntity imple
                 stackInSlot.shrink(1);
                 inputInventory.setStackInSlot(0, stackInSlot);
 
-                siftingRecipe.rollResults()
+                siftingRecipe.rollResults(level.random)
                         .forEach(stack -> tryToInsertOutputItem(outputInventory, stack, false));
             }
         }

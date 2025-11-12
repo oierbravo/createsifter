@@ -23,7 +23,7 @@ public class SmeltingRecipeGen extends StandardMechanicalRecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(RecipeOutput recipeOutput) {
+    public void buildRecipes(RecipeOutput recipeOutput) {
         create(ResourceLocation.fromNamespaceAndPath("bigreactors","yellorium_ingot"))
                 .whenModLoaded("bigreactors")
                 .viaCooking(() -> AllItems.CRUSHED_URANIUM)
