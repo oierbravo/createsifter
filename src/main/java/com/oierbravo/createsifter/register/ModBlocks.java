@@ -11,10 +11,14 @@ import com.simibubi.create.foundation.data.BlockStateGen;
 import com.simibubi.create.foundation.data.SharedProperties;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -37,7 +41,7 @@ public class ModBlocks {
                     .define('W', ItemTags.PLANKS)
                     .define('A', AllBlocks.ANDESITE_CASING)
                     .define('C', AllBlocks.COGWHEEL)
-                    .define('P', AllTags.commonItemTag("stones"))
+                    .define('P', commonItemTag("stones"))
                     .define('S', Items.STICK)
                     .pattern("WAW")
                     .pattern("SCS")
@@ -57,8 +61,8 @@ public class ModBlocks {
             .item()
             .transform(customItemModel())
             .recipe((c, p) -> ShapedRecipeBuilder.shaped(RecipeCategory.MISC, c.get())
-                    .define('B', AllTags.commonItemTag("ingots/brass"))
-                    .define('P', AllTags.commonItemTag("plates/brass"))
+                    .define('B', commonItemTag("ingots/brass"))
+                    .define('P', commonItemTag("plates/brass"))
                     .define('R', Items.REDSTONE_BLOCK)
                     .define('S', ModBlocks.SIFTER)
                     .pattern("PPP")
@@ -81,6 +85,9 @@ public class ModBlocks {
     public static final BlockEntry<Block> CRUSHED_END_STONE = crushedBlock("end stone");
     public static final BlockEntry<Block> CRUSHED_BASALT = crushedBlock("basalt");
 
+    public static TagKey<Item> commonItemTag(String path) {
+        return TagKey.create(BuiltInRegistries.ITEM.key(), ResourceLocation.fromNamespaceAndPath("c", path));
+    }
 
     public static BlockEntry<Block> crushedBlock(String displayName){
         return REGISTRATE.block("crushed_" + displayName.toLowerCase().replace(" ", "_"), Block::new)

@@ -59,7 +59,7 @@ public class SiftingRecipeSerializer implements RecipeSerializer<SiftingRecipe> 
             instance -> instance
                     .group(
                             Ingredient.CODEC.fieldOf("input").forGetter(SiftingRecipe::getInput),
-                            ProcessingOutput.CODEC.listOf().fieldOf("results").forGetter(SiftingRecipe::getResults),
+                            ProcessingOutput.CODEC_NEW.listOf().fieldOf("results").forGetter(SiftingRecipe::getResults),
                             ItemStack.CODEC.fieldOf("mesh").forGetter(SiftingRecipe::getMesh),
                             ExtraCodecs.NON_NEGATIVE_INT.optionalFieldOf("processingTime", 0).forGetter(SiftingRecipe::getProcessingTime),
                             Codec.BOOL.optionalFieldOf("advancedSifter", false).forGetter(SiftingRecipe::advancedSifter),

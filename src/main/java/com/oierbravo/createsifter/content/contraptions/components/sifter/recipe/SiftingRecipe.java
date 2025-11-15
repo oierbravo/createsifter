@@ -11,6 +11,7 @@ import com.simibubi.create.content.processing.recipe.ProcessingOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.NonNullList;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeInput;
@@ -77,16 +78,16 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
                 .collect(Collectors.toList());
     }
 
-    public List<ItemStack> rollResults() {
-        return rollResults(this.getRollableResults());
+    public List<ItemStack> rollResults(RandomSource source) {
+        return rollResults(this.getRollableResults(), source);
     }
 
-    public List<ItemStack> rollResults(List<ProcessingOutput> rollableResults) {
+    public List<ItemStack> rollResults(List<ProcessingOutput> rollableResults, RandomSource source) {
         List<ItemStack> results = new ArrayList<>();
         for (int i = 0; i < rollableResults.size(); i++) {
             ProcessingOutput output = rollableResults.get(i);
             //ItemStack stack = i == 0 && forcedResult != null ? forcedResult.get() : output.rollOutput();
-            ItemStack stack = output.rollOutput();
+            ItemStack stack = output.rollOutput(source);
             if (!stack.isEmpty())
                 results.add(stack);
         }
@@ -132,11 +133,11 @@ public class SiftingRecipe extends AbstractMechanicalRecipe<RecipeInput, Sifting
         return SiftingRecipeManager.getRecipeForHandSifting(level, input, waterlogged).isPresent();
     }
 
-    public static List<ItemStack> applyHandSifting(SiftingRecipe recipe) {
-        return recipe.rollResults();
+    public static List<ItemStack> applyHandSifting(SiftingRecipe recipe, RandomSource source) {
+        return recipe.rollResults(source);
     }
-    public static List<ItemStack> applyHandSifting(Level world, Vec3 position, SiftingRecipe recipe) {
-        return recipe.rollResults();
+    public static List<ItemStack> applyHandSifting(Level world, Vec3 position, SiftingRecipe recipe, RandomSource source) {
+        return recipe.rollResults(source);
     }
 
     public boolean notRequiresAdvancedMesh() {
