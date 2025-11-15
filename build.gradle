@@ -174,7 +174,6 @@ dependencies {
     runtimeOnly("top.theillusivec4.curios:curios-neoforge:${curios_version}+${curios_minecraft_version}")
 
     if (kubejs_enabled.toBoolean()) {
-        compileOnly("dev.architectury:architectury-neoforge:$architectury_version")
         api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
         interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs_version") // optional
     }
@@ -190,7 +189,7 @@ dependencies {
    // implementation("curse.maven:kubejs-tweaks-1306367:6934294")
 
 
-    implementation("curse.maven:enderio-64578:6307311")
+    /*implementation("curse.maven:enderio-64578:6307311")
     runtimeOnly("curse.maven:guideme-1173950:6331224")
     runtimeOnly("curse.maven:actually-additions-228404:6329770")
     //runtimeOnly("curse.maven:ars-nouveau-401955:6333245")
@@ -202,7 +201,7 @@ dependencies {
 
 
     runtimeOnly("curse.maven:flux-networks-248020:6089446")
-    runtimeOnly("curse.maven:farmers-delight-398521:6597295")
+    runtimeOnly("curse.maven:farmers-delight-398521:6597295")*/
     //runtimeOnly("curse.maven:ex-deorum-901420:6162365")
 
 }
