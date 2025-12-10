@@ -1,7 +1,6 @@
 package com.oierbravo.createsifter.compat.jei.category;
 
 import com.oierbravo.createsifter.ModConstants;
-import com.oierbravo.createsifter.compat.jei.CreateSifterJEI;
 import com.oierbravo.createsifter.compat.jei.category.animations.AbstractAnimatedSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedBrassSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedSifter;
@@ -27,6 +26,8 @@ import net.minecraft.world.level.material.Fluids;
 import java.util.Iterator;
 import java.util.List;
 
+import static com.oierbravo.createsifter.compat.jei.CreateSifterJEI.getRecipesMerged;
+
 public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     public final static ResourceLocation UID = ModConstants.asResource(SiftingRecipe.Type.ID);
     public final static RecipeType<SiftingRecipe> TYPE = new mezz.jei.api.recipe.RecipeType<>(UID, SiftingRecipe.class);
@@ -34,7 +35,7 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     @SuppressWarnings("unchecked")
     public final static CreateRecipeCategory<SiftingRecipe> INFO = CreateRecipeCategoryBuilder
             .builder(SiftingRecipe.class)
-            .addRecipes(CreateSifterJEI::getRecipesMerged)
+            .addRecipes(getRecipesMerged())
             .catalyst(ModBlocks.SIFTER)
             .catalyst(ModBlocks.BRASS_SIFTER)
             .icon(new ItemIcon(() -> new ItemStack(ModBlocks.SIFTER.asItem())))
@@ -75,14 +76,14 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
 
 
     public void draw(SiftingRecipe recipe, IRecipeSlotsView iRecipeSlotsView, GuiGraphics graphics, double mouseX, double mouseY) {
-       List<ProcessingOutput> results = recipe.getRollableResults();
-       boolean single = results.size() == 1;
-       AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 20, 2); // Input arrow
-       AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 50, 32); //Output arrow
+        List<ProcessingOutput> results = recipe.getRollableResults();
+        boolean single = results.size() == 1;
+        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 20, 2); // Input arrow
+        AllGuiTextures.JEI_DOWN_ARROW.render(graphics, 50, 32); //Output arrow
 
-       drawSifter(graphics, recipe.requiresAdvancedSifter(), recipe.isWaterlogged());
-       //drawRequirements(recipe, graphics, 67, 4);
-       RecipeRequirementRenderer.drawRequirements(recipe,graphics, 67,4);
+        drawSifter(graphics, recipe.requiresAdvancedSifter(), recipe.isWaterlogged());
+        //drawRequirements(recipe, graphics, 67, 4);
+        RecipeRequirementRenderer.drawRequirements(recipe,graphics, 67,4);
 
     }
 
