@@ -1,11 +1,11 @@
 package com.oierbravo.createsifter.compat.jei.category;
 
 import com.oierbravo.createsifter.ModConstants;
-import com.oierbravo.createsifter.compat.jei.CreateSifterJEI;
 import com.oierbravo.createsifter.compat.jei.category.animations.AbstractAnimatedSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedBrassSifter;
 import com.oierbravo.createsifter.compat.jei.category.animations.AnimatedSifter;
 import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipe;
+import com.oierbravo.createsifter.content.contraptions.components.sifter.recipe.SiftingRecipeManager;
 import com.oierbravo.createsifter.register.ModBlocks;
 import com.oierbravo.mechanicals.compat.jei.CreateRecipeCategoryBuilder;
 import com.oierbravo.mechanicals.compat.jei.RecipeRequirementRenderer;
@@ -34,7 +34,7 @@ public class SiftingCategory extends CreateRecipeCategory<SiftingRecipe> {
     @SuppressWarnings("unchecked")
     public final static CreateRecipeCategory<SiftingRecipe> INFO = CreateRecipeCategoryBuilder
             .builder(SiftingRecipe.class)
-            .addRecipes(CreateSifterJEI::getRecipesMerged)
+            .addRecipes(SiftingRecipeManager::getRecipesMerged)
             .catalyst(ModBlocks.SIFTER)
             .catalyst(ModBlocks.BRASS_SIFTER)
             .icon(new ItemIcon(() -> new ItemStack(ModBlocks.SIFTER.asItem())))
