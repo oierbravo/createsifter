@@ -6,9 +6,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class ModShapes {
 
-    public static final VoxelShape SIFTER = shape(0, 0, 0, 16, 6, 16).add(2, 6, 2, 14, 13, 14)
-			.add(0, 13, 0, 16, 16, 16)
-			.build();
+    public static final VoxelShape SIFTER = Block.box(0, 0, 0, 16, 16, 16);
 
     private static AllShapes.Builder shape(VoxelShape shape) {
         return new AllShapes.Builder(shape);
