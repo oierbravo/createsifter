@@ -1,19 +1,20 @@
 {
+	"format_version": "1.21.11",
 	"credit": "Made with Blockbench",
 	"parent": "block/block",
-	"render_type": "minecraft:translucent",
 	"texture_size": [32, 32],
 	"textures": {
+		"3": "create:block/axis",
+		"4": "create:block/axis_top",
 		"5": "create:block/flywheel",
 		"6": "create:block/brass_gearbox",
-		"10": "create:block/cogwheel_axis",
 		"particle": "createsifter:block/brass_sifter_top"
 	},
 	"elements": [
 		{
 			"name": "Gear5",
-			"from": [6.5, 5.5, -1],
-			"to": [9.5, 9.5, 17],
+			"from": [6.5, 6, -1],
+			"to": [9.5, 10, 17],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 7, 8]},
 			"faces": {
 				"north": {"uv": [13, 5.5, 15, 7], "rotation": 90, "texture": "#5"},
@@ -26,8 +27,8 @@
 		},
 		{
 			"name": "Gear6",
-			"from": [6.5, 5.5, -1],
-			"to": [9.5, 9.5, 17],
+			"from": [6.5, 6, -1],
+			"to": [9.5, 10, 17],
 			"rotation": {"angle": 45, "axis": "y", "origin": [8, 7, 8]},
 			"faces": {
 				"north": {"uv": [13, 5.5, 15, 7], "rotation": 90, "texture": "#5"},
@@ -40,8 +41,8 @@
 		},
 		{
 			"name": "Gear7",
-			"from": [-1, 5.5, 6.5],
-			"to": [17, 9.5, 9.5],
+			"from": [-1, 6, 6.5],
+			"to": [17, 10, 9.5],
 			"rotation": {"angle": 0, "axis": "y", "origin": [8, 7, 8]},
 			"faces": {
 				"north": {"uv": [13, 7, 15, 16], "rotation": 90, "texture": "#5"},
@@ -54,8 +55,8 @@
 		},
 		{
 			"name": "Gear8",
-			"from": [-1, 5.5, 6.5],
-			"to": [17, 9.5, 9.5],
+			"from": [-1, 6, 6.5],
+			"to": [17, 10, 9.5],
 			"rotation": {"angle": 45, "axis": "y", "origin": [8, 7, 8]},
 			"faces": {
 				"north": {"uv": [13, 7, 15, 16], "rotation": 90, "texture": "#5"},
@@ -81,15 +82,14 @@
 		},
 		{
 			"name": "GearCaseOuter",
-			"from": [4, 6, 4],
-			"to": [12, 10, 12],
+			"from": [4, 6.5, 4],
+			"to": [12, 10.5, 12],
 			"faces": {
 				"north": {"uv": [0, 3.5, 4, 5.5], "texture": "#5"},
-				"east": {"uv": [0, 4, 4, 6], "texture": "#missing"},
+				"east": {"uv": [0, 3.5, 4, 5.5], "texture": "#5"},
 				"south": {"uv": [0, 3.5, 4, 5.5], "texture": "#5"},
 				"west": {"uv": [0, 3.5, 4, 5.5], "texture": "#5"},
-				"up": {"uv": [4, 4, 12, 12], "texture": "#6"},
-				"down": {"uv": [0, 0, 4, 4], "texture": "#missing"}
+				"up": {"uv": [4, 4, 12, 12], "texture": "#6"}
 			}
 		},
 		{
@@ -97,12 +97,11 @@
 			"from": [6, 0, 6],
 			"to": [10, 6, 10],
 			"faces": {
-				"north": {"uv": [6, 0, 10, 5], "texture": "#10"},
-				"east": {"uv": [6, 11, 10, 16], "texture": "#10"},
-				"south": {"uv": [6, 5, 10, 10], "texture": "#10"},
-				"west": {"uv": [6, 0, 10, 5], "texture": "#10"},
-				"up": {"uv": [0, 0, 2, 2], "texture": "#10"},
-				"down": {"uv": [6, 1, 10, 4], "texture": "#10"}
+				"north": {"uv": [6, 10, 10, 16], "texture": "#3"},
+				"east": {"uv": [6, 10, 10, 16], "texture": "#3"},
+				"south": {"uv": [6, 10, 10, 16], "texture": "#3"},
+				"west": {"uv": [6, 10, 10, 16], "texture": "#3"},
+				"down": {"uv": [6, 6, 10, 10], "texture": "#4"}
 			}
 		}
 	],
@@ -110,6 +109,7 @@
 		{
 			"name": "cogwheel",
 			"origin": [8, 8, 8],
+			"scope": 0,
 			"color": 0,
 			"children": [
 				0,
@@ -119,6 +119,7 @@
 				{
 					"name": "cogwheel",
 					"origin": [8, 8, 8],
+					"scope": 0,
 					"color": 0,
 					"children": [4, 5, 6]
 				}
