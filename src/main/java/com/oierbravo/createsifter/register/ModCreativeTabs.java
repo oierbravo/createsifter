@@ -2,7 +2,7 @@ package com.oierbravo.createsifter.register;
 
 import com.oierbravo.createsifter.CreateSifter;
 import com.oierbravo.createsifter.ModLang;
-import com.oierbravo.mechanicals.utility.MechanicalLangIdGenerator;
+import com.oierbravo.mechanicals.utility.LangIdGenerator;
 import com.oierbravo.mechanicals.utility.MechanicalRegistrateDisplayItemsGenerator;
 import com.simibubi.create.AllCreativeModeTabs;
 import net.minecraft.core.registries.Registries;
@@ -23,7 +23,7 @@ public class ModCreativeTabs {
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = TAB_REGISTER.register("main",
             () -> CreativeModeTab.builder()
-                    .title(ModLang.translate(MechanicalLangIdGenerator.creativeTabId("main")).component())
+                    .title(ModLang.translate(LangIdGenerator.creativeTab("main")).component())
                     .withTabsBefore(AllCreativeModeTabs.PALETTES_CREATIVE_TAB.getId())
                     .displayItems(
                             MechanicalRegistrateDisplayItemsGenerator.create(true)
