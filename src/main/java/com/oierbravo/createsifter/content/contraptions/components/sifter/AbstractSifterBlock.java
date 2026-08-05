@@ -159,7 +159,7 @@ public abstract class AbstractSifterBlock<BE extends BlockEntity> extends Kineti
 
     @Override
     public void onRemove(BlockState state, Level worldIn, BlockPos pos, BlockState newState, boolean isMoving) {
-        if (state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {
+        if (!isMoving && state.hasBlockEntity() && state.getBlock() != newState.getBlock()) {
             withBlockEntityDo(worldIn, pos, be -> {
                 AbstractSifterBlockEntity sifter = (AbstractSifterBlockEntity) be;
                 ItemHelper.dropContents(worldIn, pos, sifter.getInputInventory());
